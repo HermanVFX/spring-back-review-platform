@@ -17,7 +17,7 @@ services:
       - "5433:5432"
 
   back-end:
-    build: ./docker
+    build: /
     container_name: back-end
 #    image: hermanvfx/back-end:v1
     environment:
@@ -31,12 +31,12 @@ services:
       - db
 
   #front setting
-  front:
-    container_name: "front"
-    image: "lazy4el/front:v1"
-    depends_on:
-      - back-end
-    ports:
-      - "3000:3000"
+#  front:
+#    container_name: "front"
+#    image: "lazy4el/front:v1"
+#    depends_on:
+#      - back-end
+#    ports:
+#      - "3000:3000"
 volumes:
   pgdata:
