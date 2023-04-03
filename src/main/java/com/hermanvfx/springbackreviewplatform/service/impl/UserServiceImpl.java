@@ -6,12 +6,14 @@ import com.hermanvfx.springbackreviewplatform.entity.User;
 import com.hermanvfx.springbackreviewplatform.mapper.UserMapper;
 import com.hermanvfx.springbackreviewplatform.service.UserService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
+@Slf4j
 @Service
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -20,7 +22,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Page<User> findAllUser(Pageable pageable) {
-        userMapper.userDtoToUser(new UserDto());
         return null;
     }
 

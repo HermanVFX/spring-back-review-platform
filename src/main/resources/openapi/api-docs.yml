@@ -64,6 +64,24 @@ components:
         email:
           type: string
           description: User email
+        role:
+          type: array
+          items:
+            $ref: '#/components/schemas/RoleDto'
+        speciality:
+          type: string
+#          nullable: true
+          enum:
+            - USER
+            - ADMIN
+        review:
+          type: array
+          items:
+            $ref: '#/'
+        social:
+          type: array
+          items:
+            $ref: '#/'
 
     ShortUserDto:
       type: object
@@ -78,12 +96,37 @@ components:
           type: string
           description: User email
 
-    PaginationDto:
+    RoleDto:
       type: object
       properties:
-        page:
-          type: integer
-          description: Number page
-        size:
-          type: integer
-          description: Size all pages
+        id:
+          type: string
+          format: uuid
+          description: Role id
+        role:
+          type: string
+          description: Role name
+
+    ReviewDto:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Role id
+        theme:
+          type: string
+          description: Theme name
+        reviewer:
+          $ref: '#/components/schemas/UserDto'
+        student:
+          $ref: '#/components/schemas/UserDto'
+#    PaginationDto:
+#      type: object
+#      properties:
+#        page:
+#          type: integer
+#          description: Number page
+#        size:
+#          type: integer
+#          description: Size all pages

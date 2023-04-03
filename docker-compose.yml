@@ -14,21 +14,21 @@ services:
     #      - ./postgres/create_db.sql:/docker-entrypoint-initdb.d/create_db.sql
     #      - pgdata:/var/lib/postgresql/data
     ports:
-      - "5433:5432"
+      - "5432:5432"
 
-  back-end:
-    build: /
-    container_name: back-end
-#    image: hermanvfx/back-end:v1
-    environment:
-      #      SPRING_PROFILES_ACTIVE: docker
-      DB_URL: jdbc:postgresql://db:5432/postgres?currentSchema=public
-      DB_USER: postgres
-      DB_PASSWORD: postgres
-    ports:
-      - "8080:8080"
-    depends_on:
-      - db
+#  back-end:
+#    build: ./
+#    container_name: back-end
+##    image: hermanvfx/back-end:v1
+#    environment:
+#      #      SPRING_PROFILES_ACTIVE: docker
+#      DB_URL: jdbc:postgresql://db:5432/postgres?currentSchema=public
+#      DB_USER: postgres
+#      DB_PASSWORD: postgres
+#    ports:
+#      - "8080:8080"
+#    depends_on:
+#      - db
 
   #front setting
 #  front:
