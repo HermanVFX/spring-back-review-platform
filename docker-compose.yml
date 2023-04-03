@@ -17,7 +17,7 @@ services:
       - "5433:5432"
 
   back-end:
-    build: ./src/main/resources
+    build: ./docker
     container_name: back-end
 #    image: hermanvfx/back-end:v1
     environment:
