@@ -77,3 +77,13 @@ components:
         email:
           type: string
           description: User email
+
+    PaginationDto:
+      type: object
+      properties:
+        page:
+          type: integer
+          description: Number page
+        size:
+          type: integer
+          description: Size all pages
