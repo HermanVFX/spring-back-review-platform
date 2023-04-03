@@ -18,6 +18,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Set;
 import java.util.UUID;
@@ -45,7 +46,7 @@ public class Review {
     private User student;
 
     @Column(name = "review_time", nullable = false)
-    private Date time;
+    private LocalDate time;
 
     @Column(name = "review_link", nullable = false)
     private String link;
@@ -55,11 +56,11 @@ public class Review {
     private Speciality speciality;
 
     @Column(name = "create_time", nullable = false)
-    private Date create;
+    private LocalDate create;
     @Column(name = "update_time")
-    private Date update;
+    private LocalDate update;
     @Column(name = "delete_time")
-    private Date delete;
+    private LocalDate delete;
     @Column(
             name = "is_active",
             nullable = false,

@@ -10,7 +10,7 @@ import java.util.UUID;
 
 public interface UserService {
 
-    Page<User> findAllUser(Pageable pageable);
+    Page<UserDto> findAllUser(Pageable pageable);
 
     UserDto findUserById(UUID userId);
 

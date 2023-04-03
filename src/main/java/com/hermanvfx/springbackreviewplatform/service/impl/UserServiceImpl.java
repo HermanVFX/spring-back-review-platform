@@ -3,14 +3,20 @@ package com.hermanvfx.springbackreviewplatform.service.impl;
 import com.example.userservice.dto.ShortUserDto;
 import com.example.userservice.dto.UserDto;
 import com.hermanvfx.springbackreviewplatform.entity.User;
+import com.hermanvfx.springbackreviewplatform.exception.NotFoundException;
 import com.hermanvfx.springbackreviewplatform.mapper.UserMapper;
+import com.hermanvfx.springbackreviewplatform.repository.UserRepository;
 import com.hermanvfx.springbackreviewplatform.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Slf4j
@@ -19,10 +25,25 @@ import java.util.UUID;
 public class UserServiceImpl implements UserService {
 
     private final UserMapper userMapper;
+    private final UserRepository userRepository;
 
     @Override
-    public Page<User> findAllUser(Pageable pageable) {
-        return null;
+    public Page<UserDto> findAllUser(Pageable pageable) {
+
+        List<UserDto> list = userMapper.listUserToListUserDto(userRepository.findAll());
+
+        int last = pageable.getPageNumber() * pageable.getPageSize();
+        int first = last - pageable.getPageSize();
+
+        if (list.size() < first) {
+            throw new NotFoundException("Items not found");
+        } else if (list.size() < last) {
+            last = list.size();
+        }
+
+        Page<UserDto> page = new PageImpl<>(list.subList(first, last), pageable, list.size());
+
+        return page;
     }
 
     @Override
@@ -32,7 +53,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto create(ShortUserDto user) {
-        return null;
+        User newUser = userMapper.shortUserDtoToUser(user);
+        newUser.setCreate(LocalDate.now());
+        UserDto dto = userMapper.userToUserDTO(userRepository.save(newUser));
+        return dto;
     }
 
     @Override

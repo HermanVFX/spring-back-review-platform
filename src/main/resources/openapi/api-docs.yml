@@ -43,7 +43,133 @@ paths:
           description: Method is not available
         '500':
           description: Server error
+  /v1/user/{page}&{size}:
+    get:
+      tags:
+        - User
+      summary: find all users
+      operationId: findAllUsers
+      parameters:
+        - name: page
+          in: path
+          required: true
+          schema:
+            type: integer
+            nullable: false
+        - name: size
+          in: path
+          required: true
+          schema:
+            type: integer
+            nullable: false
+      responses:
+        '200':
+          description: Get all users
+          content:
+            application/json:
+              schema:
+                type: array
+                format: page
+                items:
+                  $ref: '#/components/schemas/UserDto'
+        '400':
+          description: Invalid request
+        '404':
+          description: Resource not found
+        '405':
+          description: Method is not available
+        '500':
+          description: Server error
 
+  /api/v1/user/{userId}:
+    get:
+      tags:
+        - User
+      summary: find users by id
+      operationId: findUsersById
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: string
+            format: uuid
+            nullable: false
+      responses:
+        '200':
+          description: Get user
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/UserDto'
+        '400':
+          description: Invalid request
+        '404':
+          description: Resource not found
+        '405':
+          description: Method is not available
+        '500':
+          description: Server error
+    delete:
+      tags:
+        - User
+      summary: Delete user
+      operationId: deleteUser
+      parameters:
+        - name: userId
+          in: path
+          description: User id to delete
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Delete user
+        '400':
+          description: Invalid request
+        '404':
+          description: Resource not found
+        '405':
+          description: Method is not available
+        '500':
+          description: Server error
+    put:
+      operationId: updateUser
+      summary: Update user
+      tags:
+        - User
+      parameters:
+        - name: userId
+          in: path
+          description: User id to update
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: User DTO
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserDto'
+        required: true
+      responses:
+        '200':
+          description: updated user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDto'
+        '400':
+          description: Invalid request
+        '404':
+          description: Resource not found
+        '405':
+          description: Method is not available
+        '500':
+          description: Server error
 # --- Dtos ---
 components:
   schemas:
@@ -64,24 +190,28 @@ components:
         email:
           type: string
           description: User email
-        role:
+        roles:
           type: array
           items:
             $ref: '#/components/schemas/RoleDto'
-        speciality:
+        specialities:
           type: string
 #          nullable: true
           enum:
-            - USER
-            - ADMIN
-        review:
+            - FRONTEND
+            - BACKEND
+        reviewsReceiving:
           type: array
           items:
-            $ref: '#/'
-        social:
+            $ref: '#/components/schemas/ReviewDto'
+        reviewsStudent:
           type: array
           items:
-            $ref: '#/'
+            $ref: '#/components/schemas/ReviewDto'
+        socials:
+          type: array
+          items:
+            $ref: '#/components/schemas/SocialDto'
 
     ShortUserDto:
       type: object
@@ -121,6 +251,34 @@ components:
           $ref: '#/components/schemas/UserDto'
         student:
           $ref: '#/components/schemas/UserDto'
+        time:
+          type: string
+          description: Review time
+        link:
+          type: string
+          description: Review link
+        speciality:
+          type: string
+          enum:
+            - FRONTEND
+            - BACKEND
+
+    SocialDto:
+      type: object
+      properties:
+#        id:
+#          type: string
+#          format: uuid
+#          description: Social id
+        name:
+          type: string
+          description: Social name
+        link:
+          type: string
+          description: Social link
+#        user:
+#          $ref: '#/components/schemas/UserDto'
+
 #    PaginationDto:
 #      type: object
 #      properties:
