@@ -17,9 +17,9 @@ services:
       - "5433:5432"
 
   back-end:
-    #    build: ./user-service
+    build: ./src/main/resources
     container_name: back-end
-    image: hermanvfx/back-end:v1
+#    image: hermanvfx/back-end:v1
     environment:
       #      SPRING_PROFILES_ACTIVE: docker
       DB_URL: jdbc:postgresql://db:5432/postgres?currentSchema=public
