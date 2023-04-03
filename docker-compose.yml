@@ -1,0 +1,33 @@
+version: "3"
+services:
+  # DataBase
+  # - PostgreSQL database
+  db:
+    image: postgres:15.1
+    container_name: db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+#    volumes:
+#      - ./postgres/create_db.sql:/docker-entrypoint-initdb.d/create_db.sql
+#      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+
+  back-end:
+#    build: ./user-service
+    container_name: back-end
+    image: hermanvfx/back-end:v1
+    environment:
+#      SPRING_PROFILES_ACTIVE: docker
+      DB_URL: jdbc:postgresql://db:5432/postgres?currentSchema=public
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+volumes:
+  pgdata:
