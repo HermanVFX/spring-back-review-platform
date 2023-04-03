@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.0.5'
     id 'io.spring.dependency-management' version '1.1.0'
+    id 'org.openapi.generator' version '6.3.0'
 }
 
 group = 'com.hermanvfx'
@@ -27,8 +28,47 @@ dependencies {
     runtimeOnly 'org.postgresql:postgresql'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    implementation 'org.openapitools:jackson-databind-nullable:0.2.6'
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.4'
+    implementation "org.mapstruct:mapstruct:1.5.3.Final"
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
 }
 
-tasks.named('test') {
-    useJUnitPlatform()
+openApiGenerate {
+    inputSpec = "$project.rootDir/src/main/resources/openapi/api-docs.yml".toString()
+    outputDir = "$buildDir/generated/api" as Object
+    generateModelDocumentation = true
+    generatorName = "spring"
+    library = "spring-boot"
+    apiPackage = "com.example.userservice.controller"
+    modelPackage = "com.example.userservice.dto"
+    invokerPackage = "com.example.userservice.api"
+    configOptions = [
+            useSpringBoot3: "true",
+            useTags: "true",
+            java8: "false",
+            dateLibrary: "java8",
+            interfaceOnly: "true",
+            skipDefaultInterface: "true",
+            hideGenerationTimestamp: "true",
+            serializableModel: "true",
+            booleanGetterPrefix: "is",
+            openApiNullable: "true",
+    ]
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir("$buildDir/generated/api/src/main/java")
+        }
+    }
+}
+
+
+tasks.compileJava {
+    dependsOn(tasks.openApiGenerate)
 }
