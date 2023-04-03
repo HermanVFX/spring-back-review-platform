@@ -3,7 +3,9 @@ package com.hermanvfx.springbackreviewplatform.service.impl;
 import com.example.userservice.dto.ShortUserDto;
 import com.example.userservice.dto.UserDto;
 import com.hermanvfx.springbackreviewplatform.entity.User;
+import com.hermanvfx.springbackreviewplatform.mapper.UserMapper;
 import com.hermanvfx.springbackreviewplatform.service.UserService;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -11,10 +13,14 @@ import org.springframework.stereotype.Service;
 import java.util.UUID;
 
 @Service
+@AllArgsConstructor
 public class UserServiceImpl implements UserService {
+
+    private final UserMapper userMapper;
 
     @Override
     public Page<User> findAllUser(Pageable pageable) {
+        userMapper.userDtoToUser(new UserDto());
         return null;
     }
 
