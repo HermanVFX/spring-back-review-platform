@@ -231,7 +231,7 @@ paths:
         '500':
           description: Server error
 
-  /api/v1/user/{companyId}:
+  /api/v1/company/{companyId}:
     get:
       tags:
         - Company
@@ -267,7 +267,7 @@ paths:
       summary: Delete company
       operationId: deleteCompany
       parameters:
-        - name: companyIdId
+        - name: companyId
           in: path
           description: Company id to delete
           required: true
