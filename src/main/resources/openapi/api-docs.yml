@@ -43,7 +43,7 @@ paths:
           description: Method is not available
         '500':
           description: Server error
-  /v1/user/{page}&{size}:
+  /v1/user/page={page}&size={size}:
     get:
       tags:
         - User
@@ -167,6 +167,159 @@ paths:
           description: Method is not available
         '500':
           description: Server error
+
+  /v1/company:
+    post:
+      operationId: createCompany
+      summary: Create new company
+      tags:
+        - Company
+      requestBody:
+        description: Company DTO
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyDto'
+        required: true
+      responses:
+        '201':
+          description: created company
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyDto'
+        '400':
+          description: Invalid request
+        '404':
+          description: Resource not found
+        '405':
+          description: Method is not available
+        '500':
+          description: Server error
+  /v1/user/page={page}&size{size}:
+    get:
+      tags:
+        - Company
+      summary: find all company
+      operationId: findAllCompanys
+      parameters:
+        - name: page
+          in: path
+          required: true
+          schema:
+            type: integer
+            nullable: false
+        - name: size
+          in: path
+          required: true
+          schema:
+            type: integer
+            nullable: false
+      responses:
+        '200':
+          description: Get all company
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyListDto'
+        '400':
+          description: Invalid request
+        '404':
+          description: Resource not found
+        '405':
+          description: Method is not available
+        '500':
+          description: Server error
+
+  /api/v1/user/{companyId}:
+    get:
+      tags:
+        - Company
+      summary: find company by id
+      operationId: findCompanyById
+      parameters:
+        - in: path
+          name: companyId
+          required: true
+          schema:
+            type: string
+            format: uuid
+            nullable: false
+      responses:
+        '200':
+          description: Get company
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/CompanyDto'
+        '400':
+          description: Invalid request
+        '404':
+          description: Resource not found
+        '405':
+          description: Method is not available
+        '500':
+          description: Server error
+    delete:
+      tags:
+        - Company
+      summary: Delete company
+      operationId: deleteCompany
+      parameters:
+        - name: companyIdId
+          in: path
+          description: Company id to delete
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Delete user
+        '400':
+          description: Invalid request
+        '404':
+          description: Resource not found
+        '405':
+          description: Method is not available
+        '500':
+          description: Server error
+    put:
+      operationId: updateCompany
+      summary: Update company
+      tags:
+        - Company
+      parameters:
+        - name: companyId
+          in: path
+          description: Company id to update
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: Company DTO
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompanyDto'
+        required: true
+      responses:
+        '200':
+          description: updated user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyDto'
+        '400':
+          description: Invalid request
+        '404':
+          description: Resource not found
+        '405':
+          description: Method is not available
+        '500':
+          description: Server error
 # --- Dtos ---
 components:
   schemas:
@@ -221,6 +374,8 @@ components:
           type: number
         totalPages:
           type: number
+        currentPage:
+          type: number
         last:
           type: boolean
         numberOfElements:
@@ -246,62 +401,185 @@ components:
     RoleDto:
       type: object
       properties:
-        id:
-          type: string
-          format: uuid
-          description: Role id
         role:
           type: string
           description: Role name
 
-    ReviewDto:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: Role id
-        theme:
-          type: string
-          description: Theme name
-        reviewer:
-          $ref: '#/components/schemas/UserDto'
-        student:
-          $ref: '#/components/schemas/UserDto'
-        time:
-          type: string
-          description: Review time
-        link:
-          type: string
-          description: Review link
-        speciality:
-          type: string
-          enum:
-            - FRONTEND
-            - BACKEND
-
     SocialDto:
       type: object
       properties:
-#        id:
-#          type: string
-#          format: uuid
-#          description: Social id
         name:
           type: string
           description: Social name
         link:
           type: string
           description: Social link
-#        user:
-#          $ref: '#/components/schemas/UserDto'
 
-#    PaginationDto:
-#      type: object
-#      properties:
-#        page:
-#          type: integer
-#          description: Number page
-#        size:
-#          type: integer
-#          description: Size all pages
+    CommentaryDto:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/UserDto'
+        text:
+          type: string
+        likes:
+          type: number
+        dislikes:
+          type: number
+        answers:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommentaryDto'
+        create:
+          type: string
+
+    CommentaryListDto:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommentaryDto'
+        totalElements:
+          type: number
+        totalPages:
+          type: number
+        currentPage:
+          type: number
+        last:
+          type: boolean
+        numberOfElements:
+          type: number
+        first:
+          type: boolean
+        empty:
+          type: boolean
+
+    CompanyDto:
+      type: object
+      properties:
+        name:
+          type: string
+        jobLink:
+          type: string
+        rating:
+          type: number
+        commentaries:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommentaryDto'
+        interviews:
+          type: array
+          items:
+            $ref: '#/components/schemas/InterviewDto'
+
+    CompanyListDto:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyDto'
+        totalElements:
+          type: number
+        totalPages:
+          type: number
+        currentPage:
+          type: number
+        last:
+          type: boolean
+        numberOfElements:
+          type: number
+        first:
+          type: boolean
+        empty:
+          type: boolean
+
+    InterviewDto:
+      type: object
+      properties:
+        jobTitle:
+          type: string
+        jobLink:
+          type: string
+        company:
+          $ref: '#/components/schemas/CompanyDto'
+        user:
+          $ref: '#/components/schemas/UserDto'
+        description:
+          type: string
+        money:
+          type: integer
+        commentaries:
+          type: array
+          items:
+            $ref: '#/components/schemas/CommentaryDto'
+        videoLink:
+          type: string
+
+    InterviewListDto:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/InterviewDto'
+        totalElements:
+          type: number
+        totalPages:
+          type: number
+        currentPage:
+          type: number
+        last:
+          type: boolean
+        numberOfElements:
+          type: number
+        first:
+          type: boolean
+        empty:
+          type: boolean
+
+    ReviewDto:
+      type: object
+      properties:
+        theme:
+          type: string
+        jobLink:
+          type: string
+        reviewer:
+          $ref: '#/components/schemas/UserDto'
+        student:
+          $ref: '#/components/schemas/UserDto'
+        time:
+          type: string
+        link:
+          type: string
+        speciality:
+          type: string
+          enum:
+            - FRONTEND
+            - BACKEND
+        create:
+          type: string
+
+    ReviewListDto:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReviewDto'
+        totalElements:
+          type: number
+        totalPages:
+          type: number
+        currentPage:
+          type: number
+        last:
+          type: boolean
+        numberOfElements:
+          type: number
+        first:
+          type: boolean
+        empty:
+          type: boolean

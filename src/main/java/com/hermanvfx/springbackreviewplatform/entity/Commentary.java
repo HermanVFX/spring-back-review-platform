@@ -65,7 +65,7 @@ public class Commentary {
     private Integer dislikes;
 
     @OneToMany(cascade = CascadeType.ALL)
-    private List<Commentary> commentaries;
+    private List<Commentary> answers;
 
     @Column(name = "create_time", nullable = false)
     private LocalDate create;
