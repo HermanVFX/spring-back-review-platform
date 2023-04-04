@@ -15,7 +15,7 @@ tags:
     description: Interview API
 
 paths:
-  /v1/user:
+  /api/v1/user:
     post:
       operationId: createUser
       summary: Create new user
@@ -30,7 +30,7 @@ paths:
         required: true
       responses:
         '201':
-          description: created user
+          description: Created user
           content:
             application/json:
               schema:
@@ -43,11 +43,11 @@ paths:
           description: Method is not available
         '500':
           description: Server error
-  /v1/user/page={page}&size={size}:
+  /api/v1/user/page={page}&size={size}:
     get:
       tags:
         - User
-      summary: find all users
+      summary: Find all users
       operationId: findAllUsers
       parameters:
         - name: page
@@ -82,7 +82,7 @@ paths:
     get:
       tags:
         - User
-      summary: find users by id
+      summary: Find users by id
       operationId: findUsersById
       parameters:
         - in: path
@@ -154,7 +154,7 @@ paths:
         required: true
       responses:
         '200':
-          description: updated user
+          description: Updated user
           content:
             application/json:
               schema:
@@ -168,7 +168,7 @@ paths:
         '500':
           description: Server error
 
-  /v1/company:
+  /api/v1/company:
     post:
       operationId: createCompany
       summary: Create new company
@@ -183,7 +183,7 @@ paths:
         required: true
       responses:
         '201':
-          description: created company
+          description: Created company
           content:
             application/json:
               schema:
@@ -196,11 +196,11 @@ paths:
           description: Method is not available
         '500':
           description: Server error
-  /v1/company/page={page}&size{size}:
+  /api/v1/company/page={page}&size{size}:
     get:
       tags:
         - Company
-      summary: find all company
+      summary: Find all company
       operationId: findAllCompanys
       parameters:
         - name: page
@@ -235,7 +235,7 @@ paths:
     get:
       tags:
         - Company
-      summary: find company by id
+      summary: Find company by id
       operationId: findCompanyById
       parameters:
         - name: companyId
@@ -276,7 +276,7 @@ paths:
             format: uuid
       responses:
         '204':
-          description: Delete user
+          description: Delete company
         '400':
           description: Invalid request
         '404':
@@ -307,11 +307,318 @@ paths:
         required: true
       responses:
         '200':
-          description: updated user
+          description: Updated company
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/CompanyDto'
+        '400':
+          description: Invalid request
+        '404':
+          description: Resource not found
+        '405':
+          description: Method is not available
+        '500':
+          description: Server error
+
+  /api/v1/interview:
+    post:
+      operationId: createInterview
+      summary: Create new interview
+      tags:
+        - Interview
+      requestBody:
+        description: Interview DTO
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShortInterviewDto'
+        required: true
+      responses:
+        '201':
+          description: Created interview
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InterviewDto'
+        '400':
+          description: Invalid request
+        '404':
+          description: Resource not found
+        '405':
+          description: Method is not available
+        '500':
+          description: Server error
+  /api/v1/interview/page={page}&size{size}:
+    get:
+      tags:
+        - Interview
+      summary: Find all interview
+      operationId: findAllInterviews
+      parameters:
+        - name: page
+          in: path
+          required: true
+          schema:
+            type: integer
+            nullable: false
+        - name: size
+          in: path
+          required: true
+          schema:
+            type: integer
+            nullable: false
+      responses:
+        '200':
+          description: Get all interview
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InterviewListDto'
+        '400':
+          description: Invalid request
+        '404':
+          description: Resource not found
+        '405':
+          description: Method is not available
+        '500':
+          description: Server error
+
+  /api/v1/interview/{interviewId}:
+    get:
+      tags:
+        - Interview
+      summary: Find interview by id
+      operationId: findInterviewById
+      parameters:
+        - name: interviewId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+            nullable: false
+      responses:
+        '200':
+          description: Get interview
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/InterviewDto'
+        '400':
+          description: Invalid request
+        '404':
+          description: Resource not found
+        '405':
+          description: Method is not available
+        '500':
+          description: Server error
+    delete:
+      tags:
+        - Interview
+      summary: Delete interview
+      operationId: deleteInterview
+      parameters:
+        - name: interviewId
+          in: path
+          description: Company id to delete
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Delete interview
+        '400':
+          description: Invalid request
+        '404':
+          description: Resource not found
+        '405':
+          description: Method is not available
+        '500':
+          description: Server error
+    put:
+      operationId: updateInterview
+      summary: Update interview
+      tags:
+        - Interview
+      parameters:
+        - name: interviewId
+          in: path
+          description: Interview by id to update
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: Interview DTO
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InterviewDto'
+        required: true
+      responses:
+        '200':
+          description: Interview updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InterviewDto'
+        '400':
+          description: Invalid request
+        '404':
+          description: Resource not found
+        '405':
+          description: Method is not available
+        '500':
+          description: Server error
+
+
+  /api/v1/review:
+    post:
+      operationId: createReview
+      summary: Create new interview
+      tags:
+        - Review
+      requestBody:
+        description: Review DTO
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShortReviewDto'
+        required: true
+      responses:
+        '201':
+          description: Created review
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReviewDto'
+        '400':
+          description: Invalid request
+        '404':
+          description: Resource not found
+        '405':
+          description: Method is not available
+        '500':
+          description: Server error
+  /api/v1/review/page={page}&size{size}:
+    get:
+      tags:
+        - Review
+      summary: find all review
+      operationId: findAllReviews
+      parameters:
+        - name: page
+          in: path
+          required: true
+          schema:
+            type: integer
+            nullable: false
+        - name: size
+          in: path
+          required: true
+          schema:
+            type: integer
+            nullable: false
+      responses:
+        '200':
+          description: Get all review
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReviewListDto'
+        '400':
+          description: Invalid request
+        '404':
+          description: Resource not found
+        '405':
+          description: Method is not available
+        '500':
+          description: Server error
+
+  /api/v1/review/{reviewId}:
+    get:
+      tags:
+        - Review
+      summary: Find review by id
+      operationId: findReviewById
+      parameters:
+        - name: reviewId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+            nullable: false
+      responses:
+        '200':
+          description: Get review
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ReviewDto'
+        '400':
+          description: Invalid request
+        '404':
+          description: Resource not found
+        '405':
+          description: Method is not available
+        '500':
+          description: Server error
+    delete:
+      tags:
+        - Review
+      summary: Delete review
+      operationId: deleteReview
+      parameters:
+        - name: reviewId
+          in: path
+          description: Review id to delete
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Delete review
+        '400':
+          description: Invalid request
+        '404':
+          description: Resource not found
+        '405':
+          description: Method is not available
+        '500':
+          description: Server error
+    put:
+      operationId: updateReview
+      summary: Update review
+      tags:
+        - Review
+      parameters:
+        - name: reviewId
+          in: path
+          description: Review by id to update
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: Review DTO
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReviewDto'
+        required: true
+      responses:
+        '200':
+          description: Review updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReviewDto'
         '400':
           description: Invalid request
         '404':
@@ -346,7 +653,6 @@ components:
             $ref: '#/components/schemas/RoleDto'
         specialities:
           type: string
-#          nullable: true
           enum:
             - FRONTEND
             - BACKEND
@@ -527,6 +833,14 @@ components:
         videoLink:
           type: string
 
+    ShortInterviewDto:
+      type: object
+      properties:
+        jobTitle:
+          type: string
+        jobLink:
+          type: string
+
     InterviewListDto:
       type: object
       properties:
@@ -570,6 +884,14 @@ components:
             - FRONTEND
             - BACKEND
         create:
+          type: string
+
+    ShortReviewDto:
+      type: object
+      properties:
+        theme:
+          type: string
+        jobLink:
           type: string
 
     ReviewListDto:

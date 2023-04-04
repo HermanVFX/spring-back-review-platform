@@ -30,4 +30,5 @@ public interface UserMapper {
 
     List<UserDto> listUserToListUserDto(List<User> entities);
 
+    User userDtoToUser(UserDto reviewer);
 }

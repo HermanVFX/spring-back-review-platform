@@ -40,7 +40,7 @@ public class CompanyServiceImpl implements CompanyService {
         int first = supportDevService.getFirstIndexElement(pageable, last);
 
         if (list.size() < first) {
-            throw new NotFoundException("Items not found");
+            throw new NotFoundException("Company not found");
         } else if (list.size() < last) {
             last = list.size();
         }
@@ -66,8 +66,7 @@ public class CompanyServiceImpl implements CompanyService {
     public CompanyDto create(ShortCompanyDto company) {
         Company newCompany = companyMapper.shortCompanyDtoToCompany(company);
         newCompany.setCreate(LocalDate.now());
-        CompanyDto dto = companyMapper.companyToCompanyDto(companyRepository.save(newCompany));
-        return dto;
+        return companyMapper.companyToCompanyDto(companyRepository.save(newCompany));
 
     }
 

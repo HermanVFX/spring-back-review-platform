@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
         int first = supportDevService.getFirstIndexElement(pageable, last);
 
         if (list.size() < first) {
-            throw new NotFoundException("Items not found");
+            throw new NotFoundException("User not found");
         } else if (list.size() < last) {
             last = list.size();
         }
@@ -66,8 +66,7 @@ public class UserServiceImpl implements UserService {
     public UserDto create(ShortUserDto user) {
         User newUser = userMapper.shortUserDtoToUser(user);
         newUser.setCreate(LocalDate.now());
-        UserDto dto = userMapper.userToUserDTO(userRepository.save(newUser));
-        return dto;
+        return userMapper.userToUserDTO(userRepository.save(newUser));
     }
 
     @Override
