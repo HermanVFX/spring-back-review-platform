@@ -21,6 +21,7 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -52,11 +53,8 @@ public class User {
     )
     private String password;
 
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JoinTable(name = "uzr_role",
-            joinColumns = @JoinColumn(name = "uzr_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles;
+    @ManyToMany(cascade = {CascadeType.MERGE})
+    private Set<Role> roles = new HashSet<>();
 
     @Enumerated(EnumType.STRING)
     @Column(name = "uzr_specialities")
@@ -94,9 +92,8 @@ public class User {
     private LocalDate delete;
     @Column(
             name = "is_active",
-            nullable = false,
-            columnDefinition = "BOOLEAN DEFAULT TRUE"
+            nullable = false
     )
-    private boolean isActive;
+    private boolean isActive = true;
 
 }

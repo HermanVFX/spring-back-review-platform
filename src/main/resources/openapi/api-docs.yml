@@ -68,10 +68,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                format: page
-                items:
-                  $ref: '#/components/schemas/UserDto'
+                $ref: '#/components/schemas/UserListDto'
         '400':
           description: Invalid request
         '404':
@@ -212,6 +209,26 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/SocialDto'
+
+    UserListDto:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserDto'
+        totalElements:
+          type: number
+        totalPages:
+          type: number
+        last:
+          type: boolean
+        numberOfElements:
+          type: number
+        first:
+          type: boolean
+        empty:
+          type: boolean
 
     ShortUserDto:
       type: object

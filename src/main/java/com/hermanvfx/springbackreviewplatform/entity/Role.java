@@ -13,6 +13,7 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -31,7 +32,7 @@ public class Role {
     private String role;
 
     @ManyToMany(mappedBy = "roles")
-    private Set<User> users;
+    private Set<User> users = new HashSet<>();
 
     @Column(name = "create_time", nullable = false)
     private LocalDate create;
@@ -41,8 +42,7 @@ public class Role {
     private LocalDate delete;
     @Column(
             name = "is_active",
-            nullable = false,
-            columnDefinition = "BOOLEAN DEFAULT TRUE"
+            nullable = false
     )
-    private boolean isActive;
+    private boolean isActive = true;
 }

@@ -63,8 +63,7 @@ public class Review {
     private LocalDate delete;
     @Column(
             name = "is_active",
-            nullable = false,
-            columnDefinition = "BOOLEAN DEFAULT TRUE"
+            nullable = false
     )
-    private boolean isActive;
+    private boolean isActive = true;
 }

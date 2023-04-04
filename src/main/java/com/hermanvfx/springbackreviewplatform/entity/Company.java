@@ -34,10 +34,9 @@ public class Company {
     private String jobLink;
 
     @Column(
-            name = "company_rating",
-            columnDefinition = "REAL DEFAULT 0"
+            name = "company_rating"
     )
-    private Byte rating;
+    private Double rating = 0.0;
 
     @OneToMany(mappedBy="company")
     private List<Commentary> commentaries;
@@ -53,8 +52,7 @@ public class Company {
     private LocalDate delete;
     @Column(
             name = "is_active",
-            nullable = false,
-            columnDefinition = "BOOLEAN DEFAULT TRUE"
+            nullable = false
     )
-    private boolean isActive;
+    private boolean isActive = true;
 }

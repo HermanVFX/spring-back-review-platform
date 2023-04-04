@@ -2,6 +2,7 @@ package com.hermanvfx.springbackreviewplatform.mapper;
 
 import com.example.userservice.dto.ShortUserDto;
 import com.example.userservice.dto.UserDto;
+import com.example.userservice.dto.UserListDto;
 import com.hermanvfx.springbackreviewplatform.entity.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -28,4 +29,5 @@ public interface UserMapper {
     User shortUserDtoToUser(ShortUserDto dto);
 
     List<UserDto> listUserToListUserDto(List<User> entities);
+
 }
