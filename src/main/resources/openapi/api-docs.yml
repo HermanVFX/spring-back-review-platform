@@ -179,7 +179,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CompanyDto'
+              $ref: '#/components/schemas/ShortCompanyDto'
         required: true
       responses:
         '201':
@@ -196,7 +196,7 @@ paths:
           description: Method is not available
         '500':
           description: Server error
-  /v1/user/page={page}&size{size}:
+  /v1/company/page={page}&size{size}:
     get:
       tags:
         - Company
@@ -231,15 +231,15 @@ paths:
         '500':
           description: Server error
 
-  /api/v1/user/{companyId}:
+  /api/v1/company/{companyId}:
     get:
       tags:
         - Company
       summary: find company by id
       operationId: findCompanyById
       parameters:
-        - in: path
-          name: companyId
+        - name: companyId
+          in: path
           required: true
           schema:
             type: string
@@ -267,7 +267,7 @@ paths:
       summary: Delete company
       operationId: deleteCompany
       parameters:
-        - name: companyIdId
+        - name: companyId
           in: path
           description: Company id to delete
           required: true
@@ -398,6 +398,7 @@ components:
           type: string
           description: User email
 
+
     RoleDto:
       type: object
       properties:
@@ -472,6 +473,15 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/InterviewDto'
+
+    ShortCompanyDto:
+      type: object
+      properties:
+        name:
+          type: string
+        jobLink:
+          type: string
+
 
     CompanyListDto:
       type: object
