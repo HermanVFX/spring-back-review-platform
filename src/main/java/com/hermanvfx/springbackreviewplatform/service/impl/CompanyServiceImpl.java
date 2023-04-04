@@ -1,13 +1,15 @@
 package com.hermanvfx.springbackreviewplatform.service.impl;
 
-import com.example.userservice.dto.ShortUserDto;
+import com.example.userservice.dto.CompanyDto;
+import com.example.userservice.dto.CompanyListDto;
+import com.example.userservice.dto.ShortCompanyDto;
 import com.example.userservice.dto.UserDto;
-import com.example.userservice.dto.UserListDto;
+import com.hermanvfx.springbackreviewplatform.entity.Company;
 import com.hermanvfx.springbackreviewplatform.entity.User;
 import com.hermanvfx.springbackreviewplatform.exception.NotFoundException;
-import com.hermanvfx.springbackreviewplatform.mapper.UserMapper;
-import com.hermanvfx.springbackreviewplatform.repository.UserRepository;
-import com.hermanvfx.springbackreviewplatform.service.UserService;
+import com.hermanvfx.springbackreviewplatform.mapper.CompanyMapper;
+import com.hermanvfx.springbackreviewplatform.repository.CompanyRepository;
+import com.hermanvfx.springbackreviewplatform.service.CompanyService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -18,23 +20,21 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
 @Slf4j
 @Service
 @AllArgsConstructor
-public class UserServiceImpl implements UserService {
+public class CompanyServiceImpl implements CompanyService {
 
-    private final UserMapper userMapper;
-    private final UserRepository userRepository;
+    private final CompanyRepository companyRepository;
+    private final CompanyMapper companyMapper;
     private final SupportDevServiceImpl supportDevService;
 
     @Override
-    public UserListDto findAllUser(Pageable pageable) {
-
-        List<UserDto> list = userMapper.listUserToListUserDto(userRepository.findAll());
+    public CompanyListDto findAllCompany(Pageable pageable) {
+        List<CompanyDto> list = companyMapper.listCompanyToListCompanyDto(companyRepository.findAll());
 
         int last = supportDevService.getLastIndexElement(pageable);
         int first = supportDevService.getFirstIndexElement(pageable, last);
@@ -45,9 +45,9 @@ public class UserServiceImpl implements UserService {
             last = list.size();
         }
 
-        Page<UserDto> page = new PageImpl<>(list.subList(first, last), pageable, list.size());
+        Page<CompanyDto> page = new PageImpl<>(list.subList(first, last), pageable, list.size());
 
-        return new UserListDto()
+        return new CompanyListDto()
                 .content(list.subList(first, last))
                 .totalPages(BigDecimal.valueOf(page.getTotalPages()))
                 .totalElements(BigDecimal.valueOf(page.getTotalElements()))
@@ -55,24 +55,25 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto findUserById(UUID userId) {
-        return userMapper.userToUserDTO(userRepository
-                .findById(userId)
-                .orElseThrow(() -> new NotFoundException("User with id[" + userId + "] does not found")));
+    public CompanyDto findCompanyById(UUID companyId) {
+        return companyMapper.companyToCompanyDto(companyRepository
+                .findById(companyId)
+                .orElseThrow(() -> new NotFoundException("Company with id[" + companyId + "] does not found")));
     }
 
     @Override
     @Transactional
-    public UserDto create(ShortUserDto user) {
-        User newUser = userMapper.shortUserDtoToUser(user);
-        newUser.setCreate(LocalDate.now());
-        UserDto dto = userMapper.userToUserDTO(userRepository.save(newUser));
+    public CompanyDto create(ShortCompanyDto company) {
+        Company newCompany = companyMapper.shortCompanyDtoToCompany(company);
+        newCompany.setCreate(LocalDate.now());
+        CompanyDto dto = companyMapper.companyToCompanyDto(companyRepository.save(newCompany));
         return dto;
+
     }
 
     @Override
     @Transactional
-    public UserDto update(UserDto user, UUID id) {
+    public CompanyDto update(CompanyDto user, UUID id) {
         return null;
     }
 
