@@ -13,6 +13,8 @@ tags:
     description: Review API
   - name: Interview
     description: Interview API
+  - name: Commentary
+    description: Commentary API
 
 paths:
   /api/v1/user:
@@ -43,7 +45,7 @@ paths:
           description: Method is not available
         '500':
           description: Server error
-  /api/v1/user/page={page}&size={size}:
+  /api/v1/users/page={page}&size={size}:
     get:
       tags:
         - User
@@ -196,7 +198,7 @@ paths:
           description: Method is not available
         '500':
           description: Server error
-  /api/v1/company/page={page}&size{size}:
+  /api/v1/companies/page={page}&size={size}:
     get:
       tags:
         - Company
@@ -349,7 +351,7 @@ paths:
           description: Method is not available
         '500':
           description: Server error
-  /api/v1/interview/page={page}&size{size}:
+  /api/v1/interviews/page={page}&size{size}:
     get:
       tags:
         - Interview
@@ -503,7 +505,7 @@ paths:
           description: Method is not available
         '500':
           description: Server error
-  /api/v1/review/page={page}&size{size}:
+  /api/v1/reviews/page={page}&size{size}:
     get:
       tags:
         - Review
@@ -627,6 +629,40 @@ paths:
           description: Method is not available
         '500':
           description: Server error
+
+
+# --- Commentary ---
+  /api/v1/comment:
+    post:
+      operationId: createCommentary
+      summary: Create new Commentary
+      tags:
+        - Commentary
+      requestBody:
+        description: Commentary DTO
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShortCommentaryDto'
+        required: true
+      responses:
+        '201':
+          description: Created Commentary
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommentaryDto'
+        '400':
+          description: Invalid request
+        '404':
+          description: Resource not found
+        '405':
+          description: Method is not available
+        '500':
+          description: Server error
+
+
+
 # --- Dtos ---
 components:
   schemas:
@@ -644,6 +680,9 @@ components:
         lastName:
           type: string
           description: User last name
+        password:
+          type: string
+          description: User password
         email:
           type: string
           description: User email
@@ -700,6 +739,9 @@ components:
         lastName:
           type: string
           description: User last name
+        password:
+          type: string
+          description: User password
         email:
           type: string
           description: User email
@@ -739,6 +781,19 @@ components:
             $ref: '#/components/schemas/CommentaryDto'
         create:
           type: string
+
+
+    ShortCommentaryDto:
+      type: object
+      properties:
+        user:
+          $ref: '#/components/schemas/UserDto'
+        text:
+          type: string
+        create:
+          type: string
+
+
 
     CommentaryListDto:
       type: object

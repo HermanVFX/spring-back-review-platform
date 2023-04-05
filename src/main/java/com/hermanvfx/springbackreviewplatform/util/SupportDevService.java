@@ -1,4 +1,4 @@
-package com.hermanvfx.springbackreviewplatform.service;
+package com.hermanvfx.springbackreviewplatform.util;
 
 import org.springframework.data.domain.Pageable;
 
