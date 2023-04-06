@@ -686,10 +686,11 @@ components:
         email:
           type: string
           description: User email
-        roles:
-          type: array
-          items:
-            $ref: '#/components/schemas/RoleDto'
+        role:
+          type: string
+          enum:
+            - USER
+            - ADMIN
         specialities:
           type: string
           enum:
@@ -745,14 +746,6 @@ components:
         email:
           type: string
           description: User email
-
-
-    RoleDto:
-      type: object
-      properties:
-        role:
-          type: string
-          description: Role name
 
     SocialDto:
       type: object
