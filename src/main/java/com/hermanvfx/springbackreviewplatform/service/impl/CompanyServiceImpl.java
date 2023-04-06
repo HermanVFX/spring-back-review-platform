@@ -69,13 +69,24 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     @Transactional
-    public CompanyDto update(CompanyDto user, UUID id) {
-        return null;
+    public CompanyDto update(CompanyDto company, UUID id) {
+        Company oldCompany = companyRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Company with id:[" + id + "] does not found"));
+
+        oldCompany.setUpdate(LocalDate.now());
+
+        oldCompany.setName(company.getName());
+        oldCompany.setJobLink(company.getJobLink());
+
+        Company newCompany = companyRepository.save(oldCompany);
+
+        return companyMapper.companyToCompanyDto(newCompany);
     }
 
     @Override
     @Transactional
     public void delete(UUID id) {
-
+            companyRepository.delete(companyRepository.findById(id)
+                    .orElseThrow(() -> new NotFoundException("Company with id:[" + id + "] does not found")));
     }
 }

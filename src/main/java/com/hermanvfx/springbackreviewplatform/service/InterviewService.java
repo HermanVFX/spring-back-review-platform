@@ -9,9 +9,9 @@ import java.util.UUID;
 
 public interface InterviewService {
 
-    InterviewListDto findAllUser(Pageable pageable);
+    InterviewListDto findAllInterview(Pageable pageable);
 
-    InterviewDto findUserById(UUID interviewId);
+    InterviewDto findInterviewById(UUID interviewId);
 
     InterviewDto create(ShortInterviewDto interview);
 

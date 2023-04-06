@@ -29,7 +29,7 @@ public class InterviewServiceImpl implements InterviewService {
     private  final InterviewMapper interviewMapper;
 
     @Override
-    public InterviewListDto findAllUser(Pageable pageable) {
+    public InterviewListDto findAllInterview(Pageable pageable) {
         List<InterviewDto> list = interviewMapper.iterableInterviewToListInterviewDto(interviewRepository.findAll());
 
         int last = pageable.getPageNumber() * pageable.getPageSize();
@@ -51,7 +51,7 @@ public class InterviewServiceImpl implements InterviewService {
     }
 
     @Override
-    public InterviewDto findUserById(UUID interviewId) {
+    public InterviewDto findInterviewById(UUID interviewId) {
         return interviewMapper.interviewToInterviewDto(interviewRepository.findById(interviewId)
                 .orElseThrow(() -> new NotFoundException("Interview with id:[" + interviewId + "] does not found")));
     }
