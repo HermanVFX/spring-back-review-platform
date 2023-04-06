@@ -4,12 +4,41 @@ import com.example.userservice.dto.ReviewDto;
 import com.example.userservice.dto.ShortReviewDto;
 import com.hermanvfx.springbackreviewplatform.entity.Review;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 import java.util.List;
-@Mapper(componentModel = "spring")
+
+@Mapper(componentModel = "spring",
+        uses = {
+                CompanyMapper.class,
+                UserMapper.class
+        })
 public interface ReviewMapper {
-    List<ReviewDto> iterableReviewToListReviewDto (Iterable<Review> entities);
+
+    @Mapping(target = "jobLink", ignore = true)
+    ReviewDto reviewToReviewDto(Review entity);
+
+    @Mapping(target = "id", ignore = true)
+
+    @Mapping(target = "reviewer", ignore = true)
+    @Mapping(target = "student", ignore = true)
+    @Mapping(target = "time", ignore = true)
+    @Mapping(target = "link", ignore = true)
+    @Mapping(target = "speciality", ignore = true)
+    @Mapping(target = "create", ignore = true)
+    @Mapping(target = "update", ignore = true)
+    @Mapping(target = "delete", ignore = true)
+    @Mapping(target = "active", ignore = true)
     Review ShortReviewDtoToReview(ShortReviewDto shortDto);
-    ReviewDto reviewToReviewDto (Review entity);
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "create", ignore = true)
+    @Mapping(target = "update", ignore = true)
+    @Mapping(target = "delete", ignore = true)
+    @Mapping(target = "active", ignore = true)
     Review reviewDtoToReview(ReviewDto dto);
+
+    List<ReviewDto> iterableReviewToListReviewDto(Iterable<Review> entities);
+
+
 }

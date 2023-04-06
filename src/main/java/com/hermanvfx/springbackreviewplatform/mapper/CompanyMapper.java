@@ -8,13 +8,28 @@ import org.mapstruct.Mapping;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring",
+        uses = {
+                InterviewMapper.class
+        })
 public interface CompanyMapper {
 
+    //    После добавления комментариев, удалить!!!
+    @Mapping(target = "commentaries", ignore = true)
+//    Попытка избавиться от цикличности:
+    @Mapping(target = "interviews", expression = "java(null)")
     CompanyDto companyToCompanyDto(Company entity);
 
+
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "rating", ignore = true)
     @Mapping(target = "commentaries", ignore = true)
     @Mapping(target = "interviews", ignore = true)
+    @Mapping(target = "create", ignore = true)
+    @Mapping(target = "update", ignore = true)
+    @Mapping(target = "delete", ignore = true)
+    @Mapping(target = "active", ignore = true)
     Company shortCompanyDtoToCompany(ShortCompanyDto dto);
 
 

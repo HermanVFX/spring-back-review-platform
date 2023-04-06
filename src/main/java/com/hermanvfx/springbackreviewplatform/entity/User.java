@@ -48,8 +48,8 @@ public class User {
     private String email;
 
     @Column(
-            name = "uzr_password"
-//            nullable = false
+            name = "uzr_password",
+            nullable = false
     )
     private String password;
 
