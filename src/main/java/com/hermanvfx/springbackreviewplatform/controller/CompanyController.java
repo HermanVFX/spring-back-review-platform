@@ -4,7 +4,6 @@ import com.example.userservice.controller.CompanyApi;
 import com.example.userservice.dto.CompanyDto;
 import com.example.userservice.dto.CompanyListDto;
 import com.example.userservice.dto.ShortCompanyDto;
-import com.hermanvfx.springbackreviewplatform.exception.NotFoundException;
 import com.hermanvfx.springbackreviewplatform.service.CompanyService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;

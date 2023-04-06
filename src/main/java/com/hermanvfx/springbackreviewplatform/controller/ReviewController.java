@@ -4,7 +4,6 @@ import com.example.userservice.controller.ReviewApi;
 import com.example.userservice.dto.ReviewDto;
 import com.example.userservice.dto.ReviewListDto;
 import com.example.userservice.dto.ShortReviewDto;
-import com.hermanvfx.springbackreviewplatform.mapper.ReviewMapper;
 import com.hermanvfx.springbackreviewplatform.service.ReviewService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -13,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -31,21 +29,22 @@ public class ReviewController implements ReviewApi {
     @Override
     public ResponseEntity<ReviewListDto> findAllReviews(Integer page, Integer size) {
         Pageable pageable = PageRequest.of(page, size);
-        return new ResponseEntity<>( reviewService.findAllUser(pageable), HttpStatus.OK);
+        return new ResponseEntity<>( reviewService.findAllReview(pageable), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Void> deleteReview(UUID reviewId) {
-        return null;
+        reviewService.delete(reviewId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<List<ReviewDto>> findReviewById(UUID reviewId) {
-        return null;
+    public ResponseEntity<ReviewDto> findReviewById(UUID reviewId) {
+        return new ResponseEntity<>(reviewService.findReviewById(reviewId), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<ReviewDto> updateReview(UUID reviewId, ReviewDto reviewDto) {
-        return null;
+        return new ResponseEntity<>(reviewService.update(reviewDto, reviewId), HttpStatus.OK);
     }
 }
