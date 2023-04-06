@@ -13,8 +13,39 @@ tags:
     description: Review API
   - name: Interview
     description: Interview API
+  - name: Auth
+    description: Auth API
 
 paths:
+#  /api/v1/auth/login:
+#    post:
+#      operationId: getAuthUser
+#      summary: Auth user
+#      tags:
+#        - Auth
+#      requestBody:
+#        description: Short user DTO
+#        content:
+#          application/json:
+#            schema:
+#              $ref: '#/components/schemas/AuthUserDto'
+#        required: true
+#      responses:
+#        '201':
+#          description: Auth user
+#          content:
+#            application/json:
+#              schema:
+#                $ref: '#/components/schemas/UserDto'
+#        '400':
+#          description: Invalid request
+#        '404':
+#          description: Resource not found
+#        '405':
+#          description: Method is not available
+#        '500':
+#          description: Server error
+
   /api/v1/user:
     post:
       operationId: createUser
@@ -704,6 +735,15 @@ components:
           type: string
           description: User email
 
+    AuthUserDto:
+      type: object
+      properties:
+        email:
+          type: string
+          description: User email
+        password:
+          type: string
+          description: User password
 
     RoleDto:
       type: object

@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -23,7 +24,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Table(name = "roles")
 @Entity
-public class Role {
+public class Role implements GrantedAuthority {
     @Id
     @Column(name = "roles_id", nullable = false)
     @GeneratedValue(generator = "UUID")
@@ -45,4 +46,9 @@ public class Role {
             nullable = false
     )
     private boolean isActive = true;
+
+    @Override
+    public String getAuthority() {
+        return role;
+    }
 }

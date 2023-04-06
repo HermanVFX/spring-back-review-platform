@@ -13,19 +13,21 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
 
 @Slf4j
 @Service
 @AllArgsConstructor
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserMapper userMapper;
     private final UserRepository userRepository;
@@ -40,7 +42,7 @@ public class UserServiceImpl implements UserService {
         int first = supportDevService.getFirstIndexElement(pageable, last);
 
         if (list.size() < first) {
-            throw new NotFoundException("User not found");
+            throw new NotFoundException("Not found");
         } else if (list.size() < last) {
             last = list.size();
         }
@@ -79,5 +81,25 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void delete(UUID id) {
 
+    }
+
+    @Override
+    public UserDto findUserByEmail(String email) {
+        return userMapper.userToUserDTO(userRepository.findUserByEmail(email)
+                .orElseThrow(() -> new NotFoundException("User with email: " + email + " does not found")));
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) {
+        User userFromBd = userRepository.findUserByEmail(username)
+                .orElseThrow(() -> new NotFoundException("User with email: " + username + " does not found"));
+        return new org.springframework.security.core.userdetails.User(
+                userFromBd.getEmail(),
+                userFromBd.getPassword(),
+                true,
+                true,
+                true,
+                true,
+                new HashSet<>());
     }
 }
