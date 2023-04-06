@@ -8,7 +8,6 @@ import com.hermanvfx.springbackreviewplatform.exception.NotFoundException;
 import com.hermanvfx.springbackreviewplatform.mapper.UserMapper;
 import com.hermanvfx.springbackreviewplatform.repository.UserRepository;
 import com.hermanvfx.springbackreviewplatform.service.UserService;
-import com.hermanvfx.springbackreviewplatform.util.SupportDevServiceImpl;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -29,15 +28,14 @@ public class UserServiceImpl implements UserService {
 
     private final UserMapper userMapper;
     private final UserRepository userRepository;
-    private final SupportDevServiceImpl supportDevService;
 
     @Override
     public UserListDto findAllUser(Pageable pageable) {
 
         List<UserDto> list = userMapper.listUserToListUserDto(userRepository.findAll());
 
-        int last = supportDevService.getLastIndexElement(pageable);
-        int first = supportDevService.getFirstIndexElement(pageable, last);
+        int last = pageable.getPageNumber() * pageable.getPageSize();
+        int first = last - pageable.getPageSize();
 
         if (list.size() < first) {
             throw new NotFoundException("User not found");

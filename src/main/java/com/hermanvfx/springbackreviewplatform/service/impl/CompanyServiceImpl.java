@@ -8,7 +8,6 @@ import com.hermanvfx.springbackreviewplatform.exception.NotFoundException;
 import com.hermanvfx.springbackreviewplatform.mapper.CompanyMapper;
 import com.hermanvfx.springbackreviewplatform.repository.CompanyRepository;
 import com.hermanvfx.springbackreviewplatform.service.CompanyService;
-import com.hermanvfx.springbackreviewplatform.util.SupportDevServiceImpl;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -29,14 +28,13 @@ public class CompanyServiceImpl implements CompanyService {
 
     private final CompanyRepository companyRepository;
     private final CompanyMapper companyMapper;
-    private final SupportDevServiceImpl supportDevService;
 
     @Override
     public CompanyListDto findAllCompany(Pageable pageable) {
         List<CompanyDto> list = companyMapper.listCompanyToListCompanyDto(companyRepository.findAll());
 
-        int last = supportDevService.getLastIndexElement(pageable);
-        int first = supportDevService.getFirstIndexElement(pageable, last);
+        int last = pageable.getPageNumber() * pageable.getPageSize();
+        int first = last - pageable.getPageSize();
 
         if (list.size() < first) {
             throw new NotFoundException("Company not found");
