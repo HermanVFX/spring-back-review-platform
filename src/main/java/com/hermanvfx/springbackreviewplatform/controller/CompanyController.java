@@ -5,7 +5,6 @@ import com.example.userservice.dto.CompanyDto;
 import com.example.userservice.dto.CompanyListDto;
 import com.example.userservice.dto.ShortCompanyDto;
 import com.hermanvfx.springbackreviewplatform.service.CompanyService;
-import com.hermanvfx.springbackreviewplatform.service.impl.CompanyServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -13,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -22,16 +20,15 @@ public class CompanyController implements CompanyApi {
 
     private final CompanyService companyService;
 
-
     @Override
     public ResponseEntity<CompanyDto> createCompany(ShortCompanyDto shortCompanyDto) {
-        CompanyDto newCompany = companyService.create(shortCompanyDto);
-        return new ResponseEntity<>(newCompany, HttpStatus.CREATED);
+        return new ResponseEntity<>(companyService.create(shortCompanyDto), HttpStatus.CREATED);
     }
 
     @Override
     public ResponseEntity<Void> deleteCompany(UUID companyId) {
-        return null;
+        companyService.delete(companyId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @Override
@@ -41,12 +38,12 @@ public class CompanyController implements CompanyApi {
     }
 
     @Override
-    public ResponseEntity<List<CompanyDto>> findCompanyById(UUID companyId) {
-        return null;
+    public ResponseEntity<CompanyDto> findCompanyById(UUID companyId) {
+        return new ResponseEntity<>(companyService.findCompanyById(companyId), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<CompanyDto> updateCompany(UUID companyId, CompanyDto companyDto) {
-        return null;
+        return new ResponseEntity<>(companyService.update(companyDto, companyId), HttpStatus.OK);
     }
 }

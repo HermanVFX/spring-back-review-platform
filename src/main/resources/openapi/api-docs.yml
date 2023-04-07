@@ -100,8 +100,7 @@ paths:
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/UserDto'
+                $ref: '#/components/schemas/UserDto'
         '400':
           description: Invalid request
         '404':
@@ -253,8 +252,7 @@ paths:
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/CompanyDto'
+                $ref: '#/components/schemas/CompanyDto'
         '400':
           description: Invalid request
         '404':
@@ -406,8 +404,7 @@ paths:
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/InterviewDto'
+                $ref: '#/components/schemas/InterviewDto'
         '400':
           description: Invalid request
         '404':
@@ -560,8 +557,7 @@ paths:
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/ReviewDto'
+                $ref: '#/components/schemas/ReviewDto'
         '400':
           description: Invalid request
         '404':
@@ -817,9 +813,14 @@ components:
         empty:
           type: boolean
 
+#   --Company--
     CompanyDto:
       type: object
       properties:
+        id:
+          type: string
+          format: uuid
+          description: Company id
         name:
           type: string
         jobLink:

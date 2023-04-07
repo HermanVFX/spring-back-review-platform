@@ -12,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -39,7 +38,7 @@ public class UserController implements UserApi {
     }
 
     @Override
-    public ResponseEntity<List<UserDto>> findUsersById(UUID userId) {
+    public ResponseEntity<UserDto> findUsersById(UUID userId) {
         return null;
     }
 
