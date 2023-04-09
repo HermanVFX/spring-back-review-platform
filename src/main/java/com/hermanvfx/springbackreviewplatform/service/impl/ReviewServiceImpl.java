@@ -33,7 +33,7 @@ public class ReviewServiceImpl implements ReviewService {
     private final SpecialityMapper specialityMapper;
 
     @Override
-    public ReviewListDto findAllReview(Pageable pageable) {
+    public ReviewListDto findAllReviews(Pageable pageable) {
         List<ReviewDto> list = reviewMapper.iterableReviewToListReviewDto(reviewRepository.findAll());
 
         int last = pageable.getPageNumber() * pageable.getPageSize();
@@ -55,7 +55,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public ReviewDto findReviewById(UUID reviewId) {
+    public ReviewDto findUserById(UUID reviewId) {
         return reviewMapper.reviewToReviewDto(reviewRepository.findById(reviewId)
                 .orElseThrow(() -> new NotFoundException("Review with id:[" + reviewId + "] does not found")));
     }

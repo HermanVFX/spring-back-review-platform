@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -19,32 +20,29 @@ import java.util.UUID;
 public class ReviewController implements ReviewApi {
 
     private final ReviewService reviewService;
-
     @Override
     public ResponseEntity<ReviewDto> createReview(ShortReviewDto shortReviewDto) {
-        ReviewDto newReview = reviewService.create(shortReviewDto);
-        return new ResponseEntity<>(newReview, HttpStatus.CREATED);
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<Void> deleteReview(UUID reviewId) {
+        return null;
     }
 
     @Override
     public ResponseEntity<ReviewListDto> findAllReviews(Integer page, Integer size) {
         Pageable pageable = PageRequest.of(page, size);
-        return new ResponseEntity<>( reviewService.findAllReview(pageable), HttpStatus.OK);
+        return new ResponseEntity<>( reviewService.findAllReviews(pageable), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Void> deleteReview(UUID reviewId) {
-        reviewService.delete(reviewId);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @Override
-    public ResponseEntity<ReviewDto> findReviewById(UUID reviewId) {
-        return new ResponseEntity<>(reviewService.findReviewById(reviewId), HttpStatus.OK);
+    public ResponseEntity<List<ReviewDto>> findReviewById(UUID reviewId) {
+        return null;
     }
 
     @Override
     public ResponseEntity<ReviewDto> updateReview(UUID reviewId, ReviewDto reviewDto) {
-        return new ResponseEntity<>(reviewService.update(reviewDto, reviewId), HttpStatus.OK);
+        return null;
     }
 }

@@ -9,9 +9,9 @@ import java.util.UUID;
 
 public interface ReviewService {
 
-    ReviewListDto findAllReview(Pageable pageable);
+    ReviewListDto findAllReviews(Pageable pageable);
 
-    ReviewDto findReviewById(UUID reviewId);
+    ReviewDto findUserById(UUID reviewId);
 
     ReviewDto create(ShortReviewDto review);
 

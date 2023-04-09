@@ -1,8 +1,14 @@
 package com.hermanvfx.springbackreviewplatform;
 
 import com.github.javafaker.Faker;
+import com.hermanvfx.springbackreviewplatform.entity.Review;
+import com.hermanvfx.springbackreviewplatform.entity.User;
+import com.hermanvfx.springbackreviewplatform.entity.enums.Role;
+import com.hermanvfx.springbackreviewplatform.entity.enums.Speciality;
+import com.hermanvfx.springbackreviewplatform.entity.enums.StatusReview;
 import com.hermanvfx.springbackreviewplatform.repository.CommentaryRepository;
 import com.hermanvfx.springbackreviewplatform.repository.CompanyRepository;
+import com.hermanvfx.springbackreviewplatform.repository.ReviewRepository;
 import com.hermanvfx.springbackreviewplatform.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +24,7 @@ import java.time.LocalDate;
 public class ApplicationRunnerImpl implements ApplicationRunner {
 
     private final UserRepository userRepository;
+    private final ReviewRepository reviewRepository;
     private final CompanyRepository companyRepository;
     private final CommentaryRepository commentaryRepository;
 
@@ -50,24 +57,55 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
 //        company4.setRating(1.1);
 //        companyRepository.save(company4);
 
+        for (int i = 0; i < 20; i++) {
+            User userNoAdmin = new User();
+            userNoAdmin.setFirstName(faker.name().firstName());
+            userNoAdmin.setSpecialities(Speciality.FRONTEND);
+            userNoAdmin.setLastName(faker.name().lastName());
+            userNoAdmin.setEmail(faker.name().username() + "@mail.ru");
+            userNoAdmin.setCreate(LocalDate.now());
+            userNoAdmin.setPassword(faker.crypto().sha512());
+            userNoAdmin.setRole(Role.USER);
+            log.info(" -- User :" + userNoAdmin.getFirstName() + " " + userNoAdmin.getLastName() + " was added with role: " + userNoAdmin.getRole());
+            userRepository.save(userNoAdmin);
+        }
+        for (int i = 0; i < 20; i++) {
+            User user2 = new User();
+            user2.setFirstName(faker.name().firstName());
+            user2.setSpecialities(Speciality.FRONTEND);
+            user2.setLastName(faker.name().lastName());
+            user2.setEmail(faker.name().username() + "@mail.ru");
+            user2.setCreate(LocalDate.now());
+            user2.setPassword(faker.crypto().sha512());
+            user2.setRole(Role.USER);
+            log.info(" -- User :" + user2.getFirstName() + " " + user2.getLastName() + " was added with role: " + user2.getRole());
+            userRepository.save(user2);
 
-    }
+            User user = new User();
+            user.setFirstName(faker.name().firstName());
+            user.setSpecialities(Speciality.FRONTEND);
+            user.setLastName(faker.name().lastName());
+            user.setEmail(faker.name().username() + "@mail.ru");
+            user.setCreate(LocalDate.now());
+            user.setPassword(faker.crypto().sha512());
+            user.setRole(Role.USER);
+            log.info(" -- User :" + user.getFirstName() + " " + user.getLastName() + " was added with role: " + user.getRole());
+            userRepository.save(user);
 
-//        for (int i = 0; i < 20; i++) {
-//            User userNoAdmin = new User();
-//            userNoAdmin.setFirstName(faker.name().firstName());
-//            userNoAdmin.setSpecialities(Speciality.FRONTEND);
-//            userNoAdmin.setLastName(faker.name().lastName());
-//            userNoAdmin.setEmail(faker.name().username() + "@mail.ru");
-//            userNoAdmin.setCreate(LocalDate.now());
-//            userNoAdmin.setPassword(faker.crypto().sha512());
-//            Set<Role> roles = new HashSet<>();
-//            roles.add(roleRepository.findByRole("USER_ROLE")
-//                    .orElseThrow(() -> new NotFoundException("Role: [USER_ROLE] does not found")));
-//            userNoAdmin.setRoles(roles);
-//            log.info(" -- User :" + userNoAdmin.getFirstName() + " " + userNoAdmin.getLastName() + " was added with role: " + userNoAdmin.getRoles());
-//            userRepository.save(userNoAdmin);
-//        }
+            Review review = new Review();
+            review.setTheme("Theme");
+            review.setTime(LocalDate.now());
+            review.setStudent(user);
+            review.setReviewer(user2);
+            review.setSpeciality(Speciality.FRONTEND);
+            review.setLink(faker.avatar().image());
+            review.setStatus(StatusReview.TOBE);
+            review.setCreate(LocalDate.now());
+            log.info(" -- Review :" + review.getTheme() + " for user " + user.getFirstName() + " was added");
+            reviewRepository.save(review);
+
+        }
+
 
 //        for (int i = 0; i < 10; i++) {
 //            User userAdmin = new User();
@@ -109,4 +147,5 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
 //    private List<Company> addCommentaryForCompany(User user) {
 //
 //    }
+    }
 }

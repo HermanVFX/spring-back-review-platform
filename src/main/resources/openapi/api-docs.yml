@@ -349,7 +349,7 @@ paths:
           description: Method is not available
         '500':
           description: Server error
-  /api/v1/interviews/page={page}&size{size}:
+  /api/v1/interviews/page={page}&size={size}:
     get:
       tags:
         - Interview
@@ -502,7 +502,7 @@ paths:
           description: Method is not available
         '500':
           description: Server error
-  /api/v1/reviews/page={page}&size{size}:
+  /api/v1/reviews/page={page}&size={size}:
     get:
       tags:
         - Review
