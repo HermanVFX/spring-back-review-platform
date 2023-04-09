@@ -33,7 +33,7 @@ public class ReviewServiceImpl implements ReviewService {
     private final SpecialityMapper specialityMapper;
 
     @Override
-    public ReviewListDto findAllUser(Pageable pageable) {
+    public ReviewListDto findAllReviews(Pageable pageable) {
         List<ReviewDto> list = reviewMapper.iterableReviewToListReviewDto(reviewRepository.findAll());
 
         int last = pageable.getPageNumber() * pageable.getPageSize();

@@ -4,7 +4,11 @@ import com.example.userservice.controller.ReviewApi;
 import com.example.userservice.dto.ReviewDto;
 import com.example.userservice.dto.ReviewListDto;
 import com.example.userservice.dto.ShortReviewDto;
+import com.hermanvfx.springbackreviewplatform.service.ReviewService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,6 +18,8 @@ import java.util.UUID;
 @RestController
 @AllArgsConstructor
 public class ReviewController implements ReviewApi {
+
+    private final ReviewService reviewService;
     @Override
     public ResponseEntity<ReviewDto> createReview(ShortReviewDto shortReviewDto) {
         return null;
@@ -26,7 +32,8 @@ public class ReviewController implements ReviewApi {
 
     @Override
     public ResponseEntity<ReviewListDto> findAllReviews(Integer page, Integer size) {
-        return null;
+        Pageable pageable = PageRequest.of(page, size);
+        return new ResponseEntity<>( reviewService.findAllReviews(pageable), HttpStatus.OK);
     }
 
     @Override
