@@ -1,5 +1,6 @@
 package com.hermanvfx.springbackreviewplatform.security.auth;
 
+import com.example.userservice.dto.AuthenticationRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -12,8 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 
 @RestController
-    @RequestMapping("/api/v1/auth")
-    @RequiredArgsConstructor
+@RequestMapping("/api/v1/auth")
+@RequiredArgsConstructor
 public class AuthenticationController {
 
     private final AuthenticationService service;
@@ -24,6 +25,7 @@ public class AuthenticationController {
     ) {
         return ResponseEntity.ok(service.register(request));
     }
+
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(
             @RequestBody AuthenticationRequest request
@@ -31,12 +33,12 @@ public class AuthenticationController {
         return ResponseEntity.ok(service.authenticate(request));
     }
 
-        @PostMapping("/refresh-token")
-        public void refreshToken(
-                HttpServletRequest request,
-                HttpServletResponse response
-        ) throws IOException {
-            service.refreshToken(request, response);
-        }
+    @PostMapping("/refresh-token")
+    public void refreshToken(
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) throws IOException {
+        service.refreshToken(request, response);
+    }
 }
 

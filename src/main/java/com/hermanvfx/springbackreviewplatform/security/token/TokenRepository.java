@@ -1,5 +1,6 @@
 package com.hermanvfx.springbackreviewplatform.security.token;
 
+import com.hermanvfx.springbackreviewplatform.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

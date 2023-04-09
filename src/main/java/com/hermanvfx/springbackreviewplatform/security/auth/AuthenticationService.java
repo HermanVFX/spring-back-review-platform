@@ -1,5 +1,6 @@
 package com.hermanvfx.springbackreviewplatform.security.auth;
 
+import com.example.userservice.dto.AuthenticationRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hermanvfx.springbackreviewplatform.entity.User;
 import com.hermanvfx.springbackreviewplatform.entity.enums.Role;

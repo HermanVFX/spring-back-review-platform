@@ -537,6 +537,49 @@ paths:
         '500':
           description: Server error
 
+  /api/v1/review/revievId={reviewId}&isDone={isDone}:
+    post:
+      tags:
+        - Review
+      summary: close review
+      operationId: closeReview
+      parameters:
+        - name: reviewId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+            nullable: false
+        - name: isDone
+          in: path
+          required: true
+          schema:
+            type: boolean
+            nullable: false
+      requestBody:
+        description: Authentication request
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthenticationToken'
+        required: true
+      responses:
+        '200':
+          description: Review close
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReviewDto'
+        '400':
+          description: Invalid request
+        '404':
+          description: Resource not found
+        '405':
+          description: Method is not available
+        '500':
+          description: Server error
+
   /api/v1/review/{reviewId}:
     get:
       tags:
@@ -918,9 +961,12 @@ components:
     ReviewDto:
       type: object
       properties:
+        id:
+          type: string
+          format: uuid
         theme:
           type: string
-        jobLink:
+        link:
           type: string
         reviewer:
           $ref: '#/components/schemas/UserDto'
@@ -928,23 +974,36 @@ components:
           $ref: '#/components/schemas/UserDto'
         time:
           type: string
-        link:
-          type: string
+          format: date-time
         speciality:
           type: string
           enum:
             - FRONTEND
             - BACKEND
-        create:
+        status:
           type: string
+          enum:
+            - TOBE
+            - PASSED
+            - CANCELED
 
     ShortReviewDto:
       type: object
       properties:
         theme:
           type: string
-        jobLink:
+        link:
           type: string
+        time:
+          type: string
+          format: date-time
+        speciality:
+          type: string
+          enum:
+            - FRONTEND
+            - BACKEND
+        authData:
+          $ref: '#/components/schemas/AuthenticationToken'
 
     ReviewListDto:
       type: object
@@ -967,3 +1026,23 @@ components:
           type: boolean
         empty:
           type: boolean
+
+    AuthenticationRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          description: User email
+        password:
+          type: string
+          description: User password
+        token:
+          type: string
+          description: JWT
+
+    AuthenticationToken:
+      type: object
+      properties:
+        token:
+          type: string
+          description: JWT

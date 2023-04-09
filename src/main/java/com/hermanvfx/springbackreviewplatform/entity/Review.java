@@ -19,7 +19,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.Date;
 import java.util.Set;
 import java.util.UUID;
@@ -40,27 +42,24 @@ public class Review {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "review_passed", nullable = false)
-    private StatusReview status;
-
-    @Column(name = "review_done")
-    private boolean isDone;
+    private StatusReview status = StatusReview.TOBE;
 
     @ManyToOne
     @JoinColumn(name="review_receiving_id", nullable=false)
     private User reviewer;
 
     @ManyToOne
-    @JoinColumn(name="review_student_id", nullable=false)
+    @JoinColumn(name="review_student_id")
     private User student;
 
     @Column(name = "review_time", nullable = false)
-    private LocalDate time;
+    private OffsetDateTime time;
 
     @Column(name = "review_link", nullable = false)
     private String link;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "review_speciality", nullable = false)
+    @Column(name = "review_speciality")
     private Speciality speciality;
 
     @Column(name = "create_time", nullable = false)

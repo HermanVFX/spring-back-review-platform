@@ -1,10 +1,13 @@
 package com.hermanvfx.springbackreviewplatform.controller;
 
 import com.example.userservice.controller.ReviewApi;
+import com.example.userservice.dto.AuthenticationRequest;
+import com.example.userservice.dto.AuthenticationToken;
 import com.example.userservice.dto.ReviewDto;
 import com.example.userservice.dto.ReviewListDto;
 import com.example.userservice.dto.ShortReviewDto;
 import com.hermanvfx.springbackreviewplatform.service.ReviewService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
@@ -24,6 +27,18 @@ public class ReviewController implements ReviewApi {
 
 
     @Override
+    public ResponseEntity<ReviewDto> closeReview(
+            UUID reviewId,
+            Boolean isDone,
+            AuthenticationToken request) {
+        return new ResponseEntity<>
+                (
+                    reviewService.closeReviewSession(reviewId, isDone, request),
+                    HttpStatus.OK
+                );
+    }
+
+    @Override
     public ResponseEntity<ReviewDto> createReview(ShortReviewDto shortReviewDto) {
         ReviewDto newReview = reviewService.create(shortReviewDto);
         return new ResponseEntity<>(newReview, HttpStatus.CREATED);
@@ -31,9 +46,8 @@ public class ReviewController implements ReviewApi {
 
     @Override
     public ResponseEntity<ReviewListDto> findAllReviews(Integer page, Integer size) {
-        log.info("Оло блять!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         Pageable pageable = PageRequest.of(page, size);
-        return new ResponseEntity<>( reviewService.findAllReviews(pageable), HttpStatus.OK);
+        return new ResponseEntity<>(reviewService.findAllReviews(pageable), HttpStatus.OK);
     }
 
     @Override

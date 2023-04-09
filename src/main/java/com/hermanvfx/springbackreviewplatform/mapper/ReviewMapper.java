@@ -15,23 +15,16 @@ import java.util.List;
         })
 public interface ReviewMapper {
 
-    @Mapping(target = "jobLink", ignore = true)
     ReviewDto reviewToReviewDto(Review entity);
-
-    @Mapping(target = "id", ignore = true)
 
     @Mapping(target = "reviewer", ignore = true)
     @Mapping(target = "student", ignore = true)
-    @Mapping(target = "time", ignore = true)
-    @Mapping(target = "link", ignore = true)
-    @Mapping(target = "speciality", ignore = true)
     @Mapping(target = "create", ignore = true)
     @Mapping(target = "update", ignore = true)
     @Mapping(target = "delete", ignore = true)
     @Mapping(target = "active", ignore = true)
     Review ShortReviewDtoToReview(ShortReviewDto shortDto);
 
-    @Mapping(target = "id", ignore = true)
     @Mapping(target = "create", ignore = true)
     @Mapping(target = "update", ignore = true)
     @Mapping(target = "delete", ignore = true)
