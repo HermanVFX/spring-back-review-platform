@@ -14,7 +14,7 @@ public class CorsConfig implements WebMvcConfigurer {
 //                .exposedHeaders("")
                 .allowedOrigins
                         (
-                                "https://back.amxurlab.tk/"
+                                "http://192.168.0.101/"
                         );
     }
 }
