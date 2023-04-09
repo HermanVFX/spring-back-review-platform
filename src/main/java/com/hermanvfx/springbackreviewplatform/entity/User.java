@@ -2,6 +2,7 @@ package com.hermanvfx.springbackreviewplatform.entity;
 
 import com.hermanvfx.springbackreviewplatform.entity.enums.Role;
 import com.hermanvfx.springbackreviewplatform.entity.enums.Speciality;
+import com.hermanvfx.springbackreviewplatform.security.token.Token;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -54,22 +55,26 @@ public class User implements UserDetails {
     private String password;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "uzr_role")
     private Role role;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private List<Token> tokens;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "uzr_specialities")
     private Speciality specialities;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "reviewer")
     private List<Review> reviewsReceiving;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "student")
     private List<Review> reviewsStudent;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<Social> socials;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<Commentary> commentaries;
 
     @Column(name = "create_time", nullable = false)
