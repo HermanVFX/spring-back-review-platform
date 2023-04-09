@@ -679,6 +679,9 @@ components:
         password:
           type: string
           description: User password
+        avatar:
+          type: string
+          description: User avatar url
         email:
           type: string
           description: User email
