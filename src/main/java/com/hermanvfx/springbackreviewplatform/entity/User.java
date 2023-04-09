@@ -1,7 +1,8 @@
 package com.hermanvfx.springbackreviewplatform.entity;
 
+import com.hermanvfx.springbackreviewplatform.entity.enums.Role;
 import com.hermanvfx.springbackreviewplatform.entity.enums.Speciality;
-import jakarta.persistence.CascadeType;
+import com.hermanvfx.springbackreviewplatform.security.token.Token;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -9,21 +10,20 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.HashSet;
+import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 @Getter
@@ -31,8 +31,9 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "uzr")
+@Builder
 @Entity
-public class User {
+public class User implements UserDetails {
     @Id
     @Column(name = "uzr_id", nullable = false)
     @GeneratedValue(generator = "UUID")
@@ -47,41 +48,33 @@ public class User {
     @Column(name = "uzr_email", nullable = false)
     private String email;
 
-    @Column(
-            name = "uzr_password",
-            nullable = false
-    )
+    @Column(name = "uzr_avatar")
+    private String avatar;
+
+    @Column(name = "uzr_password", nullable = false)
     private String password;
 
-    @ManyToMany(cascade = {CascadeType.MERGE})
-    private Set<Role> roles = new HashSet<>();
+    @Enumerated(EnumType.STRING)
+    @Column(name = "uzr_role")
+    private Role role;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private List<Token> tokens;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "uzr_specialities")
     private Speciality specialities;
 
-    @OneToMany(
-            fetch = FetchType.LAZY
-//            mappedBy="uzr"
-    )
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "reviewer")
     private List<Review> reviewsReceiving;
 
-    @OneToMany(
-            fetch = FetchType.LAZY
-//            mappedBy="uzr"
-    )
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "student")
     private List<Review> reviewsStudent;
 
-    @OneToMany(
-            fetch = FetchType.LAZY
-//            mappedBy="uzr"
-    )
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<Social> socials;
 
-    @OneToMany(
-            fetch = FetchType.LAZY
-//            mappedBy="uzr"
-    )
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<Commentary> commentaries;
 
     @Column(name = "create_time", nullable = false)
@@ -96,4 +89,33 @@ public class User {
     )
     private boolean isActive = true;
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(role.name()));
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }

@@ -1,6 +1,7 @@
 package com.hermanvfx.springbackreviewplatform.entity;
 
 import com.hermanvfx.springbackreviewplatform.entity.enums.Speciality;
+import com.hermanvfx.springbackreviewplatform.entity.enums.StatusReview;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
@@ -36,6 +37,13 @@ public class Review {
 
     @Column(name = "review_theme", nullable = false)
     private String theme;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "review_passed", nullable = false)
+    private StatusReview status;
+
+    @Column(name = "review_done")
+    private boolean isDone;
 
     @ManyToOne
     @JoinColumn(name="review_receiving_id", nullable=false)

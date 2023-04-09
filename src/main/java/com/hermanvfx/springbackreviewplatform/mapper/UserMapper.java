@@ -27,13 +27,13 @@ public interface UserMapper {
     @Mapping(target = "specialities", ignore = true)
     @Mapping(target = "reviewsReceiving", ignore = true)
     @Mapping(target = "reviewsStudent", ignore = true)
-    @Mapping(target = "roles", ignore = true)
+    @Mapping(target = "role", ignore = true)
     @Mapping(target = "socials", ignore = true)
     @Mapping(target = "commentaries", ignore = true)
     @Mapping(target = "create", ignore = true)
     @Mapping(target = "update", ignore = true)
     @Mapping(target = "delete", ignore = true)
-    @Mapping(target = "active", ignore = true)
+    @Mapping(target = "isActive", ignore = true)
     User shortUserDtoToUser(ShortUserDto dto);
 
     @Mapping(target = "password", ignore = true)
@@ -45,8 +45,8 @@ public interface UserMapper {
     @Mapping(target = "create", ignore = true)
     @Mapping(target = "update", ignore = true)
     @Mapping(target = "delete", ignore = true)
-    @Mapping(target = "active", ignore = true)
-    @Mapping(target = "roles", ignore = true)
+    @Mapping(target = "isActive", ignore = true)
+    @Mapping(target = "role", ignore = true)
     User userDtoToUser(UserDto reviewer);
 
 
