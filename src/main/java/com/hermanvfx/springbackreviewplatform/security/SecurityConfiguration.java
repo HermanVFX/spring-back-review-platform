@@ -62,8 +62,8 @@ public class SecurityConfiguration {
         CorsConfiguration configuration = new CorsConfiguration();
 //        configuration.addAllowedOriginPattern(CorsConfiguration.ALL);
         configuration.addAllowedOrigin("https://back.amxurlab.tk");
-        configuration.setAllowedMethods(List.of(CorsConfiguration.ALL));
-        configuration.setAllowedHeaders(List.of("Origin, X-Requested-With, Content-Type, Accept, Authorization"));
+        configuration.setAllowedMethods(List.of("POST","PUT", "GET", "OPTIONS"));
+        configuration.setAllowedHeaders(List.of("Origin", "X-Requested-With", "Content-Type", "Accept", "Authorization"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
