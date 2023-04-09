@@ -39,7 +39,7 @@ public class UserController implements UserApi {
 
     @Override
     public ResponseEntity<UserDto> findUsersById(UUID userId) {
-        return null;
+        return new ResponseEntity<>(userService.findUserById(userId), HttpStatus.OK);
     }
 
     @Override
