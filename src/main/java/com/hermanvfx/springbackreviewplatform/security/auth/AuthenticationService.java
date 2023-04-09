@@ -45,6 +45,10 @@ public class AuthenticationService {
         String refreshToken = jwtService.generateRefreshToken(user);
         saveUserToken(saveUser, jwtToken);
         return AuthenticationResponse.builder()
+                .avatar(user.getAvatar())
+                .email(user.getEmail())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
                 .accessToken(jwtToken)
                 .refreshToken(refreshToken)
                 .build();
@@ -64,6 +68,10 @@ public class AuthenticationService {
         revokeAllUserTokens(user);
         saveUserToken(user, jwtToken);
         return AuthenticationResponse.builder()
+                .avatar(user.getAvatar())
+                .email(user.getEmail())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
                 .accessToken(jwtToken)
                 .refreshToken(refreshToken)
                 .build();
@@ -111,6 +119,10 @@ public class AuthenticationService {
                 revokeAllUserTokens(user);
                 saveUserToken(user, accessToken);
                 var authResponse = AuthenticationResponse.builder()
+                        .avatar(user.getAvatar())
+                        .email(user.getEmail())
+                        .firstName(user.getFirstName())
+                        .lastName(user.getLastName())
                         .accessToken(accessToken)
                         .refreshToken(refreshToken)
                         .build();
