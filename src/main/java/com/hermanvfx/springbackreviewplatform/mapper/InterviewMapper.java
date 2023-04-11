@@ -36,9 +36,7 @@ public interface InterviewMapper {
     @Mapping(target = "commentaries", ignore = true)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "create", ignore = true)
-    @Mapping(target = "update", ignore = true)
-    @Mapping(target = "delete", ignore = true)
-    @Mapping(target = "active", ignore = true)
+
     Interview interviewDtoToInterview(InterviewDto dto);
 
     List<InterviewDto> iterableInterviewToListInterviewDto(Iterable<Interview> entities);

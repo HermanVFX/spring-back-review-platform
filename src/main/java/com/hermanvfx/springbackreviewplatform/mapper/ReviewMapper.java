@@ -17,6 +17,8 @@ public interface ReviewMapper {
 
     ReviewDto reviewToReviewDto(Review entity);
 
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "status", ignore = true)
     @Mapping(target = "reviewer", ignore = true)
     @Mapping(target = "student", ignore = true)
     @Mapping(target = "create", ignore = true)

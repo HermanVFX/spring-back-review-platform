@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -62,7 +63,7 @@ public class CompanyServiceImpl implements CompanyService {
     @Transactional
     public CompanyDto create(ShortCompanyDto company) {
         Company newCompany = companyMapper.shortCompanyDtoToCompany(company);
-        newCompany.setCreate(LocalDate.now());
+        newCompany.setCreate(OffsetDateTime.now());
         return companyMapper.companyToCompanyDto(companyRepository.save(newCompany));
 
     }
@@ -73,7 +74,7 @@ public class CompanyServiceImpl implements CompanyService {
         Company oldCompany = companyRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Company with id:[" + id + "] does not found"));
 
-        oldCompany.setUpdate(LocalDate.now());
+        oldCompany.setUpdate(OffsetDateTime.now());
 
         oldCompany.setName(company.getName());
         oldCompany.setJobLink(company.getJobLink());

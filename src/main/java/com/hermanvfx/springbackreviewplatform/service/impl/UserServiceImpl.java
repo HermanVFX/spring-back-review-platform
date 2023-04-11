@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -63,7 +64,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public UserDto create(ShortUserDto user) {
         User newUser = userMapper.shortUserDtoToUser(user);
-        newUser.setCreate(LocalDate.now());
+        newUser.setCreate(OffsetDateTime.now());
         return userMapper.userToUserDTO(userRepository.save(newUser));
     }
 

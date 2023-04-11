@@ -46,7 +46,7 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
                 .password(encoder.encode("admin"))
                 .email("admin")
                 .id(UUID.fromString("56c55332-d701-11ed-afa1-0242ac120002"))
-                .create(LocalDate.now())
+                .create(OffsetDateTime.now())
                 .role(Role.ADMIN).build();
         userRepository.save(userAdminMock);
 
@@ -56,7 +56,7 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
             userNoAdmin.setSpecialities(Speciality.FRONTEND);
             userNoAdmin.setLastName(faker.name().lastName());
             userNoAdmin.setEmail(faker.name().username() + "@mail.ru");
-            userNoAdmin.setCreate(LocalDate.now());
+            userNoAdmin.setCreate(OffsetDateTime.now());
             userNoAdmin.setPassword(encoder.encode(faker.crypto().sha512()));
             userNoAdmin.setRole(Role.USER);
             log.info(" -- User :" + userNoAdmin.getFirstName() + " " + userNoAdmin.getLastName() + " was added with role: " + userNoAdmin.getRole());
@@ -68,7 +68,7 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
             user2.setSpecialities(Speciality.FRONTEND);
             user2.setLastName(faker.name().lastName());
             user2.setEmail(faker.name().username() + "@mail.ru");
-            user2.setCreate(LocalDate.now());
+            user2.setCreate(OffsetDateTime.now());
             user2.setPassword(encoder.encode(faker.crypto().sha512()));
             user2.setRole(Role.USER);
             log.info(" -- User :" + user2.getFirstName() + " " + user2.getLastName() + " was added with role: " + user2.getRole());
@@ -79,7 +79,7 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
             user.setSpecialities(Speciality.FRONTEND);
             user.setLastName(faker.name().lastName());
             user.setEmail(faker.name().username() + "@mail.ru");
-            user.setCreate(LocalDate.now());
+            user.setCreate(OffsetDateTime.now());
             user.setPassword(faker.crypto().sha512());
             user.setRole(Role.USER);
             log.info(" -- User :" + user.getFirstName() + " " + user.getLastName() + " was added with role: " + user.getRole());
@@ -93,7 +93,7 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
             review.setSpeciality(Speciality.FRONTEND);
             review.setLink(faker.avatar().image());
             review.setStatus(StatusReview.TOBE);
-            review.setCreate(LocalDate.now());
+            review.setCreate(OffsetDateTime.now());
             log.info(" -- Review :" + review.getTheme() + " for user " + user.getFirstName() + " was added");
             reviewRepository.save(review);
 

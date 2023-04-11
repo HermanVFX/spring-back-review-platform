@@ -63,11 +63,11 @@ public class Review {
     private Speciality speciality;
 
     @Column(name = "create_time", nullable = false)
-    private LocalDate create;
+    private OffsetDateTime create;
     @Column(name = "update_time")
-    private LocalDate update;
+    private OffsetDateTime update;
     @Column(name = "delete_time")
-    private LocalDate delete;
+    private OffsetDateTime delete;
     @Column(
             name = "is_active",
             nullable = false

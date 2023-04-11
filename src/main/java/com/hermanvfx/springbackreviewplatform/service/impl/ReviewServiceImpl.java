@@ -26,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -78,7 +79,7 @@ public class ReviewServiceImpl implements ReviewService {
 
 
         Review newReview = reviewMapper.ShortReviewDtoToReview(review);
-        newReview.setCreate(LocalDate.now());
+        newReview.setCreate(OffsetDateTime.now());
         newReview.setReviewer(authUser);
         return reviewMapper.reviewToReviewDto(reviewRepository.save(newReview));
     }
@@ -89,7 +90,7 @@ public class ReviewServiceImpl implements ReviewService {
         Review oldReview = reviewRepository.findById(reviewId)
                 .orElseThrow(() -> new NotFoundException("Review with id:[" + reviewId + "] does not found"));
 
-        oldReview.setUpdate(LocalDate.now());
+        oldReview.setUpdate(OffsetDateTime.now());
 
         oldReview.setReviewer(userMapper.userDtoToUser(review.getReviewer()));
         oldReview.setLink(review.getLink());
@@ -128,6 +129,7 @@ public class ReviewServiceImpl implements ReviewService {
                 update(reviewMapper.reviewToReviewDto(review), reviewId);
             }
         });
-        return reviewMapper.reviewToReviewDto(reviewRepository.findById(reviewId).orElseThrow());
+        return reviewMapper.reviewToReviewDto(reviewRepository.findById(reviewId)
+                .orElseThrow(() -> new NotFoundException("Review with id:[" + reviewId + "] does not update")));
     }
 }
