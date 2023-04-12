@@ -36,6 +36,15 @@ public class Interview {
     @Column(name = "interview_job_link")
     private String jobLink;
 
+    @Column(name = "interview_description")
+    private String description;
+
+    @Column(name = "interview_money")
+    private Integer money;
+
+    @Column(name = "interview_video_link")
+    private String videoLink;
+
     @ManyToOne
     @JoinColumn(name="company_id", nullable=false)
     private Company company;
@@ -44,17 +53,8 @@ public class Interview {
     @JoinColumn(name="uzr_id", nullable=false)
     private User user;
 
-    @Column(name = "interview_description")
-    private String description;
-
-    @Column(name = "interview_money")
-    private Integer money;
-
     @OneToMany(mappedBy="interview")
     private List<Commentary> commentaries;
-
-    @Column(name = "interview_video_link")
-    private String videoLink;
 
     @Column(name = "create_time", nullable = false)
     private OffsetDateTime create;

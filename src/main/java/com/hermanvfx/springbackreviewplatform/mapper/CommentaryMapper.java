@@ -11,7 +11,8 @@ import org.mapstruct.Mapping;
         uses = {
                 InterviewMapper.class,
                 ReviewMapper.class,
-                CommentaryMapper.class
+                CommentaryMapper.class,
+                CompanyMapper.class
         })
 public interface CommentaryMapper {
 
@@ -22,12 +23,17 @@ public interface CommentaryMapper {
     @Mapping(target = "update", ignore = true)
     @Mapping(target = "delete", ignore = true)
     @Mapping(target = "active", ignore = true)
+    @Mapping(target = "likes", ignore = true)
+    @Mapping(target = "dislikes", ignore = true)
     @Mapping(target = "company", expression = "java(null)")
     @Mapping(target = "user", expression = "java(null)")
     @Mapping(target = "interview", expression = "java(null)")
     @Mapping(target = "commentary", expression = "java(null)")
     Commentary shortCommentaryDtoToCommentary(ShortCommentaryDto dto);
 
-
+    @Mapping(target = "create", ignore = true)
+    @Mapping(target = "update", ignore = true)
+    @Mapping(target = "delete", ignore = true)
+    @Mapping(target = "active", ignore = true)
     Commentary commentaryDtoToCommentary(CommentaryDto dto);
 }

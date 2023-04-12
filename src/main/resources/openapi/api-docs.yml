@@ -670,7 +670,7 @@ paths:
           description: Server error
 
 
-# --- Commentary ---
+  # --- Commentary ---
   /api/v1/comment:
     post:
       operationId: createCommentary
@@ -863,7 +863,7 @@ components:
         empty:
           type: boolean
 
-#   --Company--
+    #   --Company DTO--
     CompanyDto:
       type: object
       properties:
@@ -873,18 +873,23 @@ components:
           description: Company id
         name:
           type: string
+          description: Company name
         jobLink:
           type: string
+          description: Company jobLink
         rating:
           type: number
+          description: Company rating
         commentaries:
           type: array
           items:
             $ref: '#/components/schemas/CommentaryDto'
+          description: Company commentaries
         interviews:
           type: array
           items:
             $ref: '#/components/schemas/InterviewDto'
+          description: Company interviews
 
     ShortCompanyDto:
       type: object
@@ -917,6 +922,7 @@ components:
         empty:
           type: boolean
 
+    #   --Interview DTO--
     InterviewDto:
       type: object
       properties:
@@ -926,30 +932,50 @@ components:
           description: Interview id
         jobTitle:
           type: string
+          description: Interview jobTitle
         jobLink:
           type: string
+          description: Interview jobLink
+        description:
+          type: string
+          description: Interview description
+        money:
+          type: integer
+          description: Interview money
+        videoLink:
+          type: string
+          description: Interview videoLink
         company:
           $ref: '#/components/schemas/CompanyDto'
         user:
           $ref: '#/components/schemas/UserDto'
-        description:
-          type: string
-        money:
-          type: integer
         commentaries:
           type: array
           items:
             $ref: '#/components/schemas/CommentaryDto'
-        videoLink:
-          type: string
 
     ShortInterviewDto:
       type: object
       properties:
         jobTitle:
           type: string
+          description: Interview jobTitle
         jobLink:
           type: string
+          description: Interview jobLink
+        description:
+          type: string
+          description: Interview description
+        money:
+          type: integer
+          description: Interview money
+        videoLink:
+          type: string
+          description: Interview videoLink
+        company:
+          $ref: '#/components/schemas/CompanyDto'
+        user:
+          $ref: '#/components/schemas/UserDto'
 
     InterviewListDto:
       type: object
@@ -973,6 +999,7 @@ components:
         empty:
           type: boolean
 
+    #   --ReviewDto DTO--
     ReviewDto:
       type: object
       properties:
@@ -981,15 +1008,11 @@ components:
           format: uuid
         theme:
           type: string
-        link:
-          type: string
-        reviewer:
-          $ref: '#/components/schemas/UserDto'
-        student:
-          $ref: '#/components/schemas/UserDto'
         time:
           type: string
           format: date-time
+        link:
+          type: string
         speciality:
           type: string
           enum:
@@ -1001,17 +1024,21 @@ components:
             - TOBE
             - PASSED
             - CANCELED
+        reviewer:
+          $ref: '#/components/schemas/UserDto'
+        student:
+          $ref: '#/components/schemas/UserDto'
 
     ShortReviewDto:
       type: object
       properties:
         theme:
           type: string
-        link:
-          type: string
         time:
           type: string
           format: date-time
+        link:
+          type: string
         speciality:
           type: string
           enum:
