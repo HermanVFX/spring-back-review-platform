@@ -55,7 +55,7 @@ public class Review {
     private StatusReview status = StatusReview.TOBE;
 
     @ManyToOne
-    @JoinColumn(name="review_receiving_id", nullable=false)
+    @JoinColumn(name="review_receiving_id")
     private User reviewer;
     @ManyToOne
     @JoinColumn(name="review_student_id")

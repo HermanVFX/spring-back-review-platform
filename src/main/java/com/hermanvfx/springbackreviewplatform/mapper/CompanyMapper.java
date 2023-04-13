@@ -22,7 +22,6 @@ public interface CompanyMapper {
 
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "rating", ignore = true)
     @Mapping(target = "commentaries", ignore = true)
     @Mapping(target = "interviews", ignore = true)
     @Mapping(target = "create", ignore = true)

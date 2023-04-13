@@ -77,10 +77,22 @@ public class ReviewServiceImpl implements ReviewService {
                 .orElseThrow(() -> new NotFoundException("Token not found"))
                 .getUser();
 
-
         Review newReview = reviewMapper.ShortReviewDtoToReview(review);
         newReview.setCreate(OffsetDateTime.now());
         newReview.setReviewer(authUser);
+        return reviewMapper.reviewToReviewDto(reviewRepository.save(newReview));
+    }
+
+    @Override
+    public ReviewDto createForUser(ShortReviewDto review) {
+        var token = review.getAuthData().getToken();
+        var authUser = tokenRepository.findByToken(token)
+                .orElseThrow(() -> new NotFoundException("Token not found"))
+                .getUser();
+
+        Review newReview = reviewMapper.ShortReviewDtoToReview(review);
+        newReview.setCreate(OffsetDateTime.now());
+        newReview.setStudent(authUser);
         return reviewMapper.reviewToReviewDto(reviewRepository.save(newReview));
     }
 

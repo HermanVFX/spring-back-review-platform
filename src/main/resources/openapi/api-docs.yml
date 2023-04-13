@@ -502,6 +502,36 @@ paths:
           description: Method is not available
         '500':
           description: Server error
+
+  /api/v1/review-for-user:
+    post:
+      operationId: createReviewForUser
+      summary: Create new interview for users
+      tags:
+        - Review
+      requestBody:
+        description: Review DTO
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ShortReviewDto'
+        required: true
+      responses:
+        '201':
+          description: Created review
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReviewDto'
+        '400':
+          description: Invalid request
+        '404':
+          description: Resource not found
+        '405':
+          description: Method is not available
+        '500':
+          description: Server error
+
   /api/v1/reviews/page={page}&size={size}:
     get:
       tags:
@@ -898,6 +928,9 @@ components:
           type: string
         jobLink:
           type: string
+        rating:
+          type: number
+          description: Company rating
 
 
     CompanyListDto:
@@ -976,6 +1009,8 @@ components:
           $ref: '#/components/schemas/CompanyDto'
         user:
           $ref: '#/components/schemas/UserDto'
+        authData:
+          $ref: '#/components/schemas/AuthenticationToken'
 
     InterviewListDto:
       type: object

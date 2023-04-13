@@ -18,6 +18,8 @@ public interface ReviewService {
 
     ReviewDto create(ShortReviewDto review);
 
+    ReviewDto createForUser(ShortReviewDto review);
+
     ReviewDto update(ReviewDto review, UUID reviewId);
 
     void delete(UUID reviewId);

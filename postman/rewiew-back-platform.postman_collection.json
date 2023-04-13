@@ -1,0 +1,279 @@
+{
+	"info": {
+		"_postman_id": "66002a8e-04ec-46eb-b63e-525367773a24",
+		"name": "rewiew-back-platform",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22112445"
+	},
+	"item": [
+		{
+			"name": "Создать пользователя",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"{{$randomFirstName}}\",\r\n    \"lastName\": \"{{$randomLastName}}\",\r\n    \"email\": \"{{$randomEmail}}\",\r\n    \"password\": \"123123\"\r\n    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Авторизовать пользователя",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"admin3\",\r\n    \"password\": \"admin3\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/auth/authenticate",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"authenticate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Получить всех пользователей",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/users/page=1&size=6",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"users",
+						"page=1&size=6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Создать ревью с ревьюером",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"theme\": \"{{$randomJobType}}\",\r\n    \"link\": \"{{$randomUtil}}\",\r\n    \"time\": \"{{$isoTimestamp}}\",\r\n    \"speciality\": \"FRONTEND\",\r\n    \"authData\": {\r\n        \"token\": \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY4MTM4Njg0MywiZXhwIjoxNjgxMzg2OTAzfQ.vqzbWdT3H6FMC4sju8xkHSiHzsMPFwQwt-S_-Au--hM\"\r\n    }\r\n}\r\n    ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/review",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"review"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Создать ревью с юзером",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"theme\": \"{{$randomJobType}}\",\r\n    \"link\": \"https://www.youtube.com/watch?v=_suZGUbIvvM&ab_channel=%2aDOCPRODUCTION\",\r\n    \"time\": \"{{$isoTimestamp}}\",\r\n    \"speciality\": \"FRONTEND\",\r\n    \"authData\": {\r\n        \"token\": \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTY4MTM4NzE3MCwiZXhwIjoxNjgxMzg3MjMwfQ.vOS7i_XCEKB5gbh_trCocPqoFGN6mxYAApHy96h2f9I\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/review-for-user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"review-for-user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Получить все ревью",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/reviews/page=1&size=10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"reviews",
+						"page=1&size=10"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Создать компанию",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"{{$randomCompanyName}}\",\r\n    \"jobLink\": \"https://www.youtube.com/watch?v=_suZGUbIvvM&ab_channel=%2aDOCPRODUCTION\",\r\n    \"rating\": 10.0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/company",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"company"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Получить все компании",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/companies/page=1&size=10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"companies",
+						"page=1&size=10"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Создать собеседование (Interview)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"jobTitle\": \"{{$randomJobTitle}}\",\r\n    \"jobLink\": \"https://www.youtube.com/watch?v=_suZGUbIvvM&ab_channel=%2aDOCPRODUCTION\",\r\n    \"description\": \"{{$randomLoremText}}\",\r\n    \"money\": 300,\r\n    \"videoLink\": \"https://www.youtube.com/watch?v=dQw4w9WgXcQ&feature=youtu.be&ab_channel=RickAstley\",\r\n    \"company\": {\r\n        \"id\": \"4cd10577-18ba-4d6a-b3c6-ad46cd5c2992\"\r\n    },\r\n    \"authData\": {\r\n        \"token\": \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbjMiLCJpYXQiOjE2ODEzOTM3MjEsImV4cCI6MTY4MTM5Mzc4MX0.72ICNgGl-i1ypLCbZhnqv2BWn9QdnL3vVXi0_OXgKdU\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/interview",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"interview"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Получить все собеседования (Interview)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/interviews/page=1&size=10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"interviews",
+						"page=1&size=10"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

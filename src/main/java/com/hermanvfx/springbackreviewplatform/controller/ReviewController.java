@@ -45,6 +45,12 @@ public class ReviewController implements ReviewApi {
     }
 
     @Override
+    public ResponseEntity<ReviewDto> createReviewForUser(ShortReviewDto shortReviewDto) {
+        ReviewDto newReview = reviewService.createForUser(shortReviewDto);
+        return new ResponseEntity<>(newReview, HttpStatus.CREATED);
+    }
+
+    @Override
     public ResponseEntity<ReviewListDto> findAllReviews(Integer page, Integer size) {
         Pageable pageable = PageRequest.of(page, size);
         return new ResponseEntity<>(reviewService.findAllReviews(pageable), HttpStatus.OK);
