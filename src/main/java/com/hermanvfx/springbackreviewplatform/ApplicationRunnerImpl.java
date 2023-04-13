@@ -2,15 +2,14 @@ package com.hermanvfx.springbackreviewplatform;
 
 import com.github.javafaker.Faker;
 import com.hermanvfx.springbackreviewplatform.entity.Company;
+import com.hermanvfx.springbackreviewplatform.entity.Interview;
 import com.hermanvfx.springbackreviewplatform.entity.Review;
 import com.hermanvfx.springbackreviewplatform.entity.User;
 import com.hermanvfx.springbackreviewplatform.entity.enums.Role;
 import com.hermanvfx.springbackreviewplatform.entity.enums.Speciality;
 import com.hermanvfx.springbackreviewplatform.entity.enums.StatusReview;
-import com.hermanvfx.springbackreviewplatform.repository.CommentaryRepository;
-import com.hermanvfx.springbackreviewplatform.repository.CompanyRepository;
-import com.hermanvfx.springbackreviewplatform.repository.ReviewRepository;
-import com.hermanvfx.springbackreviewplatform.repository.UserRepository;
+import com.hermanvfx.springbackreviewplatform.exception.NotFoundException;
+import com.hermanvfx.springbackreviewplatform.repository.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
@@ -19,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.OffsetDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Slf4j
@@ -30,6 +30,7 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
     private final ReviewRepository reviewRepository;
     private final CompanyRepository companyRepository;
     private final CommentaryRepository commentaryRepository;
+    private final InterviewRepository interviewRepository;
     private final PasswordEncoder encoder;
 
     @Override
@@ -130,6 +131,43 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
             companyRepository.save(company);
             log.info(" -- Company : " + company.getName() + " was added");
         }
+
+        Company companyMoc = new Company();
+//        companyMoc.setId(UUID.fromString("6f1b6d5b-af46-450b-868a-c3cc21f5f3cb"));
+        companyMoc.setName(faker.company().name());
+        companyMoc.setJobLink("https://www.youtube.com/watch?v=_suZGUbIvvM&ab_channel=%2aDOCPRODUCTION");
+        companyMoc.setRating(10.0);
+        companyMoc.setCreate(OffsetDateTime.now());
+        companyRepository.save(companyMoc);
+        log.info(" -- CompanyMoc : " + companyMoc.getName() + " was added");
+
+
+        for (int i = 0; i < 10; i++) {
+            Interview interview = new Interview();
+            interview.setJobTitle(faker.job().title());
+            interview.setJobLink("https://www.youtube.com/watch?v=_suZGUbIvvM&ab_channel=%2aDOCPRODUCTION");
+            interview.setDescription(faker.lorem().word());
+            interview.setMoney(300);
+            interview.setVideoLink("https://www.youtube.com/watch?v=dQw4w9WgXcQ&feature=youtu.be&ab_channel=RickAstley");
+            interview.setCompany(companyMoc);
+            companyMoc.setInterviews(List.of(interview));
+            companyRepository.save(companyMoc);
+            interview.setUser(userAdminMock);
+            userAdminMock.se
+            interview.setCreate(OffsetDateTime.now());
+            interviewRepository.save(interview);
+
+            log.info(" -- Interview : " + interview.getJobTitle() + " was added");
+        }
+
+//        var interviewMoc = Interview.builder()
+//                .jobTitle(faker.job().title())
+//                .jobLink("https://www.youtube.com/watch?v=_suZGUbIvvM&ab_channel=%2aDOCPRODUCTION")
+//                .description(faker.lorem().word())
+//                .money(300)
+//                .videoLink("https://www.youtube.com/watch?v=dQw4w9WgXcQ&feature=youtu.be&ab_channel=RickAstley")
+//                .company(companyRepository.findById("6f1b6d5b-af46-450b-868a-c3cc21f5f3cb").orElse())
+
 
     }
 }

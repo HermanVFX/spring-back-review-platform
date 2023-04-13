@@ -6,10 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
@@ -22,6 +19,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Table(name = "company")
 @Entity
+
 public class Company {
     @Id
     @Column(name = "company_id", nullable = false)

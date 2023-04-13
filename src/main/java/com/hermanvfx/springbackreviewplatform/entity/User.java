@@ -59,6 +59,9 @@ public class User implements UserDetails {
     @Column(name = "uzr_role")
     private Role role;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "")
+    private Interview interview;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<Token> tokens;
 

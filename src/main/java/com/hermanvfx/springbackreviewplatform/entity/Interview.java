@@ -8,10 +8,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
@@ -46,11 +43,11 @@ public class Interview {
     private String videoLink;
 
     @ManyToOne
-    @JoinColumn(name="company_id", nullable=false)
+    @JoinColumn(name="company_id")
     private Company company;
 
     @ManyToOne
-    @JoinColumn(name="uzr_id", nullable=false)
+    @JoinColumn(name="uzr_id")
     private User user;
 
     @OneToMany(mappedBy="interview")
