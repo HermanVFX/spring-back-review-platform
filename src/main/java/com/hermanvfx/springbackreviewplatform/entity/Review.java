@@ -40,18 +40,6 @@ public class Review {
     @Column(name = "review_theme", nullable = false)
     private String theme;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "review_passed", nullable = false)
-    private StatusReview status = StatusReview.TOBE;
-
-    @ManyToOne
-    @JoinColumn(name="review_receiving_id", nullable=false)
-    private User reviewer;
-
-    @ManyToOne
-    @JoinColumn(name="review_student_id")
-    private User student;
-
     @Column(name = "review_time", nullable = false)
     private OffsetDateTime time;
 
@@ -62,12 +50,25 @@ public class Review {
     @Column(name = "review_speciality")
     private Speciality speciality;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "review_passed", nullable = false)
+    private StatusReview status = StatusReview.TOBE;
+
+    @ManyToOne
+    @JoinColumn(name="review_receiving_id")
+    private User reviewer;
+    @ManyToOne
+    @JoinColumn(name="review_student_id")
+    private User student;
+
+
+
     @Column(name = "create_time", nullable = false)
-    private LocalDate create;
+    private OffsetDateTime create;
     @Column(name = "update_time")
-    private LocalDate update;
+    private OffsetDateTime update;
     @Column(name = "delete_time")
-    private LocalDate delete;
+    private OffsetDateTime delete;
     @Column(
             name = "is_active",
             nullable = false

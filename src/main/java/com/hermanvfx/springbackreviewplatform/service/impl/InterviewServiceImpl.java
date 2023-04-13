@@ -3,10 +3,14 @@ package com.hermanvfx.springbackreviewplatform.service.impl;
 import com.example.userservice.dto.InterviewDto;
 import com.example.userservice.dto.InterviewListDto;
 import com.example.userservice.dto.ShortInterviewDto;
+import com.hermanvfx.springbackreviewplatform.entity.Company;
 import com.hermanvfx.springbackreviewplatform.entity.Interview;
 import com.hermanvfx.springbackreviewplatform.exception.NotFoundException;
 import com.hermanvfx.springbackreviewplatform.mapper.InterviewMapper;
+import com.hermanvfx.springbackreviewplatform.repository.CommentaryRepository;
+import com.hermanvfx.springbackreviewplatform.repository.CompanyRepository;
 import com.hermanvfx.springbackreviewplatform.repository.InterviewRepository;
+import com.hermanvfx.springbackreviewplatform.security.token.TokenRepository;
 import com.hermanvfx.springbackreviewplatform.service.InterviewService;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
@@ -18,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,6 +32,8 @@ public class InterviewServiceImpl implements InterviewService {
 
     private final InterviewRepository interviewRepository;
     private  final InterviewMapper interviewMapper;
+    private final TokenRepository tokenRepository;
+    private final CompanyRepository companyRepository;
 
     @Override
     public InterviewListDto findAllInterview(Pageable pageable) {
@@ -59,8 +66,17 @@ public class InterviewServiceImpl implements InterviewService {
     @Override
     @Transactional
     public InterviewDto create(ShortInterviewDto interview) {
+        var token = interview.getAuthData().getToken();
+        var authUser = tokenRepository.findByToken(token)
+                .orElseThrow(() -> new NotFoundException("Token not found"))
+                .getUser();
+        Company company = companyRepository.findById(interview.getCompany().getId())
+                .orElseThrow(() -> new NotFoundException("Token not found"));
+
         Interview newInterview = interviewMapper.shortInterviewDtoToInterview(interview);
-        newInterview.setCreate(LocalDate.now());
+        newInterview.setCreate(OffsetDateTime.now());
+        newInterview.setUser(authUser);
+        newInterview.setCompany(company);
         return interviewMapper.interviewToInterviewDto(interviewRepository.save(newInterview));
     }
 
@@ -70,7 +86,7 @@ public class InterviewServiceImpl implements InterviewService {
         Interview oldInterview = interviewRepository.findById(interviewId)
                 .orElseThrow(() -> new NotFoundException("Interview with id:[" + interviewId + "] does not found"));
 
-        oldInterview.setUpdate(LocalDate.now());
+        oldInterview.setUpdate(OffsetDateTime.now());
 
         oldInterview.setVideoLink(interview.getVideoLink());
         oldInterview.setDescription(interview.getDescription());

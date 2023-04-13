@@ -10,12 +10,11 @@ import java.util.List;
 
 @Mapper(componentModel = "spring",
         uses = {
-                InterviewMapper.class
+                InterviewMapper.class,
+                CommentaryMapper.class
         })
 public interface CompanyMapper {
 
-    //    После добавления комментариев, удалить!!!
-    @Mapping(target = "commentaries", ignore = true)
 //    Попытка избавиться от цикличности:
     @Mapping(target = "interviews", expression = "java(null)")
     CompanyDto companyToCompanyDto(Company entity);
@@ -23,7 +22,6 @@ public interface CompanyMapper {
 
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "rating", ignore = true)
     @Mapping(target = "commentaries", ignore = true)
     @Mapping(target = "interviews", ignore = true)
     @Mapping(target = "create", ignore = true)

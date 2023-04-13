@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @Service
@@ -38,7 +39,7 @@ public class AuthenticationService {
                 .lastName(request.getLastname())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .create(LocalDate.now())
+                .create(OffsetDateTime.now())
                 .role(Role.USER)
                 .build();
         User saveUser = repository.save(user);

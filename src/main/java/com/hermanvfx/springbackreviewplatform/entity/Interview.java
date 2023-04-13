@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -35,6 +36,15 @@ public class Interview {
     @Column(name = "interview_job_link")
     private String jobLink;
 
+    @Column(name = "interview_description")
+    private String description;
+
+    @Column(name = "interview_money")
+    private Integer money;
+
+    @Column(name = "interview_video_link")
+    private String videoLink;
+
     @ManyToOne
     @JoinColumn(name="company_id", nullable=false)
     private Company company;
@@ -43,24 +53,15 @@ public class Interview {
     @JoinColumn(name="uzr_id", nullable=false)
     private User user;
 
-    @Column(name = "interview_description")
-    private String description;
-
-    @Column(name = "interview_money")
-    private Integer money;
-
     @OneToMany(mappedBy="interview")
     private List<Commentary> commentaries;
 
-    @Column(name = "interview_video_link")
-    private String videoLink;
-
     @Column(name = "create_time", nullable = false)
-    private LocalDate create;
+    private OffsetDateTime create;
     @Column(name = "update_time")
-    private LocalDate update;
+    private OffsetDateTime update;
     @Column(name = "delete_time")
-    private LocalDate delete;
+    private OffsetDateTime delete;
     @Column(
             name = "is_active",
             nullable = false

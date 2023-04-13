@@ -22,6 +22,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
@@ -78,11 +79,11 @@ public class User implements UserDetails {
     private List<Commentary> commentaries;
 
     @Column(name = "create_time", nullable = false)
-    private LocalDate create;
+    private OffsetDateTime create;
     @Column(name = "update_time")
-    private LocalDate update;
+    private OffsetDateTime update;
     @Column(name = "delete_time")
-    private LocalDate delete;
+    private OffsetDateTime delete;
     @Column(
             name = "is_active",
             nullable = false

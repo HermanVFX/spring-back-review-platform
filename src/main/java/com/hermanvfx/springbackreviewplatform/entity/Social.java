@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.Date;
 import java.util.UUID;
 
@@ -41,11 +42,11 @@ public class Social {
     private User user;
 
     @Column(name = "create_time", nullable = false)
-    private LocalDate create;
+    private OffsetDateTime create;
     @Column(name = "update_time")
-    private LocalDate update;
+    private OffsetDateTime update;
     @Column(name = "delete_time")
-    private LocalDate delete;
+    private OffsetDateTime delete;
     @Column(
             name = "is_active",
             nullable = false
