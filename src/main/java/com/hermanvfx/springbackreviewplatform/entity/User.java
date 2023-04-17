@@ -59,9 +59,6 @@ public class User implements UserDetails {
     @Column(name = "uzr_role")
     private Role role;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "")
-    private Interview interview;
-
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<Token> tokens;
 
@@ -80,6 +77,9 @@ public class User implements UserDetails {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<Commentary> commentaries;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private List<Interview> interviews;
 
     @Column(name = "create_time", nullable = false)
     private OffsetDateTime create;

@@ -1,11 +1,6 @@
 package com.hermanvfx.springbackreviewplatform.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -40,7 +35,7 @@ public class Company {
     @OneToMany(mappedBy="company")
     private List<Commentary> commentaries;
 
-    @OneToMany(mappedBy="company")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy="company")
     private List<Interview> interviews;
 
     @Column(name = "create_time", nullable = false)

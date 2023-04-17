@@ -16,7 +16,7 @@ import java.util.List;
 public interface CompanyMapper {
 
 //    Попытка избавиться от цикличности:
-    @Mapping(target = "interviews", expression = "java(null)")
+//    @Mapping(target = "interviews", expression = "java(null)")
     CompanyDto companyToCompanyDto(Company entity);
 
 

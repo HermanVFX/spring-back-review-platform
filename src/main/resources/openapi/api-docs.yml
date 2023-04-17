@@ -567,6 +567,114 @@ paths:
         '500':
           description: Server error
 
+#          Ревью Созданные
+  /api/v1/reviews/tobe/page={page}&size={size}:
+    get:
+      tags:
+        - Review
+      summary: find tobe review
+      operationId: findTobeReviews
+      parameters:
+        - name: page
+          in: path
+          required: true
+          schema:
+            type: integer
+            nullable: false
+        - name: size
+          in: path
+          required: true
+          schema:
+            type: integer
+            nullable: false
+      responses:
+        '200':
+          description: Get all review
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReviewListDto'
+        '400':
+          description: Invalid request
+        '404':
+          description: Resource not found
+        '405':
+          description: Method is not available
+        '500':
+          description: Server error
+
+#          Ревью Принятые
+  /api/v1/reviews/passed/page={page}&size={size}:
+    get:
+      tags:
+        - Review
+      summary: find passed review
+      operationId: findPassedReviews
+      parameters:
+        - name: page
+          in: path
+          required: true
+          schema:
+            type: integer
+            nullable: false
+        - name: size
+          in: path
+          required: true
+          schema:
+            type: integer
+            nullable: false
+      responses:
+        '200':
+          description: Get all review
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReviewListDto'
+        '400':
+          description: Invalid request
+        '404':
+          description: Resource not found
+        '405':
+          description: Method is not available
+        '500':
+          description: Server error
+
+#          Найти отмененные ревью
+  /api/v1/reviews/canceled/page={page}&size={size}:
+    get:
+      tags:
+        - Review
+      summary: find canceled review
+      operationId: findCanceledReviews
+      parameters:
+        - name: page
+          in: path
+          required: true
+          schema:
+            type: integer
+            nullable: false
+        - name: size
+          in: path
+          required: true
+          schema:
+            type: integer
+            nullable: false
+      responses:
+        '200':
+          description: Get all review
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReviewListDto'
+        '400':
+          description: Invalid request
+        '404':
+          description: Resource not found
+        '405':
+          description: Method is not available
+        '500':
+          description: Server error
+
   /api/v1/review/revievId={reviewId}&isDone={isDone}:
     post:
       tags:
@@ -978,6 +1086,16 @@ components:
         videoLink:
           type: string
           description: Interview videoLink
+        structure:
+          type: string
+          description: Interview structure
+        substructure:
+          type: string
+          description: Interview substructure
+        date:
+          type: string
+          format: date-time
+          description: Interview dateInterview
         company:
           $ref: '#/components/schemas/CompanyDto'
         user:
@@ -1005,6 +1123,16 @@ components:
         videoLink:
           type: string
           description: Interview videoLink
+        structure:
+          type: string
+          description: Interview structure
+        substructure:
+          type: string
+          description: Interview substructure
+        date:
+          type: string
+          format: date-time
+          description: Interview dateInterview
         company:
           $ref: '#/components/schemas/CompanyDto'
         user:

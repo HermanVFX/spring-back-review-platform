@@ -1,14 +1,10 @@
 package com.hermanvfx.springbackreviewplatform;
 
 import com.github.javafaker.Faker;
-import com.hermanvfx.springbackreviewplatform.entity.Company;
-import com.hermanvfx.springbackreviewplatform.entity.Interview;
-import com.hermanvfx.springbackreviewplatform.entity.Review;
-import com.hermanvfx.springbackreviewplatform.entity.User;
+import com.hermanvfx.springbackreviewplatform.entity.*;
 import com.hermanvfx.springbackreviewplatform.entity.enums.Role;
 import com.hermanvfx.springbackreviewplatform.entity.enums.Speciality;
 import com.hermanvfx.springbackreviewplatform.entity.enums.StatusReview;
-import com.hermanvfx.springbackreviewplatform.exception.NotFoundException;
 import com.hermanvfx.springbackreviewplatform.repository.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -44,7 +41,7 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
                 .avatar("https://cdn.kanobu.ru/c/9d4136be5e203d48b7aeb2a11a805056/270x200/cdn.kanobu.ru/articles/pics/tmp/images/2023/1/27/46743968-e2f1-496a-bb49-08b8110d68ac.jpg")
                 .password(encoder.encode("admin"))
                 .email("admin")
-                .id(UUID.fromString("56c55332-d701-11ed-afa1-0242ac120002"))
+//                .id(UUID.fromString("56c55332-d701-11ed-afa1-0242ac120002"))
                 .create(OffsetDateTime.now())
                 .role(Role.ADMIN).build();
         userRepository.save(userAdminMock);
@@ -57,7 +54,9 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
                 .email("admin2")
                 .id(UUID.fromString("56c55332-d701-11ed-afa1-0242ac120003"))
                 .create(OffsetDateTime.now())
-                .role(Role.ADMIN).build();
+                .role(Role.ADMIN)
+                .specialities(Speciality.FRONTEND)
+                .build();
         userRepository.save(userAdminMock2);
 
         var userAdminMock3 = User.builder()
@@ -68,7 +67,9 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
                 .email("admin3")
                 .id(UUID.fromString("56c55332-d701-11ed-afa1-0242ac120004"))
                 .create(OffsetDateTime.now())
-                .role(Role.ADMIN).build();
+                .role(Role.ADMIN)
+                .specialities(Speciality.FRONTEND)
+                .build();
         userRepository.save(userAdminMock3);
 
         for (int i = 0; i < 20; i++) {
@@ -120,6 +121,30 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
             log.info(" -- Review :" + review.getTheme() + " for user " + user.getFirstName() + " was added");
             reviewRepository.save(review);
 
+            Review review2 = new Review();
+            review2.setTheme("Theme");
+            review2.setTime(OffsetDateTime.now());
+            review2.setStudent(user);
+            review2.setReviewer(user2);
+            review2.setSpeciality(Speciality.FRONTEND);
+            review2.setLink(faker.avatar().image());
+            review2.setStatus(StatusReview.PASSED);
+            review2.setCreate(OffsetDateTime.now());
+            log.info(" -- Review :" + review2.getTheme() + " for user " + user.getFirstName() + " was added");
+            reviewRepository.save(review2);
+
+            Review review3 = new Review();
+            review3.setTheme("Theme");
+            review3.setTime(OffsetDateTime.now());
+            review3.setStudent(user);
+            review3.setReviewer(user2);
+            review3.setSpeciality(Speciality.FRONTEND);
+            review3.setLink(faker.avatar().image());
+            review3.setStatus(StatusReview.CANCELED);
+            review3.setCreate(OffsetDateTime.now());
+            log.info(" -- Review :" + review3.getTheme() + " for user " + user.getFirstName() + " was added");
+            reviewRepository.save(review3);
+
         }
 
         for (int i = 0; i < 5; i++) {
@@ -128,7 +153,21 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
             company.setJobLink("https://www.youtube.com/watch?v=_suZGUbIvvM&ab_channel=%2aDOCPRODUCTION");
             company.setRating(10.0);
             company.setCreate(OffsetDateTime.now());
+
+            Commentary commentary = new Commentary();
+            commentary.setText(faker.lorem().paragraph());
+            commentary.setLikes(150);
+            commentary.setDislikes(23);
+            commentary.setCreate(OffsetDateTime.now());
+            commentary.setUser(userAdminMock);
+            userAdminMock.setCommentaries(List.of(commentary));
+
+            commentary.setCompany(company);
+            company.setCommentaries(List.of(commentary));
+
+            userRepository.save(userAdminMock);
             companyRepository.save(company);
+            commentaryRepository.save(commentary);
             log.info(" -- Company : " + company.getName() + " was added");
         }
 
@@ -150,24 +189,36 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
             interview.setMoney(300);
             interview.setVideoLink("https://www.youtube.com/watch?v=dQw4w9WgXcQ&feature=youtu.be&ab_channel=RickAstley");
             interview.setCompany(companyMoc);
+            interview.setCreate(OffsetDateTime.now());
+            interview.setStructure("Название компании");
+            interview.setSubstructure("Название подразделения компании");
+            interview.setDate(OffsetDateTime.now());
+
             companyMoc.setInterviews(List.of(interview));
+
+            List<Commentary> commentaryList = new ArrayList<>();
+            for (int j = 0; j < 10; j++) {
+                Commentary commentary = new Commentary();
+                commentary.setText(faker.lorem().paragraph());
+                commentary.setLikes(150);
+                commentary.setDislikes(23);
+                commentary.setCreate(OffsetDateTime.now());
+                commentary.setUser(userAdminMock);
+                userAdminMock.setCommentaries(List.of(commentary));
+                commentary.setInterview(interview);
+                interview.setCommentaries(List.of(commentary));
+                commentaryList.add(commentary);
+            }
+
             companyRepository.save(companyMoc);
             interview.setUser(userAdminMock);
-            userAdminMock.se
-            interview.setCreate(OffsetDateTime.now());
+            userAdminMock.setInterviews(List.of(interview));
+
+            userRepository.save(userAdminMock);
             interviewRepository.save(interview);
+            commentaryRepository.saveAll(commentaryList);
 
             log.info(" -- Interview : " + interview.getJobTitle() + " was added");
         }
-
-//        var interviewMoc = Interview.builder()
-//                .jobTitle(faker.job().title())
-//                .jobLink("https://www.youtube.com/watch?v=_suZGUbIvvM&ab_channel=%2aDOCPRODUCTION")
-//                .description(faker.lorem().word())
-//                .money(300)
-//                .videoLink("https://www.youtube.com/watch?v=dQw4w9WgXcQ&feature=youtu.be&ab_channel=RickAstley")
-//                .company(companyRepository.findById("6f1b6d5b-af46-450b-868a-c3cc21f5f3cb").orElse())
-
-
     }
 }

@@ -1,13 +1,11 @@
 package com.hermanvfx.springbackreviewplatform.controller;
 
 import com.example.userservice.controller.ReviewApi;
-import com.example.userservice.dto.AuthenticationRequest;
 import com.example.userservice.dto.AuthenticationToken;
 import com.example.userservice.dto.ReviewDto;
 import com.example.userservice.dto.ReviewListDto;
 import com.example.userservice.dto.ShortReviewDto;
 import com.hermanvfx.springbackreviewplatform.service.ReviewService;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
@@ -57,6 +55,24 @@ public class ReviewController implements ReviewApi {
     }
 
     @Override
+    public ResponseEntity<ReviewListDto> findTobeReviews(Integer page, Integer size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return new ResponseEntity<>(reviewService.findTobeReviews(pageable), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<ReviewListDto> findCanceledReviews(Integer page, Integer size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return new ResponseEntity<>(reviewService.findCanceledReviews(pageable), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<ReviewListDto> findPassedReviews(Integer page, Integer size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return new ResponseEntity<>(reviewService.findPassedReviews(pageable), HttpStatus.OK);
+    }
+
+    @Override
     public ResponseEntity<Void> deleteReview(UUID reviewId) {
         reviewService.delete(reviewId);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -66,6 +82,8 @@ public class ReviewController implements ReviewApi {
     public ResponseEntity<ReviewDto> findReviewById(UUID reviewId) {
         return new ResponseEntity<>(reviewService.findUserById(reviewId), HttpStatus.OK);
     }
+
+
 
     @Override
     public ResponseEntity<ReviewDto> updateReview(UUID reviewId, ReviewDto reviewDto) {
