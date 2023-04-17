@@ -216,7 +216,10 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
 
             userRepository.save(userAdminMock);
             interviewRepository.save(interview);
-            commentaryRepository.saveAll(commentaryList);
+            commentaryList.forEach(c -> {
+                commentaryRepository.save(c);
+                log.info(" -- Commentary : " + c.getUser().getFirstName() + " was added");
+            });
 
             log.info(" -- Interview : " + interview.getJobTitle() + " was added");
         }
