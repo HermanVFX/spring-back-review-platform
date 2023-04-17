@@ -1,17 +1,7 @@
 package com.hermanvfx.springbackreviewplatform.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
@@ -45,12 +35,20 @@ public class Interview {
     @Column(name = "interview_video_link")
     private String videoLink;
 
-    @ManyToOne
-    @JoinColumn(name="company_id", nullable=false)
+    @Column(name = "interview_date_time")
+    private OffsetDateTime date;
+
+    @Column(name = "interview_structure")
+    private String structure;
+    @Column(name = "interview_substructure")
+    private String substructure;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="company_id")
     private Company company;
 
     @ManyToOne
-    @JoinColumn(name="uzr_id", nullable=false)
+    @JoinColumn(name="uzr_id")
     private User user;
 
     @OneToMany(mappedBy="interview")

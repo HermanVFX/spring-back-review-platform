@@ -23,11 +23,9 @@ public interface UserMapper {
     UserDto userToUserDTO(User entity);
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "password", ignore = true)
     @Mapping(target = "specialities", ignore = true)
     @Mapping(target = "reviewsReceiving", ignore = true)
     @Mapping(target = "reviewsStudent", ignore = true)
-    @Mapping(target = "role", ignore = true)
     @Mapping(target = "socials", ignore = true)
     @Mapping(target = "commentaries", ignore = true)
     @Mapping(target = "avatar", ignore = true)

@@ -40,19 +40,19 @@ public class Commentary {
 
 
     @ManyToOne
-    @JoinColumn(name="uzr_id", nullable=false)
+    @JoinColumn(name="uzr_id")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name="company_id", nullable=false)
+    @JoinColumn(name="company_id")
     private Company company;
 
     @ManyToOne
-    @JoinColumn(name="interview_id", nullable=false)
+    @JoinColumn(name="interview_id")
     private Interview interview;
 
     @ManyToOne
-    @JoinColumn(name="sub_commentary_id", nullable=false)
+    @JoinColumn(name="sub_commentary_id")
     private Commentary commentary;
 
     @OneToMany(cascade = CascadeType.ALL)

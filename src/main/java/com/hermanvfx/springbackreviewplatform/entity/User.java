@@ -78,6 +78,9 @@ public class User implements UserDetails {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<Commentary> commentaries;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private List<Interview> interviews;
+
     @Column(name = "create_time", nullable = false)
     private OffsetDateTime create;
     @Column(name = "update_time")

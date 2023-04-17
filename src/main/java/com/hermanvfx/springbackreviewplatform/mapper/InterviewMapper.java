@@ -1,7 +1,9 @@
 package com.hermanvfx.springbackreviewplatform.mapper;
 
+import com.example.userservice.dto.CompanyDto;
 import com.example.userservice.dto.InterviewDto;
 import com.example.userservice.dto.ShortInterviewDto;
+import com.hermanvfx.springbackreviewplatform.entity.Company;
 import com.hermanvfx.springbackreviewplatform.entity.Interview;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -17,6 +19,7 @@ import java.util.List;
 public interface InterviewMapper {
 
 
+    @Mapping(target = "company", expression = "java(null)")
     InterviewDto interviewToInterviewDto(Interview entity);
 
     @Mapping(target = "id", ignore = true)
