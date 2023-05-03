@@ -34,6 +34,6 @@ public interface ReviewMapper {
     Review reviewDtoToReview(ReviewDto dto);
 
     List<ReviewDto> iterableReviewToListReviewDto(Iterable<Review> entities);
-
+    List<ReviewDto> listReviewToListReviewDto(List<Review> entities);
 
 }

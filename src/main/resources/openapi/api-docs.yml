@@ -23,6 +23,12 @@ paths:
       summary: Create new user
       tags:
         - User
+      parameters:
+        - in: header
+          name: authorization
+          required: true
+          schema:
+            type: string
       requestBody:
         description: Short user DTO
         content:
@@ -45,6 +51,41 @@ paths:
           description: Method is not available
         '500':
           description: Server error
+
+    put:
+      operationId: updateUser
+      summary: Update user
+      tags:
+        - User
+      parameters:
+        - in: header
+          name: authorization
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: User DTO
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserDto'
+        required: true
+      responses:
+        '200':
+          description: Updated user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDto'
+        '400':
+          description: Invalid request
+        '404':
+          description: Resource not found
+        '405':
+          description: Method is not available
+        '500':
+          description: Server error
+
   /api/v1/users/page={page}&size={size}:
     get:
       tags:
@@ -52,6 +93,11 @@ paths:
       summary: Find all users
       operationId: findAllUsers
       parameters:
+        - in: header
+          name: authorization
+          required: true
+          schema:
+            type: string
         - name: page
           in: path
           required: true
@@ -87,6 +133,11 @@ paths:
       summary: Find users by id
       operationId: findUsersById
       parameters:
+        - in: header
+          name: authorization
+          required: true
+          schema:
+            type: string
         - in: path
           name: userId
           required: true
@@ -115,6 +166,11 @@ paths:
       summary: Delete user
       operationId: deleteUser
       parameters:
+        - in: header
+          name: authorization
+          required: true
+          schema:
+            type: string
         - name: userId
           in: path
           description: User id to delete
@@ -133,41 +189,6 @@ paths:
           description: Method is not available
         '500':
           description: Server error
-    put:
-      operationId: updateUser
-      summary: Update user
-      tags:
-        - User
-      parameters:
-        - name: userId
-          in: path
-          description: User id to update
-          required: true
-          schema:
-            type: string
-            format: uuid
-      requestBody:
-        description: User DTO
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UserDto'
-        required: true
-      responses:
-        '200':
-          description: Updated user
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UserDto'
-        '400':
-          description: Invalid request
-        '404':
-          description: Resource not found
-        '405':
-          description: Method is not available
-        '500':
-          description: Server error
 
   /api/v1/company:
     post:
@@ -175,6 +196,12 @@ paths:
       summary: Create new company
       tags:
         - Company
+      parameters:
+        - in: header
+          name: authorization
+          required: true
+          schema:
+            type: string
       requestBody:
         description: Company DTO
         content:
@@ -204,6 +231,11 @@ paths:
       summary: Find all company
       operationId: findAllCompanys
       parameters:
+        - in: header
+          name: authorization
+          required: true
+          schema:
+            type: string
         - name: page
           in: path
           required: true
@@ -239,6 +271,11 @@ paths:
       summary: Find company by id
       operationId: findCompanyById
       parameters:
+        - in: header
+          name: authorization
+          required: true
+          schema:
+            type: string
         - name: companyId
           in: path
           required: true
@@ -267,6 +304,11 @@ paths:
       summary: Delete company
       operationId: deleteCompany
       parameters:
+        - in: header
+          name: authorization
+          required: true
+          schema:
+            type: string
         - name: companyId
           in: path
           description: Company id to delete
@@ -291,6 +333,11 @@ paths:
       tags:
         - Company
       parameters:
+        - in: header
+          name: authorization
+          required: true
+          schema:
+            type: string
         - name: companyId
           in: path
           description: Company id to update
@@ -327,6 +374,12 @@ paths:
       summary: Create new interview
       tags:
         - Interview
+      parameters:
+        - in: header
+          name: authorization
+          required: true
+          schema:
+            type: string
       requestBody:
         description: Interview DTO
         content:
@@ -356,6 +409,11 @@ paths:
       summary: Find all interview
       operationId: findAllInterviews
       parameters:
+        - in: header
+          name: authorization
+          required: true
+          schema:
+            type: string
         - name: page
           in: path
           required: true
@@ -391,6 +449,11 @@ paths:
       summary: Find interview by id
       operationId: findInterviewById
       parameters:
+        - in: header
+          name: authorization
+          required: true
+          schema:
+            type: string
         - name: interviewId
           in: path
           required: true
@@ -419,6 +482,11 @@ paths:
       summary: Delete interview
       operationId: deleteInterview
       parameters:
+        - in: header
+          name: authorization
+          required: true
+          schema:
+            type: string
         - name: interviewId
           in: path
           description: Company id to delete
@@ -443,6 +511,11 @@ paths:
       tags:
         - Interview
       parameters:
+        - in: header
+          name: authorization
+          required: true
+          schema:
+            type: string
         - name: interviewId
           in: path
           description: Interview by id to update
@@ -480,6 +553,12 @@ paths:
       summary: Create new interview
       tags:
         - Review
+      parameters:
+        - in: header
+          name: authorization
+          required: true
+          schema:
+            type: string
       requestBody:
         description: Review DTO
         content:
@@ -509,6 +588,12 @@ paths:
       summary: Create new interview for users
       tags:
         - Review
+      parameters:
+        - in: header
+          name: authorization
+          required: true
+          schema:
+            type: string
       requestBody:
         description: Review DTO
         content:
@@ -539,6 +624,11 @@ paths:
       summary: find all review
       operationId: findAllReviews
       parameters:
+        - in: header
+          name: authorization
+          required: true
+          schema:
+            type: string
         - name: page
           in: path
           required: true
@@ -575,6 +665,11 @@ paths:
       summary: find tobe review
       operationId: findTobeReviews
       parameters:
+        - in: header
+          name: authorization
+          required: true
+          schema:
+            type: string
         - name: page
           in: path
           required: true
@@ -611,6 +706,11 @@ paths:
       summary: find passed review
       operationId: findPassedReviews
       parameters:
+        - in: header
+          name: authorization
+          required: true
+          schema:
+            type: string
         - name: page
           in: path
           required: true
@@ -647,6 +747,11 @@ paths:
       summary: find canceled review
       operationId: findCanceledReviews
       parameters:
+        - in: header
+          name: authorization
+          required: true
+          schema:
+            type: string
         - name: page
           in: path
           required: true
@@ -682,6 +787,11 @@ paths:
       summary: close review
       operationId: closeReview
       parameters:
+        - in: header
+          name: authorization
+          required: true
+          schema:
+            type: string
         - name: reviewId
           in: path
           required: true
@@ -725,6 +835,11 @@ paths:
       summary: Find review by id
       operationId: findReviewById
       parameters:
+        - in: header
+          name: authorization
+          required: true
+          schema:
+            type: string
         - name: reviewId
           in: path
           required: true
@@ -777,6 +892,11 @@ paths:
       tags:
         - Review
       parameters:
+        - in: header
+          name: authorization
+          required: true
+          schema:
+            type: string
         - name: reviewId
           in: path
           description: Review by id to update
@@ -815,6 +935,12 @@ paths:
       summary: Create new Commentary
       tags:
         - Commentary
+      parameters:
+        - in: header
+          name: authorization
+          required: true
+          schema:
+            type: string
       requestBody:
         description: Commentary DTO
         content:
@@ -838,7 +964,101 @@ paths:
         '500':
           description: Server error
 
+    put:
+      operationId: updateCommentary
+      summary: Update commentary
+      tags:
+        - Commentary
+      parameters:
+        - in: header
+          name: authorization
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Review DTO
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EditCommentaryDto'
+        required: true
+      responses:
+        '200':
+          description: Review updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommentaryDto'
+        '400':
+          description: Invalid request
+        '404':
+          description: Resource not found
+        '405':
+          description: Method is not available
+        '500':
+          description: Server error
 
+  /api/v1/comment/{commentId}:
+    delete:
+      operationId: deleteCommentary
+      summary: Delete commentary
+      tags:
+        - Commentary
+      parameters:
+        - in: header
+          name: authorization
+          required: true
+          schema:
+            type: string
+        - name: commentId
+          in: path
+          description: Commentary id to delete
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Delete commentary
+        '400':
+          description: Invalid request
+        '404':
+          description: Resource not found
+        '405':
+          description: Method is not available
+        '500':
+          description: Server error
+
+  /api/v1/comment/admin/{commentId}:
+    delete:
+      operationId: deleteCommentaryFromDb
+      summary: Delete commentary drom DB
+      tags:
+        - Commentary
+      parameters:
+        - in: header
+          name: authorization
+          required: true
+          schema:
+            type: string
+        - name: commentId
+          in: path
+          description: Commentary id to delete from Db
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Delete commentary
+        '400':
+          description: Invalid request
+        '404':
+          description: Resource not found
+        '405':
+          description: Method is not available
+        '500':
+          description: Server error
 
 # --- Dtos ---
 components:
@@ -857,9 +1077,6 @@ components:
         lastName:
           type: string
           description: User last name
-        password:
-          type: string
-          description: User password
         avatar:
           type: string
           description: User avatar url
@@ -969,15 +1186,29 @@ components:
     ShortCommentaryDto:
       type: object
       properties:
-        user:
-          $ref: '#/components/schemas/UserDto'
+        userId:
+          type: string
+          format: uuid
+        companyId:
+          type: string
+          format: uuid
+        interviewId:
+          type: string
+          format: uuid
+        subCommentaryId:
+          type: string
+          format: uuid
         text:
           type: string
-        create:
+
+    EditCommentaryDto:
+      type: object
+      properties:
+        id:
           type: string
-          format: date-time
-
-
+          format: uuid
+        text:
+          type: string
 
     CommentaryListDto:
       type: object
@@ -1030,6 +1261,20 @@ components:
           description: Company interviews
 
     ShortCompanyDto:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Social id
+        name:
+          type: string
+          description: Social name
+        link:
+          type: string
+          description: Social link
+
+    CreateSocialDto:
       type: object
       properties:
         name:
@@ -1235,6 +1480,12 @@ components:
     AuthenticationRequest:
       type: object
       properties:
+        firstName:
+          type: string
+          description: User firstName
+        lastName:
+          type: string
+          description: User lastName
         email:
           type: string
           description: User email

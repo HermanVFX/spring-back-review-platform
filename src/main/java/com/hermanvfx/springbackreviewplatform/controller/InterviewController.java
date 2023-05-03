@@ -22,29 +22,29 @@ public class InterviewController implements InterviewApi {
     private final InterviewService interviewService;
 
     @Override
-    public ResponseEntity<InterviewDto> createInterview(ShortInterviewDto shortInterviewDto) {
+    public ResponseEntity<InterviewDto> createInterview(String authorization, ShortInterviewDto shortInterviewDto) {
         return new ResponseEntity<>(interviewService.create(shortInterviewDto), HttpStatus.CREATED);
     }
 
     @Override
-    public ResponseEntity<Void> deleteInterview(UUID interviewId) {
+    public ResponseEntity<Void> deleteInterview(String authorization, UUID interviewId) {
         interviewService.delete(interviewId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<InterviewListDto> findAllInterviews(Integer page, Integer size) {
+    public ResponseEntity<InterviewListDto> findAllInterviews(String authorization, Integer page, Integer size) {
         Pageable pageable = PageRequest.of(page, size);
         return new ResponseEntity<>(interviewService.findAllInterview(pageable), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<InterviewDto> findInterviewById(UUID interviewId) {
+    public ResponseEntity<InterviewDto> findInterviewById(String authorization, UUID interviewId) {
         return new ResponseEntity<>(interviewService.findInterviewById(interviewId), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<InterviewDto> updateInterview(UUID interviewId, InterviewDto interviewDto) {
+    public ResponseEntity<InterviewDto> updateInterview(String authorization, UUID interviewId, InterviewDto interviewDto) {
         return new ResponseEntity<>(interviewService.update(interviewDto, interviewId), HttpStatus.OK);
     }
 }

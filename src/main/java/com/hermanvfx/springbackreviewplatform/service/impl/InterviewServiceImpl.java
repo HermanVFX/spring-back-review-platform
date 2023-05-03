@@ -105,4 +105,9 @@ public class InterviewServiceImpl implements InterviewService {
         interviewRepository.delete(interviewRepository.findById(interviewId)
                 .orElseThrow(() -> new NotFoundException("Interview with id:[" + interviewId + "] does not found")));
     }
+
+    @Override
+    public void deleteFromBd(UUID id) {
+        interviewRepository.delete(interviewRepository.findById(id).orElseThrow());
+    }
 }

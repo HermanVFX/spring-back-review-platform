@@ -34,13 +34,13 @@ public class SecurityConfiguration {
                     .cors()
                 .and()
                     .csrf()
-                    .disable()
+                        .disable()
                     .authorizeHttpRequests()
                     .requestMatchers("/api/v1/auth/**")
                     .permitAll()
                     .anyRequest()
-                    .permitAll() // ToDo Выключить!!!
-                    //.authenticated() // ToDo Включить!!!
+                    //.permitAll()
+                    .authenticated()
                  .and()
                     .sessionManagement()
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -62,7 +62,7 @@ public class SecurityConfiguration {
         CorsConfiguration configuration = new CorsConfiguration();
 //        configuration.addAllowedOriginPattern(CorsConfiguration.ALL);
         configuration.addAllowedOrigin("*");
-        configuration.setAllowedMethods(List.of("POST","PUT", "GET", "OPTIONS"));
+        configuration.setAllowedMethods(List.of("POST","PUT", "GET", "DELETE"));
         configuration.setAllowedHeaders(List.of("Origin", "X-Requested-With", "Content-Type", "Accept", "Authorization"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);

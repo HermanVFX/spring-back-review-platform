@@ -21,29 +21,29 @@ public class UserController implements UserApi {
     private final UserService userService;
 
     @Override
-    public ResponseEntity<UserDto> createUser(ShortUserDto shortUserDto) {
+    public ResponseEntity<UserDto> createUser(String authorization, ShortUserDto shortUserDto) {
         UserDto newUser = userService.create(shortUserDto);
         return new ResponseEntity<>(newUser, HttpStatus.CREATED);
     }
 
     @Override
-    public ResponseEntity<Void> deleteUser(UUID userId) {
+    public ResponseEntity<Void> deleteUser(String authorization, UUID userId) {
         return null;
     }
 
     @Override
-    public ResponseEntity<UserListDto> findAllUsers(Integer page, Integer size) {
+    public ResponseEntity<UserListDto> findAllUsers(String authorization, Integer page, Integer size) {
         Pageable pageable = PageRequest.of(page, size);
         return new ResponseEntity<>( userService.findAllUser(pageable), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<UserDto> findUsersById(UUID userId) {
+    public ResponseEntity<UserDto> findUsersById(String authorization, UUID userId) {
         return new ResponseEntity<>(userService.findUserById(userId), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<UserDto> updateUser(UUID userId, UserDto userDto) {
-        return null;
+    public ResponseEntity<UserDto> updateUser(String authorization, UserDto userDto) {
+        return new ResponseEntity<>(userService.update(userDto), HttpStatus.OK);
     }
 }

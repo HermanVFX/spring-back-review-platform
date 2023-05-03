@@ -17,6 +17,8 @@ public interface InterviewService {
 
     InterviewDto update(InterviewDto interview, UUID interviewId);
 
-    void delete(UUID interviewId);
+    void delete(UUID id);
+
+    void deleteFromBd(UUID id);
 
 }

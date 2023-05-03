@@ -21,29 +21,29 @@ public class CompanyController implements CompanyApi {
     private final CompanyService companyService;
 
     @Override
-    public ResponseEntity<CompanyDto> createCompany(ShortCompanyDto shortCompanyDto) {
+    public ResponseEntity<CompanyDto> createCompany(String authorization, ShortCompanyDto shortCompanyDto) {
         return new ResponseEntity<>(companyService.create(shortCompanyDto), HttpStatus.CREATED);
     }
 
     @Override
-    public ResponseEntity<Void> deleteCompany(UUID companyId) {
+    public ResponseEntity<Void> deleteCompany(String authorization, UUID companyId) {
         companyService.delete(companyId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<CompanyListDto> findAllCompanys(Integer page, Integer size) {
+    public ResponseEntity<CompanyListDto> findAllCompanys(String authorization, Integer page, Integer size) {
         Pageable pageable = PageRequest.of(page, size);
         return new ResponseEntity<>( companyService.findAllCompany(pageable), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<CompanyDto> findCompanyById(UUID companyId) {
+    public ResponseEntity<CompanyDto> findCompanyById(String authorization, UUID companyId) {
         return new ResponseEntity<>(companyService.findCompanyById(companyId), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<CompanyDto> updateCompany(UUID companyId, CompanyDto companyDto) {
+    public ResponseEntity<CompanyDto> updateCompany(String authorization, UUID companyId, CompanyDto companyDto) {
         return new ResponseEntity<>(companyService.update(companyDto, companyId), HttpStatus.OK);
     }
 }

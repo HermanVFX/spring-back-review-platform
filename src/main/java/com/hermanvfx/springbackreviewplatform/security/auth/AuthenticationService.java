@@ -1,9 +1,12 @@
 package com.hermanvfx.springbackreviewplatform.security.auth;
 
 import com.example.userservice.dto.AuthenticationRequest;
+import com.example.userservice.dto.SocialDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hermanvfx.springbackreviewplatform.entity.Social;
 import com.hermanvfx.springbackreviewplatform.entity.User;
 import com.hermanvfx.springbackreviewplatform.entity.enums.Role;
+import com.hermanvfx.springbackreviewplatform.repository.SocialRepository;
 import com.hermanvfx.springbackreviewplatform.repository.UserRepository;
 import com.hermanvfx.springbackreviewplatform.security.JwtService;
 import com.hermanvfx.springbackreviewplatform.security.token.Token;
@@ -21,6 +24,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -32,17 +36,31 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final TokenRepository tokenRepository;
+    private final SocialRepository socialRepository;
 
     public AuthenticationResponse register(RegisterRequest request) {
+
+        List<Social> newSocials = new ArrayList<>();
+        Social social = new Social();
+        social.setName("VK");
+        social.setLink(request.getVk());
+        social.setCreate(OffsetDateTime.now());
+        newSocials.add(social);
         User user = User.builder()
-                .firstName(request.getFirstname())
-                .lastName(request.getLastname())
+                .firstName(request.getFirstName())
+                .lastName(request.getLastName())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .create(OffsetDateTime.now())
+                .socials(newSocials)
                 .role(Role.USER)
                 .build();
+
         User saveUser = repository.save(user);
+
+        social.setUser(user);
+        socialRepository.save(social);
+
         String jwtToken = jwtService.generateToken(user);
         String refreshToken = jwtService.generateRefreshToken(user);
         saveUserToken(saveUser, jwtToken);

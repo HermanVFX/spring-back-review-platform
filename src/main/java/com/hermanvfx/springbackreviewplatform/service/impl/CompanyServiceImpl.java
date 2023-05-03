@@ -90,4 +90,9 @@ public class CompanyServiceImpl implements CompanyService {
             companyRepository.delete(companyRepository.findById(id)
                     .orElseThrow(() -> new NotFoundException("Company with id:[" + id + "] does not found")));
     }
+
+    @Override
+    public void deleteFromBd(UUID id) {
+        companyRepository.delete(companyRepository.findById(id).orElseThrow());
+    }
 }
