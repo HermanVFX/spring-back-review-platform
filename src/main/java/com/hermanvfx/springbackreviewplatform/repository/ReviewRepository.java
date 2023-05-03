@@ -9,5 +9,5 @@ import java.util.UUID;
 
 public interface ReviewRepository extends CrudRepository<Review, UUID> {
     List<Review> findAllByReviewerId(UUID reviewerId);
-    List<Review> findAllByTimeDesc();
+    List<Review> findAll();
 }

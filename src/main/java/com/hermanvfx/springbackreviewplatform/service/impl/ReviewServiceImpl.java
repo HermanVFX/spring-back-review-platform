@@ -39,7 +39,7 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public ReviewListDto findAllReviews(Pageable pageable) {
-        List<ReviewDto> list = reviewMapper.listReviewToListReviewDto(reviewRepository.findAllByTimeDesc());
+        List<ReviewDto> list = reviewMapper.listReviewToListReviewDto(reviewRepository.findAll());
 
         int last = pageable.getPageNumber() * pageable.getPageSize();
         int first = last - pageable.getPageSize();
