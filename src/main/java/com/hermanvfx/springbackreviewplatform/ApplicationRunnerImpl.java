@@ -155,7 +155,7 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
             company.setCreate(OffsetDateTime.now());
 
             Commentary commentary = new Commentary();
-            commentary.setText(faker.lorem().paragraph());
+            commentary.setText(faker.lorem().paragraph(155));
             commentary.setLikes(150);
             commentary.setDislikes(23);
             commentary.setCreate(OffsetDateTime.now());
@@ -199,7 +199,7 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
             List<Commentary> commentaryList = new ArrayList<>();
             for (int j = 0; j < 10; j++) {
                 Commentary commentary = new Commentary();
-                commentary.setText(faker.lorem().paragraph());
+                commentary.setText(faker.lorem().paragraph(144));
                 commentary.setLikes(150);
                 commentary.setDislikes(23);
                 commentary.setCreate(OffsetDateTime.now());
