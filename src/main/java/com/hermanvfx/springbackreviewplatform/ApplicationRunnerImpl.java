@@ -75,7 +75,7 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
         var userAdminMock5 = User.builder()
                 .firstName("Александр")
                 .lastName("Красавцев")
-                .avatar("https://i.ytimg.com/vi/uOOwNdMej4Y/maxresdefault.jpg%22")
+                .avatar("https://i.ytimg.com/vi/p3aOgllm0ck/maxresdefault.jpg")
                 .password(encoder.encode("nagibator228"))
                 .email("nagibator3000")
                 .id(UUID.fromString("16e4d516-e9d1-11ed-a05b-0242ac120003"))
