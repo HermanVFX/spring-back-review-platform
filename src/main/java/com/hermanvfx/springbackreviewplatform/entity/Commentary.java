@@ -1,6 +1,7 @@
 package com.hermanvfx.springbackreviewplatform.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -53,6 +54,7 @@ public class Commentary {
 
     @ManyToOne
     @JoinColumn(name="sub_commentary_id")
+    @Max(500)
     private Commentary commentary;
 
     @OneToMany(cascade = CascadeType.ALL)
