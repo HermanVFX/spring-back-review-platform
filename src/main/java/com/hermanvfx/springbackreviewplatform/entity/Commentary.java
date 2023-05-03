@@ -22,7 +22,7 @@ public class Commentary {
     @GeneratedValue(generator = "UUID")
     private UUID id;
 
-    @Column(name = "commentary_text", nullable = false)
+    @Column(name = "commentary_text", nullable = false, length = 500)
     private String text;
 
     @Column(
@@ -54,7 +54,6 @@ public class Commentary {
 
     @ManyToOne
     @JoinColumn(name="sub_commentary_id")
-    @Max(500)
     private Commentary commentary;
 
     @OneToMany(cascade = CascadeType.ALL)

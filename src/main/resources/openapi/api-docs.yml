@@ -828,6 +828,53 @@ paths:
         '500':
           description: Server error
 
+  /api/v1/review/userId={reviewId}&page={page}&size={size}:
+    get:
+      tags:
+        - Review
+      summary: Find all review by user id
+      operationId: findAllReviewByUserId
+      parameters:
+        - in: header
+          name: authorization
+          required: true
+          schema:
+            type: string
+        - name: reviewId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+            nullable: false
+        - name: page
+          in: path
+          required: true
+          schema:
+            type: integer
+            nullable: false
+        - name: size
+          in: path
+          required: true
+          schema:
+            type: integer
+            nullable: false
+      responses:
+        '200':
+          description: Get review
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReviewListDto'
+        '400':
+          description: Invalid request
+        '404':
+          description: Resource not found
+        '405':
+          description: Method is not available
+        '500':
+          description: Server error
+
   /api/v1/review/{reviewId}:
     get:
       tags:

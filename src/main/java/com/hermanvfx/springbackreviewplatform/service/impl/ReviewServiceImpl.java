@@ -13,6 +13,7 @@ import com.hermanvfx.springbackreviewplatform.mapper.UserMapper;
 import com.hermanvfx.springbackreviewplatform.repository.ReviewRepository;
 import com.hermanvfx.springbackreviewplatform.security.token.TokenRepository;
 import com.hermanvfx.springbackreviewplatform.service.ReviewService;
+import com.hermanvfx.springbackreviewplatform.util.Pagination;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -54,6 +55,20 @@ public class ReviewServiceImpl implements ReviewService {
 
         return new ReviewListDto()
                 .content(list.subList(first, last))
+                .totalPages(BigDecimal.valueOf(page.getTotalPages()))
+                .totalElements(BigDecimal.valueOf(page.getTotalElements()))
+                .currentPage(BigDecimal.valueOf(pageable.getPageNumber()));
+    }
+
+    @Override
+    public ReviewListDto findAllReviewsByUser(Pageable pageable, UUID userId) {
+        List<ReviewDto> list = reviewMapper.listReviewToListReviewDto(reviewRepository.findAllByReviewerId(userId));
+        list.addAll(reviewMapper.listReviewToListReviewDto(reviewRepository.findAllByStudentId(userId)));
+
+        Page<ReviewDto> page = new Pagination<ReviewDto>().addPagination(list, pageable);
+
+        return new ReviewListDto()
+                .content(page.getContent())
                 .totalPages(BigDecimal.valueOf(page.getTotalPages()))
                 .totalElements(BigDecimal.valueOf(page.getTotalElements()))
                 .currentPage(BigDecimal.valueOf(pageable.getPageNumber()));
@@ -148,7 +163,7 @@ public class ReviewServiceImpl implements ReviewService {
 
 
     @Override
-    public ReviewDto findUserById(UUID reviewId) {
+    public ReviewDto findReviewById(UUID reviewId) {
         return reviewMapper.reviewToReviewDto(reviewRepository.findById(reviewId)
                 .orElseThrow(() -> new NotFoundException("Review with id:[" + reviewId + "] does not found")));
     }

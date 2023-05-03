@@ -80,8 +80,18 @@ public class ReviewController implements ReviewApi {
     }
 
     @Override
+    public ResponseEntity<ReviewListDto> findAllReviewByUserId(
+            String authorization,
+            UUID userId,
+            Integer page,
+            Integer size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return new ResponseEntity<>(reviewService.findAllReviewsByUser(pageable, userId) ,HttpStatus.OK);
+    }
+
+    @Override
     public ResponseEntity<ReviewDto> findReviewById(String authorization, UUID reviewId) {
-        return new ResponseEntity<>(reviewService.findUserById(reviewId), HttpStatus.OK);
+        return new ResponseEntity<>(reviewService.findReviewById(reviewId), HttpStatus.OK);
     }
 
 

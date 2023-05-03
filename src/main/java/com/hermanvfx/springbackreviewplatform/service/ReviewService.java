@@ -12,13 +12,15 @@ public interface ReviewService {
 
     ReviewListDto findAllReviews(Pageable pageable);
 
+    ReviewListDto findAllReviewsByUser(Pageable pageable, UUID userId);
+
     ReviewListDto findTobeReviews(Pageable pageable);
 
     ReviewListDto findPassedReviews(Pageable pageable);
 
     ReviewListDto findCanceledReviews(Pageable pageable);
 
-    ReviewDto findUserById(UUID reviewId);
+    ReviewDto findReviewById(UUID reviewId);
 
     ReviewDto create(ShortReviewDto review);
 

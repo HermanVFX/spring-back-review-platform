@@ -14,6 +14,7 @@ import com.hermanvfx.springbackreviewplatform.mapper.UserMapper;
 import com.hermanvfx.springbackreviewplatform.repository.SocialRepository;
 import com.hermanvfx.springbackreviewplatform.repository.UserRepository;
 import com.hermanvfx.springbackreviewplatform.service.UserService;
+import com.hermanvfx.springbackreviewplatform.util.Pagination;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -43,19 +44,10 @@ public class UserServiceImpl implements UserService {
 
         List<UserDto> list = userMapper.listUserToListUserDto(userRepository.findAll());
 
-        int last = pageable.getPageNumber() * pageable.getPageSize();
-        int first = last - pageable.getPageSize();
-
-        if (list.size() < first) {
-            throw new NotFoundException("User not found");
-        } else if (list.size() < last) {
-            last = list.size();
-        }
-
-        Page<UserDto> page = new PageImpl<>(list.subList(first, last), pageable, list.size());
+        Page<UserDto> page = new Pagination<UserDto>().addPagination(list, pageable);
 
         return new UserListDto()
-                .content(list.subList(first, last))
+                .content(page.getContent())
                 .totalPages(BigDecimal.valueOf(page.getTotalPages()))
                 .totalElements(BigDecimal.valueOf(page.getTotalElements()))
                 .currentPage(BigDecimal.valueOf(pageable.getPageNumber()));
