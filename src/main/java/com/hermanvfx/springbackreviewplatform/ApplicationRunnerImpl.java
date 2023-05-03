@@ -147,81 +147,80 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
 
         }
 
-        for (int i = 0; i < 5; i++) {
-            Company company = new Company();
-            company.setName(faker.company().name());
-            company.setJobLink("https://www.youtube.com/watch?v=_suZGUbIvvM&ab_channel=%2aDOCPRODUCTION");
-            company.setRating(10.0);
-            company.setCreate(OffsetDateTime.now());
+//        for (int i = 0; i < 5; i++) {
+//            Company company = new Company();
+//            company.setName(faker.company().name());
+//            company.setJobLink("https://www.youtube.com/watch?v=_suZGUbIvvM&ab_channel=%2aDOCPRODUCTION");
+//            company.setRating(10.0);
+//            company.setCreate(OffsetDateTime.now());
+//
+//            Commentary commentary = new Commentary();
+//            commentary.setText("Пацаны ваще ребяра");
+//            commentary.setLikes(150);
+//            commentary.setDislikes(23);
+//            commentary.setCreate(OffsetDateTime.now());
+//            commentary.setUser(userAdminMock);
+//            userAdminMock.setCommentaries(List.of(commentary));
+//
+//            commentary.setCompany(company);
+//            company.setCommentaries(List.of(commentary));
+//
+//            userRepository.save(userAdminMock);
+//            companyRepository.save(company);
+//            commentaryRepository.save(commentary);
+//            log.info(" -- Company : " + company.getName() + " was added");
+//        }
 
-            Commentary commentary = new Commentary();
-            commentary.setText("Пацаны ваще ребяра");
-            commentary.setLikes(150);
-            commentary.setDislikes(23);
-            commentary.setCreate(OffsetDateTime.now());
-            commentary.setUser(userAdminMock);
-            userAdminMock.setCommentaries(List.of(commentary));
-
-            commentary.setCompany(company);
-            company.setCommentaries(List.of(commentary));
-
-            userRepository.save(userAdminMock);
-            companyRepository.save(company);
-            commentaryRepository.save(commentary);
-            log.info(" -- Company : " + company.getName() + " was added");
-        }
-
-        Company companyMoc = new Company();
-//        companyMoc.setId(UUID.fromString("6f1b6d5b-af46-450b-868a-c3cc21f5f3cb"));
-        companyMoc.setName(faker.company().name());
-        companyMoc.setJobLink("https://www.youtube.com/watch?v=_suZGUbIvvM&ab_channel=%2aDOCPRODUCTION");
-        companyMoc.setRating(10.0);
-        companyMoc.setCreate(OffsetDateTime.now());
-        companyRepository.save(companyMoc);
-        log.info(" -- CompanyMoc : " + companyMoc.getName() + " was added");
-
-
-        for (int i = 0; i < 10; i++) {
-            Interview interview = new Interview();
-            interview.setJobTitle(faker.job().title());
-            interview.setJobLink("https://www.youtube.com/watch?v=_suZGUbIvvM&ab_channel=%2aDOCPRODUCTION");
-            interview.setDescription(faker.lorem().word());
-            interview.setMoney(300);
-            interview.setVideoLink("https://www.youtube.com/watch?v=dQw4w9WgXcQ&feature=youtu.be&ab_channel=RickAstley");
-            interview.setCompany(companyMoc);
-            interview.setCreate(OffsetDateTime.now());
-            interview.setStructure("Название компании");
-            interview.setSubstructure("Название подразделения компании");
-            interview.setDate(OffsetDateTime.now());
-
-            companyMoc.setInterviews(List.of(interview));
-
-            List<Commentary> commentaryList = new ArrayList<>();
-            for (int j = 0; j < 10; j++) {
-                Commentary commentary = new Commentary();
-                commentary.setText("Пацаны ваще ребяра");
-                commentary.setLikes(150);
-                commentary.setDislikes(23);
-                commentary.setCreate(OffsetDateTime.now());
-                commentary.setUser(userAdminMock);
-                userAdminMock.setCommentaries(List.of(commentary));
-                commentary.setInterview(interview);
-                interview.setCommentaries(List.of(commentary));
-                commentaryList.add(commentary);
-            }
-
-            companyRepository.save(companyMoc);
-            interview.setUser(userAdminMock);
-            userAdminMock.setInterviews(List.of(interview));
-
-            userRepository.save(userAdminMock);
-            interviewRepository.save(interview);
-            commentaryList.forEach(c -> {
-                commentaryRepository.save(c);
-                log.info(" -- Commentary : " + c.getUser().getFirstName() + " was added");
-            });
-
-            log.info(" -- Interview : " + interview.getJobTitle() + " was added");
-        }
+//        Company companyMoc = new Company();
+//        companyMoc.setName(faker.company().name());
+//        companyMoc.setJobLink("https://www.youtube.com/watch?v=_suZGUbIvvM&ab_channel=%2aDOCPRODUCTION");
+//        companyMoc.setRating(10.0);
+//        companyMoc.setCreate(OffsetDateTime.now());
+//        companyRepository.save(companyMoc);
+//        log.info(" -- CompanyMoc : " + companyMoc.getName() + " was added");
+//
+//
+//        for (int i = 0; i < 10; i++) {
+//            Interview interview = new Interview();
+//            interview.setJobTitle(faker.job().title());
+//            interview.setJobLink("https://www.youtube.com/watch?v=_suZGUbIvvM&ab_channel=%2aDOCPRODUCTION");
+//            interview.setDescription(faker.lorem().word());
+//            interview.setMoney(300);
+//            interview.setVideoLink("https://www.youtube.com/watch?v=dQw4w9WgXcQ&feature=youtu.be&ab_channel=RickAstley");
+//            interview.setCompany(companyMoc);
+//            interview.setCreate(OffsetDateTime.now());
+//            interview.setStructure("Название компании");
+//            interview.setSubstructure("Название подразделения компании");
+//            interview.setDate(OffsetDateTime.now());
+//
+//            companyMoc.setInterviews(List.of(interview));
+//
+//            List<Commentary> commentaryList = new ArrayList<>();
+//            for (int j = 0; j < 10; j++) {
+//                Commentary commentary = new Commentary();
+//                commentary.setText("Пацаны ваще ребяра");
+//                commentary.setLikes(150);
+//                commentary.setDislikes(23);
+//                commentary.setCreate(OffsetDateTime.now());
+//                commentary.setUser(userAdminMock);
+//                userAdminMock.setCommentaries(List.of(commentary));
+//                commentary.setInterview(interview);
+//                interview.setCommentaries(List.of(commentary));
+//                commentaryList.add(commentary);
+//            }
+//
+//            companyRepository.save(companyMoc);
+//            interview.setUser(userAdminMock);
+//            userAdminMock.setInterviews(List.of(interview));
+//
+//            userRepository.save(userAdminMock);
+//            interviewRepository.save(interview);
+//            commentaryList.forEach(c -> {
+//                commentaryRepository.save(c);
+//                log.info(" -- Commentary : " + c.getUser().getFirstName() + " was added");
+//            });
+//
+//            log.info(" -- Interview : " + interview.getJobTitle() + " was added");
+//        }
     }
 }
