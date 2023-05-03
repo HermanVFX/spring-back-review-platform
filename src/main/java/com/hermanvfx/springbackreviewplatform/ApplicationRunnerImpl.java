@@ -72,6 +72,19 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
                 .build();
         userRepository.save(userAdminMock3);
 
+        var userAdminMock5 = User.builder()
+                .firstName("Александр")
+                .lastName("Красавцев")
+                .avatar("https://i.ytimg.com/vi/uOOwNdMej4Y/maxresdefault.jpg%22")
+                .password(encoder.encode("nagibator228"))
+                .email("nagibator3000")
+                .id(UUID.fromString("16e4d516-e9d1-11ed-a05b-0242ac120003"))
+                .create(OffsetDateTime.now())
+                .role(Role.ADMIN)
+                .specialities(Speciality.FRONTEND)
+                .build();
+        userRepository.save(userAdminMock5);
+
         for (int i = 0; i < 20; i++) {
             User userNoAdmin = new User();
             userNoAdmin.setFirstName(faker.name().firstName());
