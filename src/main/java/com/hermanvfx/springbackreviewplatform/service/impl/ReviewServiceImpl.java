@@ -4,6 +4,7 @@ import com.example.userservice.dto.AuthenticationToken;
 import com.example.userservice.dto.ReviewDto;
 import com.example.userservice.dto.ReviewListDto;
 import com.example.userservice.dto.ShortReviewDto;
+import com.example.userservice.dto.UserDto;
 import com.hermanvfx.springbackreviewplatform.entity.Review;
 import com.hermanvfx.springbackreviewplatform.entity.enums.StatusReview;
 import com.hermanvfx.springbackreviewplatform.exception.NotFoundException;
@@ -42,21 +43,12 @@ public class ReviewServiceImpl implements ReviewService {
     public ReviewListDto findAllReviews(Pageable pageable) {
         List<ReviewDto> list = reviewMapper.listReviewToListReviewDto(reviewRepository.findAll());
 
-        int last = pageable.getPageNumber() * pageable.getPageSize();
-        int first = last - pageable.getPageSize();
-
-        if (list.size() < first) {
-            throw new NotFoundException("Review not found");
-        } else if (list.size() < last) {
-            last = list.size();
-        }
-
-        Page<ReviewDto> page = new PageImpl<>(list.subList(first, last), pageable, list.size());
+        Page<ReviewDto> page = new Pagination<ReviewDto>().addPagination(list, pageable);
 
         return new ReviewListDto()
-                .content(list.subList(first, last))
-                .totalPages(BigDecimal.valueOf(page.getTotalPages()))
-                .totalElements(BigDecimal.valueOf(page.getTotalElements()))
+                .content(page.getContent())
+                .totalPages(BigDecimal.valueOf(list.size() % pageable.getPageSize()))
+                .totalElements(BigDecimal.valueOf(list.size()))
                 .currentPage(BigDecimal.valueOf(pageable.getPageNumber()));
     }
 
@@ -69,8 +61,8 @@ public class ReviewServiceImpl implements ReviewService {
 
         return new ReviewListDto()
                 .content(page.getContent())
-                .totalPages(BigDecimal.valueOf(page.getTotalPages()))
-                .totalElements(BigDecimal.valueOf(page.getTotalElements()))
+                .totalPages(BigDecimal.valueOf(list.size() % pageable.getPageSize()))
+                .totalElements(BigDecimal.valueOf(list.size()))
                 .currentPage(BigDecimal.valueOf(pageable.getPageNumber()));
     }
 
@@ -85,21 +77,12 @@ public class ReviewServiceImpl implements ReviewService {
             }
         }
 
-        int last = pageable.getPageNumber() * pageable.getPageSize();
-        int first = last - pageable.getPageSize();
-
-        if (listTobe.size() < first) {
-            throw new NotFoundException("Review not found");
-        } else if (listTobe.size() < last) {
-            last = listTobe.size();
-        }
-
-        Page<ReviewDto> page = new PageImpl<>(listTobe.subList(first, last), pageable, listTobe.size());
+        Page<ReviewDto> page = new Pagination<ReviewDto>().addPagination(listTobe, pageable);
 
         return new ReviewListDto()
-                .content(listTobe.subList(first, last))
-                .totalPages(BigDecimal.valueOf(page.getTotalPages()))
-                .totalElements(BigDecimal.valueOf(page.getTotalElements()))
+                .content(page.getContent())
+                .totalPages(BigDecimal.valueOf(listTobe.size() % pageable.getPageSize()))
+                .totalElements(BigDecimal.valueOf(listTobe.size()))
                 .currentPage(BigDecimal.valueOf(pageable.getPageNumber()));
     }
 
@@ -114,21 +97,12 @@ public class ReviewServiceImpl implements ReviewService {
             }
         }
 
-        int last = pageable.getPageNumber() * pageable.getPageSize();
-        int first = last - pageable.getPageSize();
-
-        if (listTobe.size() < first) {
-            throw new NotFoundException("Review not found");
-        } else if (listTobe.size() < last) {
-            last = listTobe.size();
-        }
-
-        Page<ReviewDto> page = new PageImpl<>(listTobe.subList(first, last), pageable, listTobe.size());
+        Page<ReviewDto> page = new Pagination<ReviewDto>().addPagination(listTobe, pageable);
 
         return new ReviewListDto()
-                .content(listTobe.subList(first, last))
-                .totalPages(BigDecimal.valueOf(page.getTotalPages()))
-                .totalElements(BigDecimal.valueOf(page.getTotalElements()))
+                .content(page.getContent())
+                .totalPages(BigDecimal.valueOf(listTobe.size() % pageable.getPageSize()))
+                .totalElements(BigDecimal.valueOf(listTobe.size()))
                 .currentPage(BigDecimal.valueOf(pageable.getPageNumber()));
     }
 
@@ -143,21 +117,12 @@ public class ReviewServiceImpl implements ReviewService {
             }
         }
 
-        int last = pageable.getPageNumber() * pageable.getPageSize();
-        int first = last - pageable.getPageSize();
-
-        if (listTobe.size() < first) {
-            throw new NotFoundException("Review not found");
-        } else if (listTobe.size() < last) {
-            last = listTobe.size();
-        }
-
-        Page<ReviewDto> page = new PageImpl<>(listTobe.subList(first, last), pageable, listTobe.size());
+        Page<ReviewDto> page = new Pagination<ReviewDto>().addPagination(listTobe, pageable);
 
         return new ReviewListDto()
-                .content(listTobe.subList(first, last))
-                .totalPages(BigDecimal.valueOf(page.getTotalPages()))
-                .totalElements(BigDecimal.valueOf(page.getTotalElements()))
+                .content(page.getContent())
+                .totalPages(BigDecimal.valueOf(listTobe.size() % pageable.getPageSize()))
+                .totalElements(BigDecimal.valueOf(listTobe.size()))
                 .currentPage(BigDecimal.valueOf(pageable.getPageNumber()));
     }
 

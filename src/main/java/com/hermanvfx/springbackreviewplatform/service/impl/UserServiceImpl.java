@@ -48,8 +48,8 @@ public class UserServiceImpl implements UserService {
 
         return new UserListDto()
                 .content(page.getContent())
-                .totalPages(BigDecimal.valueOf(page.getTotalPages()))
-                .totalElements(BigDecimal.valueOf(page.getTotalElements()))
+                .totalPages(BigDecimal.valueOf(list.size() % pageable.getPageSize()))
+                .totalElements(BigDecimal.valueOf(list.size()))
                 .currentPage(BigDecimal.valueOf(pageable.getPageNumber()));
     }
 

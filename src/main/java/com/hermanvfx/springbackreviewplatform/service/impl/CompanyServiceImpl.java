@@ -2,12 +2,14 @@ package com.hermanvfx.springbackreviewplatform.service.impl;
 
 import com.example.userservice.dto.CompanyDto;
 import com.example.userservice.dto.CompanyListDto;
+import com.example.userservice.dto.InterviewDto;
 import com.example.userservice.dto.ShortCompanyDto;
 import com.hermanvfx.springbackreviewplatform.entity.Company;
 import com.hermanvfx.springbackreviewplatform.exception.NotFoundException;
 import com.hermanvfx.springbackreviewplatform.mapper.CompanyMapper;
 import com.hermanvfx.springbackreviewplatform.repository.CompanyRepository;
 import com.hermanvfx.springbackreviewplatform.service.CompanyService;
+import com.hermanvfx.springbackreviewplatform.util.Pagination;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -34,21 +36,12 @@ public class CompanyServiceImpl implements CompanyService {
     public CompanyListDto findAllCompany(Pageable pageable) {
         List<CompanyDto> list = companyMapper.listCompanyToListCompanyDto(companyRepository.findAll());
 
-        int last = pageable.getPageNumber() * pageable.getPageSize();
-        int first = last - pageable.getPageSize();
-
-        if (list.size() < first) {
-            throw new NotFoundException("Company not found");
-        } else if (list.size() < last) {
-            last = list.size();
-        }
-
-        Page<CompanyDto> page = new PageImpl<>(list.subList(first, last), pageable, list.size());
+        Page<CompanyDto> page = new Pagination<CompanyDto>().addPagination(list, pageable);
 
         return new CompanyListDto()
-                .content(list.subList(first, last))
+                .content(page.getContent())
                 .totalPages(BigDecimal.valueOf(page.getTotalPages()))
-                .totalElements(BigDecimal.valueOf(page.getTotalElements()))
+                .totalElements(BigDecimal.valueOf(list.size()))
                 .currentPage(BigDecimal.valueOf(pageable.getPageNumber()));
     }
 

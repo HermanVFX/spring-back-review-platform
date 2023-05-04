@@ -2,6 +2,7 @@ package com.hermanvfx.springbackreviewplatform.service.impl;
 
 import com.example.userservice.dto.InterviewDto;
 import com.example.userservice.dto.InterviewListDto;
+import com.example.userservice.dto.ReviewDto;
 import com.example.userservice.dto.ShortInterviewDto;
 import com.hermanvfx.springbackreviewplatform.entity.Company;
 import com.hermanvfx.springbackreviewplatform.entity.Interview;
@@ -12,6 +13,7 @@ import com.hermanvfx.springbackreviewplatform.repository.CompanyRepository;
 import com.hermanvfx.springbackreviewplatform.repository.InterviewRepository;
 import com.hermanvfx.springbackreviewplatform.security.token.TokenRepository;
 import com.hermanvfx.springbackreviewplatform.service.InterviewService;
+import com.hermanvfx.springbackreviewplatform.util.Pagination;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.data.domain.Page;
@@ -40,21 +42,12 @@ public class InterviewServiceImpl implements InterviewService {
     public InterviewListDto findAllInterview(Pageable pageable) {
         List<InterviewDto> list = interviewMapper.iterableInterviewToListInterviewDto(interviewRepository.findAll());
 
-        int last = pageable.getPageNumber() * pageable.getPageSize();
-        int first = last - pageable.getPageSize();
-
-        if (list.size() < first) {
-            throw new NotFoundException("Review not found");
-        } else if (list.size() < last) {
-            last = list.size();
-        }
-
-        Page<InterviewDto> page = new PageImpl<>(list.subList(first, last), pageable, list.size());
+        Page<InterviewDto> page = new Pagination<InterviewDto>().addPagination(list, pageable);
 
         return new InterviewListDto()
-                .content(list.subList(first, last))
+                .content(page.getContent())
                 .totalPages(BigDecimal.valueOf(page.getTotalPages()))
-                .totalElements(BigDecimal.valueOf(page.getTotalElements()))
+                .totalElements(BigDecimal.valueOf(list.size()))
                 .currentPage(BigDecimal.valueOf(pageable.getPageNumber()));
     }
 
