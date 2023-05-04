@@ -135,8 +135,8 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     @Transactional
-    public ReviewDto create(ShortReviewDto review) {
-        var token = review.getAuthData().getToken();
+    public ReviewDto create(ShortReviewDto review, String tokenB) {
+        var token = tokenB.substring(7);
         var authUser = tokenRepository.findByToken(token)
                 .orElseThrow(() -> new NotFoundException("Token not found"))
                 .getUser();

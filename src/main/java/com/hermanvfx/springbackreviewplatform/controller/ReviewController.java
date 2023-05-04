@@ -39,7 +39,7 @@ public class ReviewController implements ReviewApi {
 
     @Override
     public ResponseEntity<ReviewDto> createReview(String authorization, ShortReviewDto shortReviewDto) {
-        ReviewDto newReview = reviewService.create(shortReviewDto);
+        ReviewDto newReview = reviewService.create(shortReviewDto, authorization);
         return new ResponseEntity<>(newReview, HttpStatus.CREATED);
     }
 

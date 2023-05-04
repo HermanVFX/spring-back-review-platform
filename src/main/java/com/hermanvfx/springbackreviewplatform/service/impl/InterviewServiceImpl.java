@@ -59,8 +59,8 @@ public class InterviewServiceImpl implements InterviewService {
 
     @Override
     @Transactional
-    public InterviewDto create(ShortInterviewDto interview) {
-        var token = interview.getAuthData().getToken();
+    public InterviewDto create(ShortInterviewDto interview, String tokenB) {
+        var token = tokenB.substring(7);
         var authUser = tokenRepository.findByToken(token)
                 .orElseThrow(() -> new NotFoundException("Token not found"))
                 .getUser();

@@ -14,9 +14,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
+import java.time.temporal.ChronoUnit;
+import java.util.concurrent.ThreadLocalRandom;
+
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Slf4j
 @Component
@@ -30,10 +36,19 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
     private final InterviewRepository interviewRepository;
     private final PasswordEncoder encoder;
 
+    public static OffsetDateTime generateRandomDateFromCurrent(OffsetDateTime currentDate) {
+        long daysInFuture = ThreadLocalRandom.current().nextInt(0, 365 + 1);
+        return currentDate.plus(daysInFuture, ChronoUnit.DAYS);
+    }
+
     @Override
     public void run(ApplicationArguments args) throws Exception {
 
         Faker faker = new Faker();
+
+        OffsetDateTime currentDate = OffsetDateTime.now(ZoneOffset.UTC);
+        OffsetDateTime randomDate = generateRandomDateFromCurrent(currentDate);
+        System.out.println(randomDate);
 
         var userAdminMock = User.builder()
                 .firstName("Райан")
@@ -89,7 +104,7 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
                 .firstName("Luche")
                 .lastName("Cinema")
                 .avatar("https://steamuserimages-a.akamaihd.net/ugc/856104172566104759/1369BFF9A3B63B57C9AB28E2C219F6692BD32D6C/")
-                .password(encoder.encode("UOOvn34"))
+                .password(encoder.encode("uoovn34"))
                 .email("shipoklyk")
                 .id(UUID.fromString("16e4d516-e9d1-11ed-a05b-0242ac120003"))
                 .create(OffsetDateTime.now())
@@ -137,7 +152,7 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
 
             Review review = new Review();
             review.setTheme("Theme");
-            review.setTime(OffsetDateTime.now());
+            review.setTime(generateRandomDateFromCurrent(currentDate));
             review.setStudent(user);
             review.setReviewer(user2);
             review.setSpeciality(Speciality.FRONTEND);
@@ -149,7 +164,7 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
 
             Review review2 = new Review();
             review2.setTheme("Theme");
-            review2.setTime(OffsetDateTime.now());
+            review2.setTime(generateRandomDateFromCurrent(currentDate));
             review2.setStudent(user);
             review2.setReviewer(user2);
             review2.setSpeciality(Speciality.FRONTEND);
@@ -161,7 +176,7 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
 
             Review review3 = new Review();
             review3.setTheme("Theme");
-            review3.setTime(OffsetDateTime.now());
+            review3.setTime(generateRandomDateFromCurrent(currentDate));
             review3.setStudent(user);
             review3.setReviewer(user2);
             review3.setSpeciality(Speciality.FRONTEND);
@@ -248,5 +263,7 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
 
             log.info(" -- Interview : " + interview.getJobTitle() + " was added");
         }
+
+
     }
 }

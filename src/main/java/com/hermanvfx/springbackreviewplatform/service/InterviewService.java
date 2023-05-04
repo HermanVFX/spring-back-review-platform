@@ -13,7 +13,7 @@ public interface InterviewService {
 
     InterviewDto findInterviewById(UUID interviewId);
 
-    InterviewDto create(ShortInterviewDto interview);
+    InterviewDto create(ShortInterviewDto interview, String token);
 
     InterviewDto update(InterviewDto interview, UUID interviewId);
 

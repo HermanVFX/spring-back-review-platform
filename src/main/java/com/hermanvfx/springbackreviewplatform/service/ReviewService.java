@@ -22,7 +22,7 @@ public interface ReviewService {
 
     ReviewDto findReviewById(UUID reviewId);
 
-    ReviewDto create(ShortReviewDto review);
+    ReviewDto create(ShortReviewDto review, String token);
 
     ReviewDto createForUser(ShortReviewDto review);
 

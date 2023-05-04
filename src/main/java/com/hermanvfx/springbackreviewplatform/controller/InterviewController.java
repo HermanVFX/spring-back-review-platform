@@ -23,7 +23,7 @@ public class InterviewController implements InterviewApi {
 
     @Override
     public ResponseEntity<InterviewDto> createInterview(String authorization, ShortInterviewDto shortInterviewDto) {
-        return new ResponseEntity<>(interviewService.create(shortInterviewDto), HttpStatus.CREATED);
+        return new ResponseEntity<>(interviewService.create(shortInterviewDto, authorization), HttpStatus.CREATED);
     }
 
     @Override

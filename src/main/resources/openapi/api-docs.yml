@@ -1429,8 +1429,6 @@ components:
           $ref: '#/components/schemas/CompanyDto'
         user:
           $ref: '#/components/schemas/UserDto'
-        authData:
-          $ref: '#/components/schemas/AuthenticationToken'
 
     InterviewListDto:
       type: object
