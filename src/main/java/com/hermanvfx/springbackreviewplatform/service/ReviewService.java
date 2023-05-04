@@ -24,7 +24,7 @@ public interface ReviewService {
 
     ReviewDto create(ShortReviewDto review, String token);
 
-    ReviewDto createForUser(ShortReviewDto review);
+    ReviewDto createForUser(ShortReviewDto review, String token);
 
     ReviewDto update(ReviewDto review, UUID reviewId);
 

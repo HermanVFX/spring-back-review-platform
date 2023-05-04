@@ -1497,8 +1497,6 @@ components:
           enum:
             - FRONTEND
             - BACKEND
-        authData:
-          $ref: '#/components/schemas/AuthenticationToken'
 
     ReviewListDto:
       type: object
