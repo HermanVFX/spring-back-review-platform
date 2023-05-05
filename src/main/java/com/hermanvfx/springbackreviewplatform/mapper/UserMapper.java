@@ -11,16 +11,14 @@ import java.util.List;
 
 @Mapper(componentModel = "spring",
         uses = {
-                SpecialityMapper.class,
-                ReviewMapper.class,
                 SpecialityMapper.class
         })
 
 public interface UserMapper {
 
     //    Попытка избавиться от цикличности:
-    @Mapping(target = "reviewsReceiving", expression = "java(null)")
-    @Mapping(target = "reviewsStudent", expression = "java(null)")
+//    @Mapping(target = "reviewsReceiving", expression = "java(null)")
+//    @Mapping(target = "reviewsStudent", expression = "java(null)")
     UserDto userToUserDTO(User entity);
 
     UserForReviewDto userToUserForReviewDto(User entity);
