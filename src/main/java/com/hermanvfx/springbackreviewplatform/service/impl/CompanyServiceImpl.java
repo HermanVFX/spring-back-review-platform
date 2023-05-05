@@ -58,7 +58,6 @@ public class CompanyServiceImpl implements CompanyService {
         Company newCompany = companyMapper.shortCompanyDtoToCompany(company);
         newCompany.setCreate(OffsetDateTime.now());
         return companyMapper.companyToCompanyDto(companyRepository.save(newCompany));
-
     }
 
     @Override
