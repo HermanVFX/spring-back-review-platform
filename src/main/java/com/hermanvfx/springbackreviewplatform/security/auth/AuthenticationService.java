@@ -2,10 +2,12 @@ package com.hermanvfx.springbackreviewplatform.security.auth;
 
 import com.example.userservice.dto.AuthenticationRequest;
 import com.example.userservice.dto.SocialDto;
+import com.example.userservice.dto.UserDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hermanvfx.springbackreviewplatform.entity.Social;
 import com.hermanvfx.springbackreviewplatform.entity.User;
 import com.hermanvfx.springbackreviewplatform.entity.enums.Role;
+import com.hermanvfx.springbackreviewplatform.mapper.UserMapper;
 import com.hermanvfx.springbackreviewplatform.repository.SocialRepository;
 import com.hermanvfx.springbackreviewplatform.repository.UserRepository;
 import com.hermanvfx.springbackreviewplatform.security.JwtService;
@@ -37,6 +39,7 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final TokenRepository tokenRepository;
     private final SocialRepository socialRepository;
+    private final UserMapper userMapper;
 
     public AuthenticationResponse register(RegisterRequest request) {
 
@@ -152,5 +155,16 @@ public class AuthenticationService {
                 new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
             }
         }
+    }
+
+    public UserDto getUserByToken(HttpServletRequest request, HttpServletResponse response) {
+        final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+        final String token;
+        if (authHeader == null ||!authHeader.startsWith("Bearer ")) {
+            return null;
+        }
+        token = authHeader.substring(7);
+        var usetEntity = tokenRepository.findByToken(token).orElseThrow().getUser();
+        return userMapper.userToUserDTO(usetEntity);
     }
 }

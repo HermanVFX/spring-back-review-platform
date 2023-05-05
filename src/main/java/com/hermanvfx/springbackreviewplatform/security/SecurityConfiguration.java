@@ -1,7 +1,7 @@
 package com.hermanvfx.springbackreviewplatform.security;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
+//import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -36,11 +36,11 @@ public class SecurityConfiguration {
                     .csrf()
                         .disable()
                     .authorizeHttpRequests()
-                    .requestMatchers(EndpointRequest.to("prometheus")).permitAll()
+//                    .requestMatchers(EndpointRequest.to("prometheus")).permitAll()
                     .requestMatchers("/api/v1/auth/**")
                     .permitAll()
-                    .requestMatchers(EndpointRequest.to("prometheus"))
-                    .permitAll()
+//                    .requestMatchers(EndpointRequest.to("prometheus"))
+//                    .permitAll()
                     .anyRequest()
                     //.permitAll()
                     .authenticated()

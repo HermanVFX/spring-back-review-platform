@@ -1,6 +1,7 @@
 package com.hermanvfx.springbackreviewplatform.security.auth;
 
 import com.example.userservice.dto.AuthenticationRequest;
+import com.example.userservice.dto.UserDto;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -39,6 +40,14 @@ public class AuthenticationController {
             HttpServletResponse response
     ) throws IOException {
         service.refreshToken(request, response);
+    }
+
+    @PostMapping("/whoiam")
+    public ResponseEntity<UserDto> getUserByToken(
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) throws IOException {
+        return ResponseEntity.ok(service.getUserByToken(request, response));
     }
 }
 
