@@ -168,10 +168,10 @@ public class ReviewServiceImpl implements ReviewService {
 
         oldReview.setUpdate(OffsetDateTime.now());
 
-        oldReview.setReviewer(userMapper.userDtoToUser(review.getReviewer()));
+        oldReview.setReviewer(userMapper.userForReviewDtoToUser(review.getReviewer()));
         oldReview.setLink(review.getLink());
         oldReview.setSpeciality(specialityMapper.specialityEnumToSpeciality(review.getSpeciality()));
-        oldReview.setStudent(userMapper.userDtoToUser(review.getStudent()));
+        oldReview.setStudent(userMapper.userForReviewDtoToUser(review.getStudent()));
         oldReview.setTheme(review.getTheme());
         oldReview.setTime(review.getTime());
 

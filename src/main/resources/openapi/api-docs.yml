@@ -1191,6 +1191,37 @@ components:
           type: string
           description: User email
 
+
+    UserForReviewDto:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        firstName:
+          type: string
+          description: User first name
+        lastName:
+          type: string
+          description: User last name
+        avatar:
+          type: string
+          description: User avatar url
+        role:
+          type: string
+          enum:
+            - USER
+            - ADMIN
+        specialities:
+          type: string
+          enum:
+            - FRONTEND
+            - BACKEND
+        socials:
+          type: array
+          items:
+            $ref: '#/components/schemas/SocialDto'
+
     SocialDto:
       type: object
       properties:
@@ -1478,9 +1509,9 @@ components:
             - PASSED
             - CANCELED
         reviewer:
-          $ref: '#/components/schemas/UserDto'
+          $ref: '#/components/schemas/UserForReviewDto'
         student:
-          $ref: '#/components/schemas/UserDto'
+          $ref: '#/components/schemas/UserForReviewDto'
 
     ShortReviewDto:
       type: object
