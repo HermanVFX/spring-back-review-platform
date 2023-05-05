@@ -1,6 +1,7 @@
 package com.hermanvfx.springbackreviewplatform.security;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -16,7 +17,6 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Configuration
@@ -36,6 +36,7 @@ public class SecurityConfiguration {
                     .csrf()
                         .disable()
                     .authorizeHttpRequests()
+                    .requestMatchers(EndpointRequest.to("prometheus")).permitAll()
                     .requestMatchers("/api/v1/auth/**")
                     .permitAll()
                     .requestMatchers(EndpointRequest.to("prometheus"))
