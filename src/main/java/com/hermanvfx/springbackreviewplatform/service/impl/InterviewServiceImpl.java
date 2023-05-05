@@ -46,7 +46,7 @@ public class InterviewServiceImpl implements InterviewService {
 
         return new InterviewListDto()
                 .content(page.getContent())
-                .totalPages(BigDecimal.valueOf(Math.ceil((double) list.size() / pageable.getPageSize())))
+                .totalPages(BigDecimal.valueOf((int) Math.ceil((double) list.size() / pageable.getPageSize())))
                 .totalElements(BigDecimal.valueOf(list.size()))
                 .currentPage(BigDecimal.valueOf(pageable.getPageNumber()));
     }

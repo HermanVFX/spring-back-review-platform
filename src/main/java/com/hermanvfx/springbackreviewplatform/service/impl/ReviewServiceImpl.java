@@ -47,7 +47,7 @@ public class ReviewServiceImpl implements ReviewService {
 
         return new ReviewListDto()
                 .content(page.getContent())
-                .totalPages(BigDecimal.valueOf(Math.ceil((double) list.size() / pageable.getPageSize())))
+                .totalPages(BigDecimal.valueOf((int) Math.ceil((double) list.size() / pageable.getPageSize())))
                 .totalElements(BigDecimal.valueOf(list.size()))
                 .currentPage(BigDecimal.valueOf(pageable.getPageNumber()));
     }
@@ -61,7 +61,7 @@ public class ReviewServiceImpl implements ReviewService {
 
         return new ReviewListDto()
                 .content(page.getContent())
-                .totalPages(BigDecimal.valueOf(Math.ceil((double) list.size() / pageable.getPageSize())))
+                .totalPages(BigDecimal.valueOf((int) Math.ceil((double) list.size() / pageable.getPageSize())))
                 .totalElements(BigDecimal.valueOf(list.size()))
                 .currentPage(BigDecimal.valueOf(pageable.getPageNumber()));
     }
@@ -81,7 +81,7 @@ public class ReviewServiceImpl implements ReviewService {
 
         return new ReviewListDto()
                 .content(page.getContent())
-                .totalPages(BigDecimal.valueOf(Math.ceil((double) list.size() / pageable.getPageSize())))
+                .totalPages(BigDecimal.valueOf((int) Math.ceil((double) list.size() / pageable.getPageSize())))
                 .totalElements(BigDecimal.valueOf(listTobe.size()))
                 .currentPage(BigDecimal.valueOf(pageable.getPageNumber()));
     }
@@ -101,7 +101,7 @@ public class ReviewServiceImpl implements ReviewService {
 
         return new ReviewListDto()
                 .content(page.getContent())
-                .totalPages(BigDecimal.valueOf(Math.ceil((double) listTobe.size() / pageable.getPageSize())))
+                .totalPages(BigDecimal.valueOf((int) Math.ceil((double) listTobe.size() / pageable.getPageSize())))
                 .totalElements(BigDecimal.valueOf(listTobe.size()))
                 .currentPage(BigDecimal.valueOf(pageable.getPageNumber()));
     }
@@ -121,7 +121,7 @@ public class ReviewServiceImpl implements ReviewService {
 
         return new ReviewListDto()
                 .content(page.getContent())
-                .totalPages(BigDecimal.valueOf(Math.ceil((double) listTobe.size() / pageable.getPageSize())))
+                .totalPages(BigDecimal.valueOf((int) Math.ceil((double) listTobe.size() / pageable.getPageSize())))
                 .totalElements(BigDecimal.valueOf(listTobe.size()))
                 .currentPage(BigDecimal.valueOf(pageable.getPageNumber()));
     }

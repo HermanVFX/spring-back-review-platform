@@ -40,7 +40,7 @@ public class CompanyServiceImpl implements CompanyService {
 
         return new CompanyListDto()
                 .content(page.getContent())
-                .totalPages(BigDecimal.valueOf(Math.ceil((double) list.size() / pageable.getPageSize())))
+                .totalPages(BigDecimal.valueOf((int) Math.ceil((double) list.size() / pageable.getPageSize())))
                 .totalElements(BigDecimal.valueOf(list.size()))
                 .currentPage(BigDecimal.valueOf(pageable.getPageNumber()));
     }
