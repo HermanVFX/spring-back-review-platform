@@ -19,8 +19,8 @@ import java.util.List;
 public interface UserMapper {
 
     //    Попытка избавиться от цикличности:
-//    @Mapping(target = "reviewsReceiving", expression = "java(null)")
-//    @Mapping(target = "reviewsStudent", expression = "java(null)")
+    @Mapping(target = "reviewsReceiving", expression = "java(null)")
+    @Mapping(target = "reviewsStudent", expression = "java(null)")
     UserDto userToUserDTO(User entity);
 
     UserForReviewDto userToUserForReviewDto(User entity);
