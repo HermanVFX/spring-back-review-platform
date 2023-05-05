@@ -2,6 +2,7 @@ package com.hermanvfx.springbackreviewplatform.mapper;
 
 import com.example.userservice.dto.ReviewDto;
 import com.example.userservice.dto.ShortReviewDto;
+import com.example.userservice.dto.UserReviewDto;
 import com.hermanvfx.springbackreviewplatform.entity.Review;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -16,6 +17,8 @@ import java.util.List;
 public interface ReviewMapper {
 
     ReviewDto reviewToReviewDto(Review entity);
+
+    UserReviewDto reviewToUserReviewDto(Review entity);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "status", ignore = true)

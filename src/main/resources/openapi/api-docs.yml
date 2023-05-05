@@ -1143,11 +1143,11 @@ components:
         reviewsReceiving:
           type: array
           items:
-            $ref: '#/components/schemas/ReviewDto'
+            $ref: '#/components/schemas/UserReviewDto'
         reviewsStudent:
           type: array
           items:
-            $ref: '#/components/schemas/ReviewDto'
+            $ref: '#/components/schemas/UserReviewDto'
         socials:
           type: array
           items:
@@ -1497,6 +1497,13 @@ components:
           enum:
             - FRONTEND
             - BACKEND
+
+    UserReviewDto:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
 
     ReviewListDto:
       type: object
