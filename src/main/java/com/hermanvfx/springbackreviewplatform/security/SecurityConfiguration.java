@@ -39,6 +39,8 @@ public class SecurityConfiguration {
                     .requestMatchers(EndpointRequest.to("prometheus")).permitAll()
                     .requestMatchers("/api/v1/auth/**")
                     .permitAll()
+                    .requestMatchers(EndpointRequest.to("prometheus"))
+                    .permitAll()
                     .anyRequest()
                     //.permitAll()
                     .authenticated()
