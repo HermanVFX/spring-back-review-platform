@@ -1446,20 +1446,10 @@ components:
         videoLink:
           type: string
           description: Interview videoLink
-        structure:
-          type: string
-          description: Interview structure
-        substructure:
-          type: string
-          description: Interview substructure
         date:
           type: string
           format: date-time
           description: Interview dateInterview
-        company:
-          $ref: '#/components/schemas/CompanyDto'
-        user:
-          $ref: '#/components/schemas/UserDto'
 
     InterviewListDto:
       type: object

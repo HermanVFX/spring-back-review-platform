@@ -230,8 +230,6 @@ public class ApplicationRunnerImpl implements ApplicationRunner {
             interview.setVideoLink("https://www.youtube.com/watch?v=dQw4w9WgXcQ&feature=youtu.be&ab_channel=RickAstley");
             interview.setCompany(companyMoc);
             interview.setCreate(OffsetDateTime.now());
-            interview.setStructure("Название компании");
-            interview.setSubstructure("Название подразделения компании");
             interview.setDate(OffsetDateTime.now());
 
             companyMoc.setInterviews(List.of(interview));

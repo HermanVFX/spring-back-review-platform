@@ -64,13 +64,12 @@ public class InterviewServiceImpl implements InterviewService {
         var authUser = tokenRepository.findByToken(token)
                 .orElseThrow(() -> new NotFoundException("Token not found"))
                 .getUser();
-        Company company = companyRepository.findById(interview.getCompany().getId())
-                .orElseThrow(() -> new NotFoundException("Token not found"));
+//        Company company = companyRepository.findById(interview.getCompany().getId())
+//                .orElseThrow(() -> new NotFoundException("Token not found"));
 
         Interview newInterview = interviewMapper.shortInterviewDtoToInterview(interview);
         newInterview.setCreate(OffsetDateTime.now());
         newInterview.setUser(authUser);
-        newInterview.setCompany(company);
         return interviewMapper.interviewToInterviewDto(interviewRepository.save(newInterview));
     }
 

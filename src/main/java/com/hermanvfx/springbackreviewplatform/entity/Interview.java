@@ -38,11 +38,6 @@ public class Interview {
     @Column(name = "interview_date_time")
     private OffsetDateTime date;
 
-    @Column(name = "interview_structure")
-    private String structure;
-    @Column(name = "interview_substructure")
-    private String substructure;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="company_id")
     private Company company;
