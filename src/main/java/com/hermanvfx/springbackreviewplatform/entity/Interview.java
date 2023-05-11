@@ -26,7 +26,7 @@ public class Interview {
     @Column(name = "interview_job_link")
     private String jobLink;
 
-    @Column(name = "interview_description")
+    @Column(name = "interview_description", length = 20000)
     private String description;
 
     @Column(name = "interview_money")
