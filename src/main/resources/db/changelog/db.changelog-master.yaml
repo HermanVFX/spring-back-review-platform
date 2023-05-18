@@ -1,0 +1,4 @@
+databaseChangeLog:
+  - include:
+      file: /18052023-1/create-jwt-table.yaml
+      relativeToChangelogFile: true

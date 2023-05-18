@@ -1,0 +1,45 @@
+
+databaseChangeLog:
+  - changeSet:
+      id: 18052023-1
+      author: Vladimir Krivov
+      changes:
+        - createTable:
+            tableName: jwt
+            columns:
+              - column:
+                  name: jwt_id
+                  type: UUID
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                    unique: true
+
+              - column:
+                  name: jwt_expired
+                  type: boolean
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: jwt_revoked
+                  type: boolean
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: jwt_token
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: jwt_type
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: uzr_id
+                  type: uuid

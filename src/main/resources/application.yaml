@@ -1,0 +1,28 @@
+server:
+  port: 8080
+
+spring:
+
+  liquibase:
+    liquibase-schema: public
+    enabled: true
+
+  datasource:
+#    url: jdbc:postgresql://db:5432/postgres?currentSchema=public
+    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=public
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL94Dialect
+    generate-ddl: true
+    hibernate:
+      ddl-auto: none
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: *
+      base-path: /actuator
