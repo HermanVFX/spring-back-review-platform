@@ -1,0 +1,58 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-company-table.yaml
+      author: Vladimir Krivov
+      changes:
+        - createTable:
+            tableName: company
+            columns:
+              - column:
+                  name: company_id
+                  type: UUID
+                  autoIncrement: false
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                    unique: true
+
+              - column:
+                  name: company_name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: company_job_link
+                  type: varchar(255)
+                  constraints:
+                    nullable: true
+
+              - column:
+                  name: company_rating
+                  type: double precision
+                  constraints:
+                    nullable: true
+
+              - column:
+                  name: create_time
+                  type: timestamp(6)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: update_time
+                  type: timestamp(6)
+                  constraints:
+                    nullable: true
+
+              - column:
+                  name: delete_time
+                  type: timestamp(6)
+                  constraints:
+                    nullable: true
+
+              - column:
+                  name: is_active
+                  type: boolean
+                  constraints:
+                    nullable: false

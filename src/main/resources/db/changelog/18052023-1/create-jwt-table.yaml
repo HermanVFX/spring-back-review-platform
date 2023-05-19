@@ -1,7 +1,7 @@
 
 databaseChangeLog:
   - changeSet:
-      id: 18052023-1
+      id: create-jwt-table.yaml
       author: Vladimir Krivov
       changes:
         - createTable:
@@ -10,7 +10,7 @@ databaseChangeLog:
               - column:
                   name: jwt_id
                   type: UUID
-                  autoIncrement: true
+                  autoIncrement: false
                   constraints:
                     primaryKey: true
                     nullable: false
@@ -43,3 +43,8 @@ databaseChangeLog:
               - column:
                   name: uzr_id
                   type: uuid
+                  constraints:
+                    foreignKeyName: fk_jwt_uzr
+                    referencedTableName: uzr
+                    referencedColumnNames: uzr_id
+                    unique: true

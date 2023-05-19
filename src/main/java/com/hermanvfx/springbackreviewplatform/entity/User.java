@@ -59,12 +59,12 @@ public class User implements UserDetails {
     @Column(name = "uzr_role")
     private Role role;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-    private List<Token> tokens;
-
     @Enumerated(EnumType.STRING)
     @Column(name = "uzr_specialities")
     private Speciality specialities;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private List<Token> tokens;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "reviewer")
     private List<Review> reviewsReceiving;
