@@ -1,67 +1,75 @@
 databaseChangeLog:
   - changeSet:
-      id: create-review-table.yaml
+      id: create-interview-table.yaml
       author: Vladimir Krivov
       changes:
         - createTable:
-            tableName: review
+            tableName: interview
             columns:
               - column:
-                  name: review_id
+                  name: interview_id
                   type: UUID
+
                   autoIncrement: false
                   constraints:
                     primaryKey: true
                     nullable: false
                     unique: true
-
               - column:
-                  name: review_theme
+                  name: interview_job_title
                   type: varchar(255)
                   constraints:
                     nullable: false
 
               - column:
-                  name: review_time
-                  type: timestamp(6)
-                  constraints:
-                    nullable: false
-
-              - column:
-                  name: review_link
-                  type: varchar(255)
-                  constraints:
-                    nullable: false
-
-              - column:
-                  name: review_speciality
+                  name: interview_job_link
                   type: varchar(255)
                   constraints:
                     nullable: true
 
               - column:
-                  name: review_passed
+                  name: interview_description
                   type: varchar(255)
                   constraints:
-                    nullable: false
+                    nullable: true
 
               - column:
-                  name: review_receiving_id
-                  type: uuid
+                  name: interview_money
+                  type: integer
                   constraints:
-                    foreignKeyName: fk_receiving_uzr
-                    referencedTableName: uzr
-                    referencedColumnNames: uzr_id
-                    unique: false
+                    nullable: true
 
               - column:
-                  name: review_student_id
+                  name: interview_video_link
+                  type: varchar(255)
+                  constraints:
+                    nullable: true
+
+              - column:
+                  name: interview_date_time
+                  type: timestamp(6)
+                  constraints:
+                    nullable: true
+
+              - column:
+                  name: company_id
                   type: uuid
                   constraints:
-                    foreignKeyName: fk_student_uzr
+                    foreignKeyName: fk_interview_company
+                    referencedTableName: company
+                    referencedColumnNames: company_id
+                    unique: true
+                    nullable: true
+
+              - column:
+                  name: uzr_id
+                  type: uuid
+                  constraints:
+                    foreignKeyName: fk_interview_uzr
                     referencedTableName: uzr
                     referencedColumnNames: uzr_id
-                    unique: false
+                    unique: true
+                    nullable: true
 
               - column:
                   name: create_time

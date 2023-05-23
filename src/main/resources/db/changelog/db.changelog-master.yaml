@@ -1,4 +1,6 @@
 databaseChangeLog:
+
+# - 18.05.2023
   - include:
       file: db/changelog/18052023-1/create-user-table.yaml
 
@@ -13,6 +15,18 @@ databaseChangeLog:
 
   - include:
       file: db/changelog/18052023-1/create-company-table.yaml
+
+# - 22.05.2023
+  - include:
+      file: db/changelog/22052023-1/create-interview-table.yaml
+
+  - include:
+      file: db/changelog/22052023-1/create-commentary-table.yaml
+
+  - include:
+      file: db/changelog/22052023-1/create-commentary-answer-table.yaml
+
+
 
 
 

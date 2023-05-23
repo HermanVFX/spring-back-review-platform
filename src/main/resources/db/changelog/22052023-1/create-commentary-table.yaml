@@ -1,13 +1,13 @@
 databaseChangeLog:
   - changeSet:
-      id: create-interview-table.yaml
+      id: create-commentary-table.yaml
       author: Vladimir Krivov
       changes:
         - createTable:
-            tableName: interview
+            tableName: commentary
             columns:
               - column:
-                  name: interview_id
+                  name: commentary_id
                   type: UUID
                   autoIncrement: false
                   constraints:
@@ -16,58 +16,62 @@ databaseChangeLog:
                     unique: true
 
               - column:
-                  name: interview_job_title
+                  name: commentary_text
                   type: varchar(255)
                   constraints:
                     nullable: false
 
               - column:
-                  name: interview_job_link
-                  type: varchar(255)
-                  constraints:
-                    nullable: true
-
-              - column:
-                  name: interview_description
-                  type: varchar(255)
-                  constraints:
-                    nullable: true
-
-              - column:
-                  name: interview_money
+                  name: commentary_likes
                   type: integer
+                  defaultValueNumeric: 0
                   constraints:
-                    nullable: true
+                    nullable: false
 
               - column:
-                  name: interview_video_link
-                  type: varchar(255)
+                  name: commentary_dislikes
+                  type: integer
+                  defaultValueNumeric: 0
                   constraints:
-                    nullable: true
+                    nullable: false
 
               - column:
-                  name: interview_date_time
-                  type: timestamp(6)
+                  name: uzr_id
+                  type: uuid
                   constraints:
+                    foreignKeyName: fk_commentary_uzr
+                    referencedTableName: uzr
+                    referencedColumnNames: uzr_id
+                    unique: true
                     nullable: true
 
               - column:
                   name: company_id
                   type: uuid
                   constraints:
-                    foreignKeyName: fk_interview_company
+                    foreignKeyName: fk_commentary_company
                     referencedTableName: company
                     referencedColumnNames: company_id
                     unique: true
                     nullable: true
 
               - column:
-                  name: uzr_id
+                  name: interview_id
                   type: uuid
                   constraints:
-                    foreignKeyName: fk_interview_uzr
-                    referencedTableName: uzr
-                    referencedColumnNames: uzr_id
+                    foreignKeyName: fk_commentary_interview
+                    referencedTableName: interview
+                    referencedColumnNames: interview_id
+                    unique: true
+                    nullable: true
+
+              - column:
+                  name: sub_commentary_id
+                  type: uuid
+                  constraints:
+                    foreignKeyName: fk_commentary_sub_commentary
+                    referencedTableName: commentary
+                    referencedColumnNames: commentary_id
                     unique: true
                     nullable: true
 
