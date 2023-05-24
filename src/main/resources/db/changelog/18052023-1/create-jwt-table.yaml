@@ -47,4 +47,4 @@ databaseChangeLog:
                     foreignKeyName: fk_jwt_uzr
                     referencedTableName: uzr
                     referencedColumnNames: uzr_id
-                    unique: true
+                    unique: false

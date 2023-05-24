@@ -17,7 +17,7 @@ databaseChangeLog:
 
               - column:
                   name: commentary_text
-                  type: varchar(255)
+                  type: varchar(500)
                   constraints:
                     nullable: false
 
@@ -42,7 +42,7 @@ databaseChangeLog:
                     foreignKeyName: fk_commentary_uzr
                     referencedTableName: uzr
                     referencedColumnNames: uzr_id
-                    unique: true
+                    unique: false
                     nullable: true
 
               - column:
@@ -52,7 +52,7 @@ databaseChangeLog:
                     foreignKeyName: fk_commentary_company
                     referencedTableName: company
                     referencedColumnNames: company_id
-                    unique: true
+                    unique: false
                     nullable: true
 
               - column:
@@ -62,7 +62,7 @@ databaseChangeLog:
                     foreignKeyName: fk_commentary_interview
                     referencedTableName: interview
                     referencedColumnNames: interview_id
-                    unique: true
+                    unique: false
                     nullable: true
 
               - column:
@@ -72,7 +72,7 @@ databaseChangeLog:
                     foreignKeyName: fk_commentary_sub_commentary
                     referencedTableName: commentary
                     referencedColumnNames: commentary_id
-                    unique: true
+                    unique: false
                     nullable: true
 
               - column:

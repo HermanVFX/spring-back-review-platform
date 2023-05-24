@@ -1,10 +1,10 @@
 databaseChangeLog:
   - changeSet:
-      id: create-commentary-answer-table.yaml
+      id: create-commentary-answers-table.yaml
       author: Vladimir Krivov
       changes:
         - createTable:
-            tableName: commentary_answer
+            tableName: commentary_answers
             columns:
               - column:
                   name: commentary_commentary_id
@@ -17,10 +17,10 @@ databaseChangeLog:
                     nullable: true
 
               - column:
-                  name: answer_commentary_id
+                  name: answers_commentary_id
                   type: uuid
                   constraints:
-                    foreignKeyName: fk_answer_commentary
+                    foreignKeyName: fk_answers_commentary
                     referencedTableName: commentary
                     referencedColumnNames: commentary_id
                     unique: true

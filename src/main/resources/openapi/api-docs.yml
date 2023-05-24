@@ -1348,9 +1348,12 @@ components:
         name:
           type: string
           description: Social name
-        link:
+        jobLink:
           type: string
           description: Social link
+        rating:
+          type: number
+          description: Company rating
 
     CreateSocialDto:
       type: object

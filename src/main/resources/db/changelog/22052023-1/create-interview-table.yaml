@@ -9,7 +9,6 @@ databaseChangeLog:
               - column:
                   name: interview_id
                   type: UUID
-
                   autoIncrement: false
                   constraints:
                     primaryKey: true
@@ -29,7 +28,7 @@ databaseChangeLog:
 
               - column:
                   name: interview_description
-                  type: varchar(255)
+                  type: varchar(20000)
                   constraints:
                     nullable: true
 
@@ -58,7 +57,7 @@ databaseChangeLog:
                     foreignKeyName: fk_interview_company
                     referencedTableName: company
                     referencedColumnNames: company_id
-                    unique: true
+                    unique: false
                     nullable: true
 
               - column:
@@ -68,7 +67,7 @@ databaseChangeLog:
                     foreignKeyName: fk_interview_uzr
                     referencedTableName: uzr
                     referencedColumnNames: uzr_id
-                    unique: true
+                    unique: false
                     nullable: true
 
               - column:
