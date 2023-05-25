@@ -35,7 +35,6 @@ public class ReviewServiceImpl implements ReviewService {
     private final ReviewMapper reviewMapper;
     private final ReviewRepository reviewRepository;
     private final TokenRepository tokenRepository;
-
     private final UserMapper userMapper;
     private final SpecialityMapper specialityMapper;
 
@@ -68,34 +67,23 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public ReviewListDto findTobeReviews(Pageable pageable) {
-        List<ReviewDto> list = reviewMapper.iterableReviewToListReviewDto(reviewRepository.findAll());
-        List<ReviewDto> listTobe = new ArrayList<>();
 
-        for (ReviewDto dto : list) {
-            if (dto.getStatus() == ReviewDto.StatusEnum.TOBE) {
-                listTobe.add(dto);
-            }
-        }
+        List<ReviewDto> listTobe = reviewMapper.iterableReviewToListReviewDto(reviewRepository
+                .findByStatusReview(StatusReview.TOBE));
 
         Page<ReviewDto> page = new Pagination<ReviewDto>().addPagination(listTobe, pageable);
-
         return new ReviewListDto()
                 .content(page.getContent())
-                .totalPages(BigDecimal.valueOf((int) Math.ceil((double) list.size() / pageable.getPageSize())))
+                .totalPages(BigDecimal.valueOf((int) Math.ceil((double) listTobe.size() / pageable.getPageSize())))
                 .totalElements(BigDecimal.valueOf(listTobe.size()))
                 .currentPage(BigDecimal.valueOf(pageable.getPageNumber()));
     }
 
     @Override
     public ReviewListDto findPassedReviews(Pageable pageable) {
-        List<ReviewDto> list = reviewMapper.iterableReviewToListReviewDto(reviewRepository.findAll());
-        List<ReviewDto> listTobe = new ArrayList<>();
 
-        for (ReviewDto dto : list) {
-            if (dto.getStatus() == ReviewDto.StatusEnum.PASSED) {
-                listTobe.add(dto);
-            }
-        }
+        List<ReviewDto> listTobe = reviewMapper.iterableReviewToListReviewDto(reviewRepository
+                .findByStatusReview(StatusReview.PASSED));
 
         Page<ReviewDto> page = new Pagination<ReviewDto>().addPagination(listTobe, pageable);
 
@@ -108,14 +96,9 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public ReviewListDto findCanceledReviews(Pageable pageable) {
-        List<ReviewDto> list = reviewMapper.iterableReviewToListReviewDto(reviewRepository.findAll());
-        List<ReviewDto> listTobe = new ArrayList<>();
 
-        for (ReviewDto dto : list) {
-            if (dto.getStatus() == ReviewDto.StatusEnum.CANCELED) {
-                listTobe.add(dto);
-            }
-        }
+        List<ReviewDto> listTobe = reviewMapper.iterableReviewToListReviewDto(reviewRepository
+                .findByStatusReview(StatusReview.CANCELED));
 
         Page<ReviewDto> page = new Pagination<ReviewDto>().addPagination(listTobe, pageable);
 
