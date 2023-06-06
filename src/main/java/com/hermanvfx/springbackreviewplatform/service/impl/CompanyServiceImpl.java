@@ -1,25 +1,21 @@
 package com.hermanvfx.springbackreviewplatform.service.impl;
 
 import com.example.userservice.dto.CompanyDto;
+import com.example.userservice.dto.CompanyDtoPage;
 import com.example.userservice.dto.CompanyListDto;
-import com.example.userservice.dto.InterviewDto;
 import com.example.userservice.dto.ShortCompanyDto;
 import com.hermanvfx.springbackreviewplatform.entity.Company;
 import com.hermanvfx.springbackreviewplatform.exception.NotFoundException;
 import com.hermanvfx.springbackreviewplatform.mapper.CompanyMapper;
 import com.hermanvfx.springbackreviewplatform.repository.CompanyRepository;
 import com.hermanvfx.springbackreviewplatform.service.CompanyService;
-import com.hermanvfx.springbackreviewplatform.util.Pagination;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -34,15 +30,22 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public CompanyListDto findAllCompany(Pageable pageable) {
-        List<CompanyDto> list = companyMapper.listCompanyToListCompanyDto(companyRepository.findAll());
 
-        Page<CompanyDto> page = new Pagination<CompanyDto>().addPagination(list, pageable);
+        Page<Company> pageCompanies = companyRepository.findPageCompany(pageable);
 
-        return new CompanyListDto()
-                .content(page.getContent())
-                .totalPages(BigDecimal.valueOf((int) Math.ceil((double) list.size() / pageable.getPageSize())))
-                .totalElements(BigDecimal.valueOf(list.size()))
-                .currentPage(BigDecimal.valueOf(pageable.getPageNumber()));
+
+
+        return null;
+
+//        List<CompanyDto> list = companyMapper.listCompanyToListCompanyDto(companyRepository.findAll());
+//
+//        Page<CompanyDto> page = new Pagination<CompanyDto>().addPagination(list, pageable);
+//
+//        return new CompanyListDto()
+//                .content(page.getContent())
+//                .totalPages(BigDecimal.valueOf((int) Math.ceil((double) list.size() / pageable.getPageSize())))
+//                .totalElements(BigDecimal.valueOf(list.size()))
+//                .currentPage(BigDecimal.valueOf(pageable.getPageNumber()));
     }
 
     @Override
@@ -87,4 +90,19 @@ public class CompanyServiceImpl implements CompanyService {
     public void deleteFromBd(UUID id) {
         companyRepository.delete(companyRepository.findById(id).orElseThrow());
     }
+
+
+    private CompanyDtoPage pageCompanyToCompanyDto(Pageable pageable, Page<Company> page) {
+        var content = companyMapper.listCompanyToListCompanyDto(page.getContent());
+        CompanyDtoPage companyDtoPage = new CompanyDtoPage();
+        companyDtoPage.setContent(content);
+        companyDtoPage.setCurrentPage(pageable.getPageNumber());
+        companyDtoPage.setTotalPage(page.getTotalPages());
+        companyDtoPage.setTotalElement(page.getTotalElements());
+
+        return companyDtoPage;
+    }
+
 }
+
+

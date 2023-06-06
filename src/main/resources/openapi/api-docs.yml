@@ -1389,6 +1389,24 @@ components:
         empty:
           type: boolean
 
+    CompanyDtoPage:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/CompanyDto'
+          description: Company List
+        totalPage:
+          type: integer
+          description: Total page company
+        currentPage:
+          type: integer
+          description: Current page company
+        totalElement:
+          type: long
+          description: Total element company
+
     #   --Interview DTO--
     InterviewDto:
       type: object
