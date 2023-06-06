@@ -29,13 +29,16 @@ public class CompanyServiceImpl implements CompanyService {
     private final CompanyMapper companyMapper;
 
     @Override
-    public CompanyListDto findAllCompany(Pageable pageable) {
+    public CompanyDtoPage findAllCompany(Pageable pageable) {
 
         Page<Company> pageCompanies = companyRepository.findPageCompany(pageable);
 
+        var a = companyRepository.testFind();
 
 
-        return null;
+
+
+        return pageCompanyToCompanyDto(pageable, pageCompanies, a);
 
 //        List<CompanyDto> list = companyMapper.listCompanyToListCompanyDto(companyRepository.findAll());
 //
@@ -92,8 +95,16 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
 
-    private CompanyDtoPage pageCompanyToCompanyDto(Pageable pageable, Page<Company> page) {
+    private CompanyDtoPage pageCompanyToCompanyDto(Pageable pageable, Page<Company> page, List<Company> a) {
         var content = companyMapper.listCompanyToListCompanyDto(page.getContent());
+        log.info(content.toString(), "Контент");
+        System.out.println("var переменная content:");
+        System.out.println(content);
+        System.out.println("getContent");
+        System.out.println(page.getContent());
+        System.out.println("Test Find");
+        System.out.println(a);
+
         CompanyDtoPage companyDtoPage = new CompanyDtoPage();
         companyDtoPage.setContent(content);
         companyDtoPage.setCurrentPage(pageable.getPageNumber());

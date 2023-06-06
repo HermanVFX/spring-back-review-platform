@@ -2,7 +2,7 @@ package com.hermanvfx.springbackreviewplatform.controller;
 
 import com.example.userservice.controller.CompanyApi;
 import com.example.userservice.dto.CompanyDto;
-import com.example.userservice.dto.CompanyListDto;
+import com.example.userservice.dto.CompanyDtoPage;
 import com.example.userservice.dto.ShortCompanyDto;
 import com.hermanvfx.springbackreviewplatform.service.CompanyService;
 import lombok.AllArgsConstructor;
@@ -32,7 +32,7 @@ public class CompanyController implements CompanyApi {
     }
 
     @Override
-    public ResponseEntity<CompanyListDto> findAllCompanys(String authorization, Integer page, Integer size) {
+    public ResponseEntity<CompanyDtoPage> findAllCompanys(String authorization, Integer page, Integer size) {
         Pageable pageable = PageRequest.of(page, size);
         return new ResponseEntity<>( companyService.findAllCompany(pageable), HttpStatus.OK);
     }
