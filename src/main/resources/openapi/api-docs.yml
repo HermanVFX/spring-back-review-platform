@@ -116,7 +116,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserListDto'
+                $ref: '#/components/schemas/UserDtoPage'
         '400':
           description: Invalid request
         '404':
@@ -432,7 +432,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/InterviewListDto'
+                $ref: '#/components/schemas/InterviewDtoPage'
         '400':
           description: Invalid request
         '404':
@@ -647,7 +647,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ReviewListDto'
+                $ref: '#/components/schemas/ReviewDtoPage'
         '400':
           description: Invalid request
         '404':
@@ -688,7 +688,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ReviewListDto'
+                $ref: '#/components/schemas/ReviewDtoPage'
         '400':
           description: Invalid request
         '404':
@@ -729,7 +729,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ReviewListDto'
+                $ref: '#/components/schemas/ReviewDtoPage'
         '400':
           description: Invalid request
         '404':
@@ -770,7 +770,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ReviewListDto'
+                $ref: '#/components/schemas/ReviewDtoPage'
         '400':
           description: Invalid request
         '404':
@@ -865,7 +865,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ReviewListDto'
+                $ref: '#/components/schemas/ReviewDtoPage'
         '400':
           description: Invalid request
         '404':
@@ -1191,6 +1191,23 @@ components:
           type: string
           description: User email
 
+    UserDtoPage:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserDto'
+          description: User List
+        totalPage:
+          type: integer
+          description: Total page User
+        currentPage:
+          type: integer
+          description: Current page User
+        totalElement:
+          type: long
+          description: Total element User
 
     UserForReviewDto:
       type: object
@@ -1494,6 +1511,25 @@ components:
         empty:
           type: boolean
 
+
+    InterviewDtoPage:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/InterviewDto'
+          description: Interview List
+        totalPage:
+          type: integer
+          description: Total page Interview
+        currentPage:
+          type: integer
+          description: Current page Interview
+        totalElement:
+          type: long
+          description: Total element Interview
+
     #   --ReviewDto DTO--
     ReviewDto:
       type: object
@@ -1568,6 +1604,24 @@ components:
           type: boolean
         empty:
           type: boolean
+
+    ReviewDtoPage:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReviewDto'
+          description: Review List
+        totalPage:
+          type: integer
+          description: Total page Review
+        currentPage:
+          type: integer
+          description: Current page Review
+        totalElement:
+          type: long
+          description: Total element Review
 
     AuthenticationRequest:
       type: object

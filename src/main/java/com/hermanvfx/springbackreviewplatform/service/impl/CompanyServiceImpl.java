@@ -2,7 +2,6 @@ package com.hermanvfx.springbackreviewplatform.service.impl;
 
 import com.example.userservice.dto.CompanyDto;
 import com.example.userservice.dto.CompanyDtoPage;
-import com.example.userservice.dto.CompanyListDto;
 import com.example.userservice.dto.ShortCompanyDto;
 import com.hermanvfx.springbackreviewplatform.entity.Company;
 import com.hermanvfx.springbackreviewplatform.exception.NotFoundException;
@@ -17,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.OffsetDateTime;
-import java.util.List;
 import java.util.UUID;
 
 @Slf4j
@@ -30,25 +28,8 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public CompanyDtoPage findAllCompany(Pageable pageable) {
-
         Page<Company> pageCompanies = companyRepository.findPageCompany(pageable);
-
-        var a = companyRepository.testFind();
-
-
-
-
-        return pageCompanyToCompanyDto(pageable, pageCompanies, a);
-
-//        List<CompanyDto> list = companyMapper.listCompanyToListCompanyDto(companyRepository.findAll());
-//
-//        Page<CompanyDto> page = new Pagination<CompanyDto>().addPagination(list, pageable);
-//
-//        return new CompanyListDto()
-//                .content(page.getContent())
-//                .totalPages(BigDecimal.valueOf((int) Math.ceil((double) list.size() / pageable.getPageSize())))
-//                .totalElements(BigDecimal.valueOf(list.size()))
-//                .currentPage(BigDecimal.valueOf(pageable.getPageNumber()));
+        return pageToDto(pageable, pageCompanies);
     }
 
     @Override
@@ -95,16 +76,8 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
 
-    private CompanyDtoPage pageCompanyToCompanyDto(Pageable pageable, Page<Company> page, List<Company> a) {
+    private CompanyDtoPage pageToDto(Pageable pageable, Page<Company> page) {
         var content = companyMapper.listCompanyToListCompanyDto(page.getContent());
-        log.info(content.toString(), "Контент");
-        System.out.println("var переменная content:");
-        System.out.println(content);
-        System.out.println("getContent");
-        System.out.println(page.getContent());
-        System.out.println("Test Find");
-        System.out.println(a);
-
         CompanyDtoPage companyDtoPage = new CompanyDtoPage();
         companyDtoPage.setContent(content);
         companyDtoPage.setCurrentPage(pageable.getPageNumber());

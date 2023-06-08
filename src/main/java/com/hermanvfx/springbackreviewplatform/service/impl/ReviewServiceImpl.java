@@ -2,9 +2,8 @@ package com.hermanvfx.springbackreviewplatform.service.impl;
 
 import com.example.userservice.dto.AuthenticationToken;
 import com.example.userservice.dto.ReviewDto;
-import com.example.userservice.dto.ReviewListDto;
+import com.example.userservice.dto.ReviewDtoPage;
 import com.example.userservice.dto.ShortReviewDto;
-import com.example.userservice.dto.UserDto;
 import com.hermanvfx.springbackreviewplatform.entity.Review;
 import com.hermanvfx.springbackreviewplatform.entity.enums.StatusReview;
 import com.hermanvfx.springbackreviewplatform.exception.NotFoundException;
@@ -14,18 +13,13 @@ import com.hermanvfx.springbackreviewplatform.mapper.UserMapper;
 import com.hermanvfx.springbackreviewplatform.repository.ReviewRepository;
 import com.hermanvfx.springbackreviewplatform.security.token.TokenRepository;
 import com.hermanvfx.springbackreviewplatform.service.ReviewService;
-import com.hermanvfx.springbackreviewplatform.util.Pagination;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -39,74 +33,33 @@ public class ReviewServiceImpl implements ReviewService {
     private final SpecialityMapper specialityMapper;
 
     @Override
-    public ReviewListDto findAllReviews(Pageable pageable) {
-        List<ReviewDto> list = reviewMapper.listReviewToListReviewDto(reviewRepository.findAll());
-
-        Page<ReviewDto> page = new Pagination<ReviewDto>().addPagination(list, pageable);
-
-        return new ReviewListDto()
-                .content(page.getContent())
-                .totalPages(BigDecimal.valueOf((int) Math.ceil((double) list.size() / pageable.getPageSize())))
-                .totalElements(BigDecimal.valueOf(list.size()))
-                .currentPage(BigDecimal.valueOf(pageable.getPageNumber()));
+    public ReviewDtoPage findAllReviews(Pageable pageable) {
+        Page<Review> pageReview = reviewRepository.findPageReview(pageable);
+        return pageToDto(pageable, pageReview);
     }
 
     @Override
-    public ReviewListDto findAllReviewsByUser(Pageable pageable, UUID userId) {
-        List<ReviewDto> list = reviewMapper.listReviewToListReviewDto(reviewRepository.findAllByReviewerId(userId));
-        list.addAll(reviewMapper.listReviewToListReviewDto(reviewRepository.findAllByStudentId(userId)));
-
-        Page<ReviewDto> page = new Pagination<ReviewDto>().addPagination(list, pageable);
-
-        return new ReviewListDto()
-                .content(page.getContent())
-                .totalPages(BigDecimal.valueOf((int) Math.ceil((double) list.size() / pageable.getPageSize())))
-                .totalElements(BigDecimal.valueOf(list.size()))
-                .currentPage(BigDecimal.valueOf(pageable.getPageNumber()));
+    public ReviewDtoPage findAllReviewsByUser(Pageable pageable, UUID userId) {
+        Page<Review> page = reviewRepository.findAllReviewByUser(userId, pageable);
+        return pageToDto(pageable, page);
     }
 
     @Override
-    public ReviewListDto findTobeReviews(Pageable pageable) {
-
-        List<ReviewDto> listTobe = reviewMapper.iterableReviewToListReviewDto(reviewRepository
-                .findByStatusReview(StatusReview.TOBE));
-
-        Page<ReviewDto> page = new Pagination<ReviewDto>().addPagination(listTobe, pageable);
-        return new ReviewListDto()
-                .content(page.getContent())
-                .totalPages(BigDecimal.valueOf((int) Math.ceil((double) listTobe.size() / pageable.getPageSize())))
-                .totalElements(BigDecimal.valueOf(listTobe.size()))
-                .currentPage(BigDecimal.valueOf(pageable.getPageNumber()));
+    public ReviewDtoPage findTobeReviews(Pageable pageable) {
+        Page<Review> page = reviewRepository.findByStatusReviewPage(StatusReview.TOBE, pageable);
+        return pageToDto(pageable, page);
     }
 
     @Override
-    public ReviewListDto findPassedReviews(Pageable pageable) {
-
-        List<ReviewDto> listTobe = reviewMapper.iterableReviewToListReviewDto(reviewRepository
-                .findByStatusReview(StatusReview.PASSED));
-
-        Page<ReviewDto> page = new Pagination<ReviewDto>().addPagination(listTobe, pageable);
-
-        return new ReviewListDto()
-                .content(page.getContent())
-                .totalPages(BigDecimal.valueOf((int) Math.ceil((double) listTobe.size() / pageable.getPageSize())))
-                .totalElements(BigDecimal.valueOf(listTobe.size()))
-                .currentPage(BigDecimal.valueOf(pageable.getPageNumber()));
+    public ReviewDtoPage findPassedReviews(Pageable pageable) {
+        Page<Review> page = reviewRepository.findByStatusReviewPage(StatusReview.PASSED, pageable);
+        return pageToDto(pageable, page);
     }
 
     @Override
-    public ReviewListDto findCanceledReviews(Pageable pageable) {
-
-        List<ReviewDto> listTobe = reviewMapper.iterableReviewToListReviewDto(reviewRepository
-                .findByStatusReview(StatusReview.CANCELED));
-
-        Page<ReviewDto> page = new Pagination<ReviewDto>().addPagination(listTobe, pageable);
-
-        return new ReviewListDto()
-                .content(page.getContent())
-                .totalPages(BigDecimal.valueOf((int) Math.ceil((double) listTobe.size() / pageable.getPageSize())))
-                .totalElements(BigDecimal.valueOf(listTobe.size()))
-                .currentPage(BigDecimal.valueOf(pageable.getPageNumber()));
+    public ReviewDtoPage findCanceledReviews(Pageable pageable) {
+        Page<Review> page = reviewRepository.findByStatusReviewPage(StatusReview.CANCELED, pageable);
+        return pageToDto(pageable, page);
     }
 
 
@@ -196,4 +149,16 @@ public class ReviewServiceImpl implements ReviewService {
         return reviewMapper.reviewToReviewDto(reviewRepository.findById(reviewId)
                 .orElseThrow(() -> new NotFoundException("Review with id:[" + reviewId + "] does not update")));
     }
+
+    private ReviewDtoPage pageToDto(Pageable pageable, Page<Review> page) {
+        var content = reviewMapper.listReviewToListReviewDto(page.getContent());
+        ReviewDtoPage reviewDtoPage = new ReviewDtoPage();
+        reviewDtoPage.setContent(content);
+        reviewDtoPage.setCurrentPage(pageable.getPageNumber());
+        reviewDtoPage.setTotalPage(page.getTotalPages());
+        reviewDtoPage.setTotalElement(page.getTotalElements());
+        return reviewDtoPage;
+    }
+
+
 }

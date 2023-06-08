@@ -21,4 +21,5 @@ public interface CompanyService {
     void delete(UUID id);
 
     void deleteFromBd(UUID id);
+
 }

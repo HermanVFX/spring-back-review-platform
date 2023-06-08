@@ -18,6 +18,4 @@ public interface CompanyRepository extends CrudRepository<Company, UUID> {
     Page<Company> findPageCompany(Pageable pageable);
 
 
-    @Query("SELECT p FROM Company p")
-    List<Company> testFind();
 }

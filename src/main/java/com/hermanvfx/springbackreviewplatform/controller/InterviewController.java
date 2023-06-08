@@ -2,6 +2,7 @@ package com.hermanvfx.springbackreviewplatform.controller;
 
 import com.example.userservice.controller.InterviewApi;
 import com.example.userservice.dto.InterviewDto;
+import com.example.userservice.dto.InterviewDtoPage;
 import com.example.userservice.dto.InterviewListDto;
 import com.example.userservice.dto.ShortInterviewDto;
 import com.hermanvfx.springbackreviewplatform.service.InterviewService;
@@ -33,7 +34,7 @@ public class InterviewController implements InterviewApi {
     }
 
     @Override
-    public ResponseEntity<InterviewListDto> findAllInterviews(String authorization, Integer page, Integer size) {
+    public ResponseEntity<InterviewDtoPage> findAllInterviews(String authorization, Integer page, Integer size) {
         Pageable pageable = PageRequest.of(page, size);
         return new ResponseEntity<>(interviewService.findAllInterview(pageable), HttpStatus.OK);
     }
