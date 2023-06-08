@@ -1,0 +1,62 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-social-table.yaml
+      author: Vladimir Krivov
+      changes:
+        - createTable:
+            tableName: social
+            columns:
+              - column:
+                  name: social_id
+                  type: UUID
+                  autoIncrement: false
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                    unique: true
+
+              - column:
+                  name: social_name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: social_link
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: uzr_id
+                  type: uuid
+                  constraints:
+                    foreignKeyName: fk_social_uzr
+                    referencedTableName: uzr
+                    referencedColumnNames: uzr_id
+                    unique: false
+                    nullable: false
+
+              - column:
+                  name: create_time
+                  type: timestamp(6)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: update_time
+                  type: timestamp(6)
+                  constraints:
+                    nullable: true
+
+              - column:
+                  name: delete_time
+                  type: timestamp(6)
+                  constraints:
+                    nullable: true
+
+              - column:
+                  name: is_active
+                  type: boolean
+                  constraints:
+                    nullable: false

@@ -40,5 +40,6 @@ public interface InterviewMapper {
 
     List<InterviewDto> iterableInterviewToListInterviewDto(Iterable<Interview> entities);
 
+    List<InterviewDto> listInterviewToListInterviewDto(List<Interview> entities);
 
 }

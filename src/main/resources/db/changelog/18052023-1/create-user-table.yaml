@@ -1,0 +1,82 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-user-table.yaml
+      author: Vladimir Krivov
+      changes:
+        - createTable:
+            tableName: uzr
+            columns:
+              - column:
+                  name: uzr_id
+                  type: UUID
+                  autoIncrement: false
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                    unique: true
+
+              - column:
+                  name: uzr_first_name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: uzr_last_name
+                  type: varchar(255)
+                  constraints:
+                    nullable: true
+
+              - column:
+                  name: uzr_email
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: uzr_avatar
+                  type: varchar(255)
+                  constraints:
+                    nullable: true
+
+              - column:
+                  name: uzr_password
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: uzr_role
+                  type: varchar(255)
+                  constraints:
+                    nullable: true
+
+              - column:
+                  name: uzr_specialities
+                  type: varchar(255)
+                  constraints:
+                    nullable: true
+
+              - column:
+                  name: create_time
+                  type: timestamp(6)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: update_time
+                  type: timestamp(6)
+                  constraints:
+                    nullable: true
+
+              - column:
+                  name: delete_time
+                  type: timestamp(6)
+                  constraints:
+                    nullable: true
+
+              - column:
+                  name: is_active
+                  type: boolean
+                  constraints:
+                    nullable: false

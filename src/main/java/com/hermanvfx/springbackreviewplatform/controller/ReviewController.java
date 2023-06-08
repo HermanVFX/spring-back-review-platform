@@ -1,10 +1,7 @@
 package com.hermanvfx.springbackreviewplatform.controller;
 
 import com.example.userservice.controller.ReviewApi;
-import com.example.userservice.dto.AuthenticationToken;
-import com.example.userservice.dto.ReviewDto;
-import com.example.userservice.dto.ReviewListDto;
-import com.example.userservice.dto.ShortReviewDto;
+import com.example.userservice.dto.*;
 import com.hermanvfx.springbackreviewplatform.service.ReviewService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -50,25 +47,26 @@ public class ReviewController implements ReviewApi {
     }
 
     @Override
-    public ResponseEntity<ReviewListDto> findAllReviews(String authorization, Integer page, Integer size) {
+    public ResponseEntity<ReviewDtoPage> findAllReviews(String authorization, Integer page, Integer size) {
         Pageable pageable = PageRequest.of(page, size);
         return new ResponseEntity<>(reviewService.findAllReviews(pageable), HttpStatus.OK);
+
     }
 
     @Override
-    public ResponseEntity<ReviewListDto> findTobeReviews(String authorization, Integer page, Integer size) {
+    public ResponseEntity<ReviewDtoPage> findTobeReviews(String authorization, Integer page, Integer size) {
         Pageable pageable = PageRequest.of(page, size);
         return new ResponseEntity<>(reviewService.findTobeReviews(pageable), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<ReviewListDto> findCanceledReviews(String authorization, Integer page, Integer size) {
+    public ResponseEntity<ReviewDtoPage> findCanceledReviews(String authorization, Integer page, Integer size) {
         Pageable pageable = PageRequest.of(page, size);
         return new ResponseEntity<>(reviewService.findCanceledReviews(pageable), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<ReviewListDto> findPassedReviews(String authorization, Integer page, Integer size) {
+    public ResponseEntity<ReviewDtoPage> findPassedReviews(String authorization, Integer page, Integer size) {
         Pageable pageable = PageRequest.of(page, size);
         return new ResponseEntity<>(reviewService.findPassedReviews(pageable), HttpStatus.OK);
     }
@@ -80,7 +78,7 @@ public class ReviewController implements ReviewApi {
     }
 
     @Override
-    public ResponseEntity<ReviewListDto> findAllReviewByUserId(
+    public ResponseEntity<ReviewDtoPage> findAllReviewByUserId(
             String authorization,
             UUID userId,
             Integer page,

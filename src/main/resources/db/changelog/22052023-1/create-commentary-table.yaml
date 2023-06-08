@@ -1,0 +1,100 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-commentary-table.yaml
+      author: Vladimir Krivov
+      changes:
+        - createTable:
+            tableName: commentary
+            columns:
+              - column:
+                  name: commentary_id
+                  type: UUID
+                  autoIncrement: false
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                    unique: true
+
+              - column:
+                  name: commentary_text
+                  type: varchar(500)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: commentary_likes
+                  type: integer
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: commentary_dislikes
+                  type: integer
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: uzr_id
+                  type: uuid
+                  constraints:
+                    foreignKeyName: fk_commentary_uzr
+                    referencedTableName: uzr
+                    referencedColumnNames: uzr_id
+                    unique: false
+                    nullable: true
+
+              - column:
+                  name: company_id
+                  type: uuid
+                  constraints:
+                    foreignKeyName: fk_commentary_company
+                    referencedTableName: company
+                    referencedColumnNames: company_id
+                    unique: false
+                    nullable: true
+
+              - column:
+                  name: interview_id
+                  type: uuid
+                  constraints:
+                    foreignKeyName: fk_commentary_interview
+                    referencedTableName: interview
+                    referencedColumnNames: interview_id
+                    unique: false
+                    nullable: true
+
+              - column:
+                  name: sub_commentary_id
+                  type: uuid
+                  constraints:
+                    foreignKeyName: fk_commentary_sub_commentary
+                    referencedTableName: commentary
+                    referencedColumnNames: commentary_id
+                    unique: false
+                    nullable: true
+
+              - column:
+                  name: create_time
+                  type: timestamp(6)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: update_time
+                  type: timestamp(6)
+                  constraints:
+                    nullable: true
+
+              - column:
+                  name: delete_time
+                  type: timestamp(6)
+                  constraints:
+                    nullable: true
+
+              - column:
+                  name: is_active
+                  type: boolean
+                  constraints:
+                    nullable: false

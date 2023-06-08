@@ -1,32 +1,21 @@
 package com.hermanvfx.springbackreviewplatform.service.impl;
 
 import com.example.userservice.dto.InterviewDto;
-import com.example.userservice.dto.InterviewListDto;
-import com.example.userservice.dto.ReviewDto;
+import com.example.userservice.dto.InterviewDtoPage;
 import com.example.userservice.dto.ShortInterviewDto;
-import com.hermanvfx.springbackreviewplatform.entity.Company;
 import com.hermanvfx.springbackreviewplatform.entity.Interview;
 import com.hermanvfx.springbackreviewplatform.exception.NotFoundException;
 import com.hermanvfx.springbackreviewplatform.mapper.InterviewMapper;
-import com.hermanvfx.springbackreviewplatform.repository.CommentaryRepository;
-import com.hermanvfx.springbackreviewplatform.repository.CompanyRepository;
 import com.hermanvfx.springbackreviewplatform.repository.InterviewRepository;
 import com.hermanvfx.springbackreviewplatform.security.token.TokenRepository;
 import com.hermanvfx.springbackreviewplatform.service.InterviewService;
-import com.hermanvfx.springbackreviewplatform.util.Pagination;
 import lombok.AllArgsConstructor;
-import lombok.SneakyThrows;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -36,19 +25,11 @@ public class InterviewServiceImpl implements InterviewService {
     private final InterviewRepository interviewRepository;
     private  final InterviewMapper interviewMapper;
     private final TokenRepository tokenRepository;
-    private final CompanyRepository companyRepository;
 
     @Override
-    public InterviewListDto findAllInterview(Pageable pageable) {
-        List<InterviewDto> list = interviewMapper.iterableInterviewToListInterviewDto(interviewRepository.findAll());
-
-        Page<InterviewDto> page = new Pagination<InterviewDto>().addPagination(list, pageable);
-
-        return new InterviewListDto()
-                .content(page.getContent())
-                .totalPages(BigDecimal.valueOf((int) Math.ceil((double) list.size() / pageable.getPageSize())))
-                .totalElements(BigDecimal.valueOf(list.size()))
-                .currentPage(BigDecimal.valueOf(pageable.getPageNumber()));
+    public InterviewDtoPage findAllInterview(Pageable pageable) {
+        Page<Interview> pageInterview = interviewRepository.findPageInterview(pageable);
+        return pageToDto(pageable, pageInterview);
     }
 
     @Override
@@ -102,4 +83,18 @@ public class InterviewServiceImpl implements InterviewService {
     public void deleteFromBd(UUID id) {
         interviewRepository.delete(interviewRepository.findById(id).orElseThrow());
     }
+
+    private InterviewDtoPage pageToDto(Pageable pageable, Page<Interview> page) {
+        var content = interviewMapper.listInterviewToListInterviewDto(page.getContent());
+        InterviewDtoPage interviewDtoPage = new InterviewDtoPage();
+        interviewDtoPage.setContent(content);
+        interviewDtoPage.setCurrentPage(pageable.getPageNumber());
+        interviewDtoPage.setTotalPage(page.getTotalPages());
+        interviewDtoPage.setTotalElement(page.getTotalElements());
+
+        return interviewDtoPage;
+    }
+
 }
+
+

@@ -1,0 +1,27 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-commentary-answers-table.yaml
+      author: Vladimir Krivov
+      changes:
+        - createTable:
+            tableName: commentary_answers
+            columns:
+              - column:
+                  name: commentary_commentary_id
+                  type: uuid
+                  constraints:
+                    foreignKeyName: fk_commentary_commentary
+                    referencedTableName: commentary
+                    referencedColumnNames: commentary_id
+                    unique: true
+                    nullable: true
+
+              - column:
+                  name: answers_commentary_id
+                  type: uuid
+                  constraints:
+                    foreignKeyName: fk_answers_commentary
+                    referencedTableName: commentary
+                    referencedColumnNames: commentary_id
+                    unique: true
+                    nullable: true

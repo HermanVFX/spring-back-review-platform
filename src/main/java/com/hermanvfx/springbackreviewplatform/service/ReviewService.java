@@ -1,24 +1,21 @@
 package com.hermanvfx.springbackreviewplatform.service;
 
-import com.example.userservice.dto.AuthenticationToken;
-import com.example.userservice.dto.ReviewDto;
-import com.example.userservice.dto.ReviewListDto;
-import com.example.userservice.dto.ShortReviewDto;
+import com.example.userservice.dto.*;
 import org.springframework.data.domain.Pageable;
 
 import java.util.UUID;
 
 public interface ReviewService {
 
-    ReviewListDto findAllReviews(Pageable pageable);
+    ReviewDtoPage findAllReviews(Pageable pageable);
 
-    ReviewListDto findAllReviewsByUser(Pageable pageable, UUID userId);
+    ReviewDtoPage findAllReviewsByUser(Pageable pageable, UUID userId);
 
-    ReviewListDto findTobeReviews(Pageable pageable);
+    ReviewDtoPage findTobeReviews(Pageable pageable);
 
-    ReviewListDto findPassedReviews(Pageable pageable);
+    ReviewDtoPage findPassedReviews(Pageable pageable);
 
-    ReviewListDto findCanceledReviews(Pageable pageable);
+    ReviewDtoPage findCanceledReviews(Pageable pageable);
 
     ReviewDto findReviewById(UUID reviewId);
 

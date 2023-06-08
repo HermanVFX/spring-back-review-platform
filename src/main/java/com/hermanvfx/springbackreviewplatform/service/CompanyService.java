@@ -1,6 +1,7 @@
 package com.hermanvfx.springbackreviewplatform.service;
 
 import com.example.userservice.dto.CompanyDto;
+import com.example.userservice.dto.CompanyDtoPage;
 import com.example.userservice.dto.CompanyListDto;
 import com.example.userservice.dto.ShortCompanyDto;
 import org.springframework.data.domain.Pageable;
@@ -9,7 +10,7 @@ import java.util.UUID;
 
 public interface CompanyService {
 
-    CompanyListDto findAllCompany(Pageable pageable);
+    CompanyDtoPage findAllCompany(Pageable pageable);
 
     CompanyDto findCompanyById(UUID companyId);
 
@@ -20,4 +21,5 @@ public interface CompanyService {
     void delete(UUID id);
 
     void deleteFromBd(UUID id);
+
 }

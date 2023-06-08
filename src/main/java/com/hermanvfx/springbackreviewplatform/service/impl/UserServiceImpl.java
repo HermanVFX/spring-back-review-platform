@@ -1,9 +1,7 @@
 package com.hermanvfx.springbackreviewplatform.service.impl;
 
-import com.example.userservice.dto.ShortUserDto;
-import com.example.userservice.dto.SocialDto;
-import com.example.userservice.dto.UserDto;
-import com.example.userservice.dto.UserListDto;
+import com.example.userservice.dto.*;
+import com.hermanvfx.springbackreviewplatform.entity.Review;
 import com.hermanvfx.springbackreviewplatform.entity.Social;
 import com.hermanvfx.springbackreviewplatform.entity.User;
 import com.hermanvfx.springbackreviewplatform.entity.enums.Role;
@@ -40,17 +38,9 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
 
     @Override
-    public UserListDto findAllUser(Pageable pageable) {
-
-        List<UserDto> list = userMapper.listUserToListUserDto(userRepository.findAll());
-
-        Page<UserDto> page = new Pagination<UserDto>().addPagination(list, pageable);
-
-        return new UserListDto()
-                .content(page.getContent())
-                .totalPages(BigDecimal.valueOf((int) Math.ceil((double) list.size() / pageable.getPageSize())))
-                .totalElements(BigDecimal.valueOf(list.size()))
-                .currentPage(BigDecimal.valueOf(pageable.getPageNumber()));
+    public UserDtoPage findAllUser(Pageable pageable) {
+       Page<User> page = userRepository.findUserPage(pageable);
+        return pageToDto(pageable, page);
     }
 
     @Override
@@ -116,5 +106,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteFromBd(UUID id) {
         userRepository.delete(userRepository.findById(id).orElseThrow());
+    }
+
+    private UserDtoPage pageToDto(Pageable pageable, Page<User> page) {
+        var content = userMapper.listUserToListUserDto(page.getContent());
+        UserDtoPage userDtoPage = new UserDtoPage();
+        userDtoPage.setContent(content);
+        userDtoPage.setCurrentPage(pageable.getPageNumber());
+        userDtoPage.setTotalPage(page.getTotalPages());
+        userDtoPage.setTotalElement(page.getTotalElements());
+        return userDtoPage;
     }
 }
